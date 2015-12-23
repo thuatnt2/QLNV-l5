@@ -42,7 +42,7 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                        <li class=""><a href="#">Link <span class="sr-only">(current)</span></a></li>
                         <li><a href="#">Link</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
@@ -207,23 +207,11 @@
     <!-- Full Width Column -->
     <div class="content-wrapper">
         <div class="container-fluid">
-            <!-- Content Header (Page header) -->
-            <section class="content-header">
-                <h1>
-                    Top Navigation
-                    <small>Example 2.0</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                    <li><a href="#">Layout</a></li>
-                    <li class="active">Top Navigation</li>
-                </ol>
-            </section>
-
             <!-- Main content -->
             <section class="content">
-               @yield('content')
-            </section><!-- /.content -->
+                @yield('content')
+            </section>
+
         </div><!-- /.container-fluid -->
     </div><!-- /.content-wrapper -->
 
