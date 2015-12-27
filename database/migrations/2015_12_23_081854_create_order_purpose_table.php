@@ -15,9 +15,9 @@ class CreateOrderPurposeTable extends Migration
         Schema::create('order_perpose', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('order_id')->unsigned();
-            $table->foreign('order_id')->references('id')->on('orders');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->integer('purpose_id')->unsigned();
-            $table->foreign('purpose_id')->references('id')->on('purposes');
+            $table->foreign('purpose_id')->references('id')->on('purposes')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.login')
 
 @section('content')
 	<div class="container">
 		<div class="col-sm-offset-2 col-sm-8">
-			<div class="panel panel-primary">
+			<div class="panel panel-primary" style="margin: 120px auto;">
 				<div class="panel-heading">
 					Login
 				</div>
@@ -13,7 +13,7 @@
 					@include('common.errors')
 
 					<!-- New Task Form -->
-					<form action="/auth/login" method="POST" class="form-horizontal">
+					<form action="{{ url('login') }}" method="POST" class="form-horizontal">
 						{{ csrf_field() }}
 
 						<!-- E-Mail Address -->
@@ -36,13 +36,11 @@
 
 						<!-- Login Button -->
 						<div class="form-group">
-							<div class="col-sm-offset-4 col-sm-8">
-								<button type="submit" class="btn btn-default">
-									<i class="fa fa-btn fa-sign-in"></i>Login
+							<div class="col-sm-offset-5 col-sm-8">
+								<button type="submit" class="btn btn-success">
+									<i class="fa fa-btn fa-sign-in"></i>&nbsp Login
 								</button>
-								<a class="btn btn-default" href="{{ url("auth/register") }}">
-									<i class="fa fa-user-plus"></i>Register
-								</a>
+
 							</div>
 						</div>
 					</form>

@@ -17,6 +17,8 @@ class Purpose extends Model
 	 */
     public function orders()
     {
+
     	return $this->belongsToMany(Order::class);
+    	
     }
 }
