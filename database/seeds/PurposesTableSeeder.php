@@ -2,25 +2,27 @@
 
 // Composer: "fzaninotto/faker": "v1.3.0"
 use Faker\Factory as Faker;
+use Illuminate\Database\Seeder;
+use App\Purpose;
 
 class PurposesTableSeeder extends Seeder {
 
     public function run() {
         $purposes = [
             [
-                "content" => "list",
+                "symbol" => "list",
                 "group"   => "list",
             ],
             [
-                 "content" => "email",
+                 "symbol" => "email",
                  "group"   => "list",
             ],
             [
-                 "content" => "xmctb",
+                 "symbol" => "xmctb",
                  "group"   => "list",
             ],
             [
-                 "content" => "giám sát",
+                 "symbol" => "giám sát",
                  "group"   => "monitor",
             ],
         ];

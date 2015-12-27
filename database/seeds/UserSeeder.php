@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Database\Seeder;
+use App\User;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,7 +13,7 @@
  *
  * @author TNT
  */
-class UserSeeder  extends DatabaseSeeder{
+class UserSeeder  extends Seeder{
     public function run() {
         $users = [
             [

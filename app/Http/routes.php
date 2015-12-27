@@ -11,12 +11,11 @@
 |
 */
 
+
 Route::group(['middleware' => ['web']], function () {
 	
-	// Authentication Routes...
-	Route::get('login', 'Auth\AuthController@getLogin');
-	Route::post('login', 'Auth\AuthController@postLogin');
-	Route::get('logout', 'Auth\AuthController@getLogout');
+	//Authentication Routes...
+    Route::auth();
 
 	Route::group(['middleware' => ['auth']], function() {
 	    //
@@ -24,8 +23,16 @@ Route::group(['middleware' => ['web']], function () {
 	    // Registration Routes...
 		Route::get('register', 'Auth\AuthController@getRegister');
 		Route::post('register', 'Auth\AuthController@postRegister');
-		// Order
+		// Orders
 	    Route::resource('order', 'OrderController');
+        // Units
+        Route::resource('units', 'UnitController');
 	});
 
+});
+
+Route::group(['middleware' => 'web'], function () {
+   
+
+    Route::get('/home', 'HomeController@index');
 });

@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Database\Seeder;
+use App\Unit;
 // Composer: "fzaninotto/faker": "v1.3.0"
 //use Faker\Factory as Faker;
 
@@ -9,17 +11,17 @@ class UnitsTableSeeder extends Seeder {
         $units = [
             [
                 "symbol" => "PA88",
-                "name"   => "An ninh chính trị tư tưởng",
+                "description"   => "An ninh chính trị tư tưởng",
                 "block"  => "AN",
             ],
             [
                 "symbol" => "PA92",
-                "name"   => "xxxxxxxxx",
+                "description"   => "xxxxxxxxx",
                 "block"  => "AN",
             ],
             [
                 "symbol" => "PC45",
-                "name"   => "Phòng chống mà túy",
+                "description"   => "Phòng chống mà túy",
                 "block"  => "CS",
             ]
         ];
