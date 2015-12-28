@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-use App\Repositories\UnitRepository;
+use App\Contracts\Repository;
 use Illuminate\Http\Request;
 
 class UnitController extends Controller
 {
     private $unit;
 
-    public function __construct(UnitRepository $unit)
+    public function __construct(Repository $unit)
     {
         $this->unit = $unit;
     }
@@ -34,7 +34,7 @@ class UnitController extends Controller
      */
     public function create()
     {
-        //
+        return view('units.create');
     }
 
     /**
