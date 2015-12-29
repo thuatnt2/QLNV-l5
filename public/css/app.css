@@ -2,10 +2,25 @@ body {
 	
 	background-color: #ECF0F5
 }
+legend {
+	padding-left: 8px;
+}
 .navbar-form .form-control {
     border-radius: 3px;
     width: 500px;
 }
+.container-fluid {
+	padding: 0px 10px;
+}
 .table-striped>tbody>tr:nth-of-type(odd){
    background-color:#E4E7EC;
+}
+.input-sm {
+	font-size: 18px;
+}
+.box {
+	border-top: 0px;
+}
+.form-group {
+	margin-bottom: 10px;
 }
