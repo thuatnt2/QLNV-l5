@@ -12,17 +12,19 @@ use App\Unit;
 
 class UnitRepository extends AbstractRepository
 {
-    public $task;
-    public function __construct(Unit $task)
+    public $unit;
+    public function __construct(Unit $unit)
     {
-        $this->task = $task;
-        parent::__construct($this->task);
+        $this->unit = $unit;
+        parent::__construct($this->unit);
     }
 
     public function create(array $data)
     {
-        $this->task->name = $data['name'];
-        $this->task->save();
+        $this->unit->description = $data['description'];
+        $this->unit->symbol = $data['symbol'];
+        $this->unit->block = $data['block'];
+        $this->unit->save();
     }
     public function edit(array $id)
     {

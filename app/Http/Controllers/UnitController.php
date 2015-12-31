@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\Repository;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-use App\Contracts\Repository;
+use App\Http\Requests\UnitRequest;
 use Illuminate\Http\Request;
 
 class UnitController extends Controller
@@ -40,13 +41,14 @@ class UnitController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request\UnitRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UnitRequest $request)
     {
-        dd($request);
-        die;
+
+        $this->unit->create($request->only('description', 'symbol', 'block'));
+        return redirect()->back();
     }
 
     /**

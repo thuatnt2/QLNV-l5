@@ -7,11 +7,11 @@
         <fieldset>
         {!! Former::legend('Form tạo mới đơn vị') !!}
         <div class="col-sm-offset-3 col-sm-4">
-            {!! Former::text('unit', 'Tên đơn vị')->required()->addClass('input-sm'); !!}
+            {!! Former::text('description', 'Tên đơn vị')->required()->addClass('input-sm'); !!}
             {!! Former::text('symbol', 'Ký hiệu')->required()->addClass('input-sm'); !!}
             {!! Former::radios('block', 'Thuộc khối')
             ->radios([
-                'An ninh' => ['value' => 'AN'],
+                'An ninh' => ['value' => 'AN', 'checked' => true],
                 'Cảnh sát' => ['value' => 'CS']
             ])
             ->inline()
@@ -40,10 +40,10 @@
                         <th class="text-center">STT</th>
                         <th class="text-center">Tên đơn vị</th>
                         <th class="text-center">Kí hiệu</th>
-                        <th class="text-center class="text-center"">Khối</th>
-                        <th class="text-center class="text-center"">Ngày tạo</th>
-                        <th class="text-center class="text-center"">Ngày sửa</th>
-                        <th class="text-center class="text-center"">Thao tác</th>
+                        <th class="text-center">Khối</th>
+                        <th class="text-center">Ngày tạo</th>
+                        <th class="text-center">Ngày sửa</th>
+                        <th class="text-center">Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
