@@ -17,8 +17,7 @@ abstract class Request extends FormRequest
 
     // public function validate()
     // {
-    // 	$this->validation = $this->validator->make($formData, $this->rules());
-
+    //     $this->validation = parent::validate();
     // 	if($this->validation->fails()) {
 
     // 		throw new FormValidationException('Validation Failed', $this->getValidationErrors());

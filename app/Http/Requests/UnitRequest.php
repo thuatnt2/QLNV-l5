@@ -24,8 +24,8 @@ class UnitRequest extends Request
     public function rules()
     {
         return [
-            'description' => 'required|max:255',
-            'symbol' => 'required|max:255',
+            'description' => 'required|min:5|max:255',
+            'symbol' => 'required|min:3|max:255',
         ];
     }
 
@@ -33,7 +33,9 @@ class UnitRequest extends Request
     {
         return [
             'description.required' => ':attribute bắt buộc và không quá 255 ký tự',
+            'description.min' => ':attribute có ít nhất 5 ký tự',
             'symbol.required' => ':attribute bắt buộc và không quá 255 ký tự',
+            'symbol.min' => ':attribute có ít nhất 3 ký tự'
         ];
     }
 

@@ -5,6 +5,9 @@ body {
 legend {
 	padding-left: 8px;
 }
+.content {
+	padding: 5px 10px;
+}
 .navbar-form .form-control {
     border-radius: 3px;
     width: 500px;
@@ -20,7 +23,19 @@ legend {
 }
 .box {
 	border-top: 0px;
+	margin-bottom: 10px;
 }
 .form-group {
 	margin-bottom: 10px;
+}
+.alert {
+	padding: 10px;
+	margin-bottom: 5px;
+}
+.modal-error{
+	background-color: red;
+	color: #FFF;
+}
+.modal-error .modal-title {
+	font-weight: bold;
 }

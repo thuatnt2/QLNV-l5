@@ -1,5 +1,7 @@
 @extends('layouts.master')
 @section('content')
+@include('partials.flash')
+@include('partials.confirm')
 <div class="row">
     <div class="box">
         {!! Former::setOption('TwitterBootstrap3.labelWidths', ['large' => 4, 'small' => 4]) !!}
@@ -62,11 +64,7 @@
                                 <button class="btn btn-warning btn-xs fa fa-edit" title="Sửa"></button>
                             </form>
                             <!-- TODO: Delete Button -->
-                            <form class="pull-right" action="{{ url('units', $unit->id) }}" method="POST">
-                                {{ csrf_field() }}
-                                {{ method_field('DELETE') }}
-                                <button class="btn btn-danger btn-xs fa fa-trash" title="Xóa"></button>
-                            </form>
+                                <button class="btn btn-danger btn-xs fa fa-trash" data-toggle="modal" data-target="#confirmModal" data-whatever="{{ action('UnitController@destroy', $unit->id) }}" title="Xóa"></button>
                         </td>
                     </tr>
                     @endforeach

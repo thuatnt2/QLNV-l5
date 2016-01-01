@@ -46,9 +46,17 @@ class UnitController extends Controller
      */
     public function store(UnitRequest $request)
     {
+        try {
 
-        $this->unit->create($request->only('description', 'symbol', 'block'));
-        return redirect()->back();
+            $this->unit->create($request->only('description', 'symbol', 'block'));
+            return redirect()->back();
+
+        } catch (\Exception $e) {
+            
+            return redirect()->back()->withInput()->with('error', 'Không thể thêm dữ liệu');
+        }
+
+        
     }
 
     /**
@@ -95,6 +103,9 @@ class UnitController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+        $this->unit->delete($id);
+
+        return redirect()->back();
     }
 }
