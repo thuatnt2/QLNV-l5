@@ -26,9 +26,13 @@ class UnitRepository extends AbstractRepository
         $this->unit->block = $data['block'];
         $this->unit->save();
     }
-    public function edit(array $id)
+    public function update($id, array $data)
     {
-
+        $unit = $this->findById($id);
+        $unit->description =  $data['description'];
+        $unit->symbol = $data['symbol'];
+        $unit->block = $data['block'];
+        $unit->save();
     }
 
 

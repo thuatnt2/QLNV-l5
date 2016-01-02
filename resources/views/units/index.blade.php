@@ -5,7 +5,7 @@
 <div class="row">
     <div class="box row-form">
         {!! Former::setOption('TwitterBootstrap3.labelWidths', ['large' => 4, 'small' => 4]) !!}
-        {!! Former::horizontal_open(url('units')) !!}
+        {!! Former::horizontal_open(url('units'))->id('form-create') !!}
         <fieldset>
         {!! Former::legend('Form tạo mới đơn vị') !!}
         <div class="col-sm-offset-3 col-sm-4">

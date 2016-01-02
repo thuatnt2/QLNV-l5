@@ -12,17 +12,23 @@
 		var modal = $(this)
   		modal.find('.modal-footer form').attr('action', action)
 	});
+	 
 	$('.fa-edit').on('click', function() {
+
 		$.ajax({
 			url: $(this).attr('data-url'),
 			type: 'GET',
             success: function (data, textStatus, jqXHR) {
-            	$('.row-form').empty();
-            	$('.row-form').html(data);
+            	$('#form-create').hide();
+            	$('#form-edit').remove();
+            	$('.row-form').append(data);
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                console.log('ajax thong ke co loi');
+                console.log('ajax fa-edit co loi');
             }
 		});
+	});
+	$('button').click(function () {
+		console.log('vo day');
 	});
 })(jQuery);

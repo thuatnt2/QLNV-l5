@@ -14,6 +14,6 @@ interface Repository
     public function findById($id);
     public function delete($id);
     public function create(array $input);
-    public function edit(array $input);
+    public function update($id, array $input);
 
 }

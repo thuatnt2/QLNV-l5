@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Contracts\Repository;
 use App\Http\Controllers\Controller;
-use App\Http\Requests;
 use App\Http\Requests\UnitRequest;
 use Illuminate\Http\Request;
 
@@ -106,9 +105,17 @@ class UnitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UnitRequest $request, $id)
     {
-        //
+        try {
+            $this->unit->update($id, $request->only('description', 'symbol', 'block'));
+
+            return redirect()->action('UnitController@index');
+            
+        } catch (Exception $e) {
+
+            return redirect()->back()->withInput()->with('error', 'Không thể truy vấn dữ liệu');
+        }
     }
 
     /**
