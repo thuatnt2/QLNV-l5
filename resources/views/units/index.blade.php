@@ -3,7 +3,7 @@
 @include('partials.flash')
 @include('partials.confirm')
 <div class="row">
-    <div class="box">
+    <div class="box row-form">
         {!! Former::setOption('TwitterBootstrap3.labelWidths', ['large' => 4, 'small' => 4]) !!}
         {!! Former::horizontal_open(url('units')) !!}
         <fieldset>
@@ -58,13 +58,10 @@
                         <td class="text-center">{{ $unit->created_at->format('d/m/Y') }}</td>
                         <td class="text-center">{{ $unit->updated_at->format('d/m/Y') }}</td>
                         <td class="text-center"width="6%">
-                            <form class="pull-left" action="{{ action('UnitController@edit', $unit->id) }}" method="POST">
-                                {{ csrf_field() }}
-                                {{ method_field('GET') }}
-                                <button class="btn btn-warning btn-xs fa fa-edit" title="Sửa"></button>
-                            </form>
+                            <button class="btn btn-warning btn-xs fa fa-edit" data-url="{{ action('UnitController@edit', $unit->id) }}" type="button" title="Sửa"></button>
                             <!-- TODO: Delete Button -->
-                                <button class="btn btn-danger btn-xs fa fa-trash" data-toggle="modal" data-target="#confirmModal" data-whatever="{{ action('UnitController@destroy', $unit->id) }}" title="Xóa"></button>
+                            &nbsp
+                            <button class="btn btn-danger btn-xs fa fa-trash" data-toggle="modal" data-target="#confirmModal" data-url="{{ action('UnitController@destroy', $unit->id) }}" title="Xóa"></button>
                         </td>
                     </tr>
                     @endforeach

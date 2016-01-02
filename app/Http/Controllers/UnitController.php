@@ -23,9 +23,17 @@ class UnitController extends Controller
      */
     public function index()
     {
-        $units = $this->unit->all();
+        try {
 
-        return view('units.index', compact('units'));
+            $units = $this->unit->all();
+
+            return view('units.index', compact('units'));
+
+        } catch (Exception $e) {
+
+            return redirect()->back()->withInput()->with('error', 'Không thể truy vấn dữ liệu');
+        }
+        
     }
 
     /**
@@ -79,8 +87,16 @@ class UnitController extends Controller
      */
     public function edit($id)
     {
-        dd("tnt");
-        die;
+        try {
+
+            $unit = $this->unit->findById($id);
+            return view('units.edit', compact('unit'));
+            
+        } catch (Exception $e) {
+            
+            return redirect()->back()->withInput()->with('error', 'Không thể truy vấn dữ liệu');
+        }
+        
     }
 
     /**
