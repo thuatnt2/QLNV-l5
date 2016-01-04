@@ -9,6 +9,7 @@ namespace App\Repositories;
 
 use App\Contracts\Repository;
 use Illuminate\Database\Eloquent\Model;
+
 abstract class AbstractRepository implements Repository
 {
     protected $model;
@@ -30,5 +31,21 @@ abstract class AbstractRepository implements Repository
     public function delete($id)
     {
         return $this->model->destroy($id);
+    }
+
+    public function create(array $data)
+    {
+
+        $this->model->unguard();
+        $model = $this->model->fill($data);
+        $this->model->reguard();
+
+        return $model->save();
+        
+    }
+
+    public function update($id, array $input)
+    {
+
     }
 }

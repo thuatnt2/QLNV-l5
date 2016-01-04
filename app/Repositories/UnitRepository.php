@@ -19,21 +19,21 @@ class UnitRepository extends AbstractRepository
         parent::__construct($this->unit);
     }
 
-    public function create(array $data)
-    {
-        $this->unit->description = $data['description'];
-        $this->unit->symbol = $data['symbol'];
-        $this->unit->block = $data['block'];
-        $this->unit->save();
-    }
-    public function update($id, array $data)
-    {
-        $unit = $this->findById($id);
-        $unit->description =  $data['description'];
-        $unit->symbol = $data['symbol'];
-        $unit->block = $data['block'];
-        $unit->save();
-    }
+    // public function create(array $data)
+    // {
+    //     $this->unit->description = $data['description'];
+    //     $this->unit->symbol = $data['symbol'];
+    //     $this->unit->block = $data['block'];
+    //     $this->unit->save();
+    // }
+    // public function update($id, array $data)
+    // {
+    //     $unit = $this->findById($id);
+    //     $unit->description =  $data['description'];
+    //     $unit->symbol = $data['symbol'];
+    //     $unit->block = $data['block'];
+    //     $unit->save();
+    // }
 
 
 }
