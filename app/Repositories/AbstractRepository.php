@@ -46,6 +46,12 @@ abstract class AbstractRepository implements Repository
 
     public function update($id, array $input)
     {
+        $model = $this->findById($id);
+        $model->unguard();
+        $model = $model->fill($input);
+        $model->reguard();
+
+        return $model->save();
 
     }
 }
