@@ -67,8 +67,8 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="#">Người dùng</a></li>
                                 <li><a href="{{ url('units') }}">Đơn vị yêu cầu</a></li>
-                                <li><a href="#">Loại đối tượng</a></li>
-                                <li><a href="#">Tính chất vụ án</a></li>
+                                <li><a href="{{ url('categories') }}">Loại đối tượng</a></li>
+                                <li><a href="{{ url('kinds') }}">Tính chất vụ án</a></li>
                             </ul>
                         </li>
                     </ul>

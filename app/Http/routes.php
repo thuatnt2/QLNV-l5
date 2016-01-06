@@ -24,9 +24,13 @@ Route::group(['middleware' => ['web']], function () {
 		Route::get('register', 'Auth\AuthController@getRegister');
 		Route::post('register', 'Auth\AuthController@postRegister');
 		// Orders
-	    Route::resource('order', 'OrderController');
+	    Route::resource('orders', 'OrderController');
         // Units
         Route::resource('units', 'UnitController');
+        // category
+        Route::resource('categories', 'CategoryController');
+        // kind
+        Route::resource('kinds', 'KindController');
 	});
 
 });

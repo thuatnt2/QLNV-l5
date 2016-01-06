@@ -14,7 +14,6 @@
 	});
 	 
 	$('.fa-edit').on('click', function() {
-
 		$.ajax({
 			url: $(this).attr('data-url'),
 			type: 'GET',
@@ -27,8 +26,5 @@
                 console.log('ajax fa-edit co loi');
             }
 		});
-	});
-	$('button').click(function () {
-		console.log('vo day');
 	});
 })(jQuery);
