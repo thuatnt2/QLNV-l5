@@ -5,8 +5,11 @@ namespace App\Providers;
 use App\Category;
 use App\Contracts\Repository;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\KindController;
 use App\Http\Controllers\UnitController;
+use App\Kind;
 use App\Repositories\CategoryRepository;
+use App\Repositories\KindRepository;
 use App\Repositories\UnitRepository;
 use App\Unit;
 use Illuminate\Support\ServiceProvider;
@@ -38,6 +41,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->when(CategoryController::class)->needs(Repository::class)->give(function($app) {
 
             return new CategoryRepository(new Category);
+        });
+        $this->app->when(KindController::class)->needs(Repository::class)->give(function($app) {
+
+            return new KindRepository(new Kind);
         });
     }
 }

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Contracts\Repository;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UnitRequest;
-use Illuminate\Http\Request;
 
 class UnitController extends Controller
 {
@@ -42,7 +41,7 @@ class UnitController extends Controller
      */
     public function create()
     {
-        return view('units.create');
+        //
     }
 
     /**
