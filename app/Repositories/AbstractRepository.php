@@ -18,9 +18,9 @@ abstract class AbstractRepository implements Repository
     {
         $this->model = $model;
     }
-    public function all()
+    public function all($columns = ['*'])
     {
-        return $this->model->orderBy('created_at', 'desc')->get();
+        return $this->model->orderBy('created_at', 'desc')->get($columns);
     }
 
     public function findById($id)
@@ -53,5 +53,19 @@ abstract class AbstractRepository implements Repository
 
         return $model->save();
 
+    }
+    /**
+     * format data from database to array inspecific ['id' => 'name']
+     * @param  Array
+     * @return Array     
+     */
+    public function formatData($items) {
+        
+        $output = [];
+        foreach ($items as $item) {
+            $output[$item->id] = $item->symbol;
+        }
+        
+        return $output;
     }
 }

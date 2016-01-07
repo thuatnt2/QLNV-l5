@@ -10,7 +10,7 @@ namespace App\Contracts;
 
 interface Repository
 {
-    public function all();
+    public function all($columns = ['*']);
     public function findById($id);
     public function delete($id);
     public function create(array $input);

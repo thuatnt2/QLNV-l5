@@ -26,7 +26,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        view()->composer(['orders.index', 'orders.edit'], function($view) {
+            $units = new UnitRepository(new  Unit);
+            $categories = new CategoryRepository(new Category);
+            $kinds = new KindRepository(new Kind);
+
+            $units = $units->formatData($units->all(['id', 'symbol']));
+            $categories = $categories->formatData($categories->all(['id', 'symbol']));
+            $kinds = $kinds->formatData($kinds->all(['id', 'symbol']));
+            $purposes = ['giám sát', 'xmctb', 'list', 'email'];
+            $view->with(compact('units', 'categories', 'kinds', 'purposes'));
+        });
     }
 
     /**
@@ -53,5 +63,6 @@ class AppServiceProvider extends ServiceProvider
 
             return new OrderRepository(new Order);
         });
+
     }
 }

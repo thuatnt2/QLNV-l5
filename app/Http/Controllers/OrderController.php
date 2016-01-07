@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Contracts\Repository;
 use App\Http\Controllers\Controller;
+use App\Repositories\UnitRepository;
 
 
 class OrderController extends Controller
 {
     protected $order;
+    protected $unit;
 
     public function __construct(Repository $order)
     {
@@ -90,4 +92,5 @@ class OrderController extends Controller
     {
         //
     }
+
 }

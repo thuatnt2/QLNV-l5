@@ -11,18 +11,19 @@
         <div class="col-sm-4">
             {!! Former::text('created_at', 'Ngày yêu cầu')->required()->addClass('input-sm'); !!}
             {!! Former::text('number_cv', 'Số công văn yêu cầu')->required()->addClass('input-sm'); !!}
+            {!! Former::select('unit')->label('Đơn vị yêu cầu')->options($units) !!}
             {!! Former::text('number_cv_pa71', 'Số công văn PA71')->required()->addClass('input-sm'); !!}
-            {!! Former::text('customer_name', 'Tên đối tượng')->required()->addClass('input-sm'); !!}
+          
         </div> 
         <div class="col-sm-4">
-             {{Former::select('unit')
-                                ->label('Đơn vị yêu cầu')
-                                ->options($units)
-                                ->class('select2')
-                        }}
+            {!! Former::text('customer_name', 'Tên đối tượng')->required()->addClass('input-sm'); !!}
+            {!! Former::select('category')->label('Loại đối tượng')->options($categories) !!}
+            {!! Former::select('kind')->label('Tính chất')->options($kinds) !!}
         </div>
         <div class="col-sm-4">
+            {!! Former::text('description', 'Thời gian yêu cầu')->required()->addClass('input-sm'); !!}
             {!! Former::text('description', 'Tên đơn vị')->required()->addClass('input-sm'); !!}
+            {!! Former::checkboxes('Mục đích yêu cầu')->checkboxes($purposes)->inline() !!}
         </div>
         <div class="form-group">
             <div class="col-lg-offset-5 col-sm-offset-5 col-lg-8 col-sm-8">
