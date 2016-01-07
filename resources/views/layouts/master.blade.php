@@ -50,8 +50,8 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle " data-toggle="dropdown" aria-expanded="false">Giám sát&nbsp;&nbsp;<span class="fa fa-caret-down"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Yêu cầu</a></li>
-                                <li><a href="#">Giao tin</a></li>
+                                <li><a href="{{ url('orders') }}">Yêu cầu</a></li>
+                                <li><a href="{{ url('ship_news') }}">Giao tin</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">

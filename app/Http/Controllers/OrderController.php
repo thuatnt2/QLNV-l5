@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Contracts\Repository;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\KindRequest;
 
-class KindController extends Controller
+
+class OrderController extends Controller
 {
-    protected $kind;
+    protected $order;
 
-    public function __construct(Repository $kind)
+    public function __construct(Repository $order)
     {
-        $this->kind = $kind;
+        $this->order = $order;
     }
     /**
      * Display a listing of the resource.
@@ -21,10 +21,8 @@ class KindController extends Controller
      */
     public function index()
     {
-        $kinds = $this->kind->all();
-
-        return view('kinds.index', compact('kinds'));
-        
+        $orders = $this->order->all();
+        return view('orders.index', compact('orders'));
     }
 
     /**
@@ -43,19 +41,9 @@ class KindController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(KindRequest $request)
+    public function store(OrderRequest $request)
     {
-        try {
-            
-            $this->kind->create($request->only('description', 'symbol'));
-
-            return redirect()->back();
-
-        } catch (Exception $e) {
-
-            return redirect()->back()->withInput()->with('error', $this->errorDB);
-            
-        }
+        //
     }
 
     /**
@@ -77,9 +65,7 @@ class KindController extends Controller
      */
     public function edit($id)
     {
-        $kind = $this->kind->findById($id);
-
-        return view('kinds.edit', compact('kind'));
+        //
     }
 
     /**
@@ -89,18 +75,9 @@ class KindController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(KindRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        try {
-
-            $this->kind->update($id, $request->only('description', 'symbol'));
-
-            return redirect()->action('KindController@index');
-            
-        } catch (Exception $e) {
-            
-            return redirect()->back()->withInput()->with('error', $this->errorDB);
-        }
+        //
     }
 
     /**
@@ -111,13 +88,6 @@ class KindController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $this->kind->delete($id);
-
-            return redirect()->back();
-
-        } catch (Exception $e) {
-            
-        }
+        //
     }
 }

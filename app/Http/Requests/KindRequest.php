@@ -34,7 +34,8 @@ class KindRequest extends Request
     {
         $messages = [
             'description.required' => ':attribute bắt buộc',
-            'symbol.required' => 'attribute bắt buộc',
+            'description.min' => ':attribute ít nhất 3 ký tự',
+            'symbol.required' => ':attribute bắt buộc',
         ];
 
         return $messages;
