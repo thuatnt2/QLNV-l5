@@ -18,6 +18,10 @@ legend {
 .table-striped>tbody>tr:nth-of-type(odd){
    background-color:#E4E7EC;
 }
+.col-lg-4, .col-sm-4 {
+	padding-left: 10px;
+	padding-right: 10px;
+}
 .input-sm {
 	font-size: 18px;
 	padding: 4px;
@@ -40,6 +44,6 @@ legend {
 .modal-error .modal-title {
 	font-weight: bold;
 }
-.datepicker {
+.daterangepicker {
 	border-radius: 0px;
 }

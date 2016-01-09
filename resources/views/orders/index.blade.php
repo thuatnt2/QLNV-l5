@@ -3,9 +3,8 @@
 @section('css')
 {{-- Select2 --}}
 <link rel="stylesheet" href="{{ URL::asset('css/plugins/select2.min.css') }}">
-{{-- Datepicker --}}
-<link rel="stylesheet" href="{{ URL::asset('css/plugins/datepicker3.css') }}">
-<link rel="stylesheet" href="{{ URL::asset('css/plugins/daterangepicker-bs3.css') }}">
+{{-- DateRangepicker --}}
+<link rel="stylesheet" href="{{ URL::asset('css/plugins/daterangepicker.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
 @stop
 
@@ -19,7 +18,12 @@
         <fieldset>
         {!! Former::legend('Thêm yêu cầu giám sát') !!}
         <div class="col-sm-4">
-            {!! Former::text('created_at', 'Ngày yêu cầu')->required()->addClass('input-sm datepicker'); !!}
+            {!! Former::text('created_at', 'Ngày yêu cầu')
+                ->append('<i class="fa fa-calendar" id="single"></i>')
+                ->required()
+                ->addClass('input-sm datesingle')
+                
+             !!}
             {!! Former::text('number_cv', 'Số công văn yêu cầu')->required()->addClass('input-sm'); !!}
             {!! Former::select('unit')->label('Đơn vị yêu cầu')->options($units)->addClass('input-sm') !!}
             {!! Former::text('number_cv_pa71', 'Số công văn PA71')->required()->addClass('input-sm'); !!}
@@ -31,7 +35,11 @@
             {!! Former::select('kind')->label('Tính chất')->options($kinds)->addClass('input-sm') !!}
         </div>
         <div class="col-sm-4">
-            {!! Former::text('description', 'Thời gian yêu cầu')->required()->addClass('input-sm daterangepicker'); !!}
+            {!! Former::text('time_request', 'Thời gian yêu cầu')
+                ->append('<i class="fa fa-calendar" id="range"></i>')
+                ->required()
+                ->addClass('input-sm daterange')
+             !!}
             {!! Former::text('description', 'Tên đơn vị')->required()->addClass('input-sm'); !!}
             {!! Former::checkboxes('Mục đích yêu cầu')->checkboxes($purposes)->inline() !!}
         </div>
@@ -92,8 +100,6 @@
 @section('javascript')
 {{-- Select2 4.0.1 --}}
 <script src="{{ URL::asset('js/plugins/select2.min.js') }}"></script>
-{{-- datepicker --}}
-<script src="{{ URL::asset('js/plugins/bootstrap-datepicker.js') }}"></script>
 {{-- Daterangepicker for Daterangepicker --}}
 <script src="{{ URL::asset('js/plugins/moment.min.js') }}"></script>
 {{-- Daterangepicker --}}
