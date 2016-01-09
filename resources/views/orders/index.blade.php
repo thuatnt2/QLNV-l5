@@ -1,4 +1,14 @@
 @extends('layouts.master')
+
+@section('css')
+{{-- Select2 --}}
+<link rel="stylesheet" href="{{ URL::asset('css/plugins/select2.min.css') }}">
+{{-- Datepicker --}}
+<link rel="stylesheet" href="{{ URL::asset('css/plugins/datepicker3.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('css/plugins/daterangepicker-bs3.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
+@stop
+
 @section('content')
 @include('partials.flash')
 @include('partials.confirm')
@@ -7,21 +17,21 @@
         {!! Former::setOption('TwitterBootstrap3.labelWidths', ['large' => 4, 'small' => 4]) !!}
         {!! Former::horizontal_open(url('orders'))->id('form-create') !!}
         <fieldset>
-        {!! Former::legend('Form thêm yêu cầu giám sát') !!}
+        {!! Former::legend('Thêm yêu cầu giám sát') !!}
         <div class="col-sm-4">
-            {!! Former::text('created_at', 'Ngày yêu cầu')->required()->addClass('input-sm'); !!}
+            {!! Former::text('created_at', 'Ngày yêu cầu')->required()->addClass('input-sm datepicker'); !!}
             {!! Former::text('number_cv', 'Số công văn yêu cầu')->required()->addClass('input-sm'); !!}
-            {!! Former::select('unit')->label('Đơn vị yêu cầu')->options($units) !!}
+            {!! Former::select('unit')->label('Đơn vị yêu cầu')->options($units)->addClass('input-sm') !!}
             {!! Former::text('number_cv_pa71', 'Số công văn PA71')->required()->addClass('input-sm'); !!}
           
         </div> 
         <div class="col-sm-4">
             {!! Former::text('customer_name', 'Tên đối tượng')->required()->addClass('input-sm'); !!}
-            {!! Former::select('category')->label('Loại đối tượng')->options($categories) !!}
-            {!! Former::select('kind')->label('Tính chất')->options($kinds) !!}
+            {!! Former::select('category')->label('Loại đối tượng')->options($categories)->addClass('input-sm') !!}
+            {!! Former::select('kind')->label('Tính chất')->options($kinds)->addClass('input-sm') !!}
         </div>
         <div class="col-sm-4">
-            {!! Former::text('description', 'Thời gian yêu cầu')->required()->addClass('input-sm'); !!}
+            {!! Former::text('description', 'Thời gian yêu cầu')->required()->addClass('input-sm daterangepicker'); !!}
             {!! Former::text('description', 'Tên đơn vị')->required()->addClass('input-sm'); !!}
             {!! Former::checkboxes('Mục đích yêu cầu')->checkboxes($purposes)->inline() !!}
         </div>
@@ -77,4 +87,17 @@
     </div><!-- /.box -->
 </div>
     
-@endsection
+@stop
+
+@section('javascript')
+{{-- Select2 4.0.1 --}}
+<script src="{{ URL::asset('js/plugins/select2.min.js') }}"></script>
+{{-- datepicker --}}
+<script src="{{ URL::asset('js/plugins/bootstrap-datepicker.js') }}"></script>
+{{-- Daterangepicker for Daterangepicker --}}
+<script src="{{ URL::asset('js/plugins/moment.min.js') }}"></script>
+{{-- Daterangepicker --}}
+<script src="{{ URL::asset('js/plugins/daterangepicker.js') }}"></script>
+{{-- app.js --}}
+<script src="{{ URL::asset('js/app.js') }}"></script>
+@stop

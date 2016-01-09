@@ -17,11 +17,9 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{ URL::asset('css/_all-skins.min.css') }}">
-    {{-- Select2 --}}
-    <link rel="stylesheet" href="{{ URL::asset('css/select2.min.css') }}">
-
-    <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
-
+    
+ 
+    @yield('css')
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -224,18 +222,7 @@
 <script src="{{ URL::asset('js/jQuery-2.1.4.min.js') }}"></script>
 <!-- Bootstrap 3.3.5 -->
 <script src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
-{{-- Select2 4.0.1 --}}
-<script src="{{ URL::asset('js/select2.min.js') }}"></script>
-<!-- SlimScroll -->
-<script src="{{ URL::asset('js/bootstrap.min.js') }}../../plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="{{ URL::asset('js/bootstrap.min.js') }}../../plugins/fastclick/fastclick.min.js"></script>
-<!-- AdminLTE App -->
-<script src="{{ URL::asset('js/bootstrap.min.js') }}../../dist/js/app.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{ URL::asset('js/bootstrap.min.js') }}../../dist/js/demo.js"></script>
 
-{{-- app.js --}}
-<script src="{{ URL::asset('js/app.js') }}"></script>
+@yield('javascript')
 </body>
 </html>
