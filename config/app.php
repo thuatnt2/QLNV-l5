@@ -156,6 +156,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Former\FormerServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 //        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         // Laracasts\Generators\GeneratorsServiceProvider::class,
 

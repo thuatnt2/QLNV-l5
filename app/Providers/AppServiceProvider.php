@@ -14,7 +14,9 @@ use App\Repositories\CategoryRepository;
 use App\Repositories\KindRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\UnitRepository;
+use App\Repositories\UserRepository;
 use App\Unit;
+use App\User;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -30,12 +32,14 @@ class AppServiceProvider extends ServiceProvider
             $units = new UnitRepository(new  Unit);
             $categories = new CategoryRepository(new Category);
             $kinds = new KindRepository(new Kind);
+            $users = new UserRepository(new User);
 
             $units = $units->formatData($units->all(['id', 'symbol']));
             $categories = $categories->formatData($categories->all(['id', 'symbol']));
             $kinds = $kinds->formatData($kinds->all(['id', 'symbol']));
+            $users = $users->formatData($users->all(['id as id', 'name as symbol' ]));
             $purposes = ['giám sát', 'xmctb', 'list', 'email'];
-            $view->with(compact('units', 'categories', 'kinds', 'purposes'));
+            $view->with(compact('units', 'categories', 'kinds', 'purposes', 'users'));
         });
     }
 

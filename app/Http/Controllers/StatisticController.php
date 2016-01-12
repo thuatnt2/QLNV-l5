@@ -2,21 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Contracts\Repository;
+use Illuminate\Http\Request;
+
+use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\OrderRequest;
-use App\Repositories\UnitRepository;
 
-
-class OrderController extends Controller
+class StatisticController extends Controller
 {
-    protected $order;
-    protected $unit;
-
-    public function __construct(Repository $order)
-    {
-        $this->order = $order;
-    }
     /**
      * Display a listing of the resource.
      *
@@ -24,8 +16,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = $this->order->all();
-        return view('orders.index', compact('orders'));
+        return view('statistics.index');
     }
 
     /**
@@ -44,14 +35,9 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(OrderRequest $request)
+    public function store(Request $request)
     {
-        try {
-            dd($request);
-            
-        } catch (Exception $e) {
-            // return redirect()->back()->withInput()->with('error', $e->error);
-        }
+        //
     }
 
     /**
@@ -98,5 +84,4 @@ class OrderController extends Controller
     {
         //
     }
-
 }

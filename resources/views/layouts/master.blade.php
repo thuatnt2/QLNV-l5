@@ -59,7 +59,7 @@
                                 <li><a href="#">Giao list-xmctb</a></li>
                              </ul>
                         </li>
-                        <li ><a href="#">Thống kê</a></li>
+                        <li ><a href="{{ url('statistics') }}">Thống kê</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Cấu hình&nbsp;&nbsp;<span class="fa fa-caret-down"></span></a>
                             <ul class="dropdown-menu" role="menu">

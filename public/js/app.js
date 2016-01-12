@@ -6,30 +6,20 @@
         };
         $(this).select2(options);
     });
-    // Daterangepicker
-    $('#single').each(function() {
-    	var options = {
-    		"opens": "left",
-             locale: { 'format': 'DD/MM/YYYY'},
-             "autoUpdateInput": false,
-             "singleDatePicker": true,
-    	};
-    	$(this).daterangepicker(options, function(start) {
-            $('.datesingle').val(start.format('DD/MM/YYYY'));
-        })
-    });
-    $('#range').each(function() {
-        var options = {
-            "opens": "left",
-             locale: { 'format': 'DD/MM/YYYY'},
-             "autoUpdateInput": false,
-             "singleDatePicker": false,
-             "autoApply": true,
-        };
-        $(this).daterangepicker(options, function(start, end) {
-            $('.daterange').val(start.format('DD/MM/YYYY') +' - '+ end.format('DD/MM/YYYY'));
-        })
-    })
+  // Daterangepicker
+  $('.daterange').each(function() {
+    var options = {
+      locale: {"format": "DD/MM/YYYY"},
+      "autoApply": true,
+      "linkedCalendars": false,
+      "endDate": moment().add(7, 'days'),
+    };
+    if($(this).attr('name') == 'created_at') {
+      options.singleDatePicker = true;
+    };
+    $(this).daterangepicker(options);  
+  });
+  
 	$('#modal-message').modal({
 		backdrop: 'static',
 	});
@@ -57,6 +47,19 @@
             }
 		});
 	});
+  $('.fa-plus').on('click', function() {
+      var fieldHTML = '<div class="col-lg-8 col-sm-8 pull-right">' +
+      '<div class="input-group">' +
+      '<input class="form-control input-sm" required="true" id="order_phone_number[]" type="text" name="order_phone_number[]">' +
+      '<span class="input-group-addon"><i class="fa fa-close"></i></span>' +
+      '</div>' +
+      '</div>';
+
+      $(fieldHTML).appendTo('.phone_order');
+  });
+  $('.phone_order').on('click', '.fa-close', function(e) {
+    $(this).parent().parent('div').remove();
+  });
 })(jQuery);
 
 
