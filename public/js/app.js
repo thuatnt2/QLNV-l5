@@ -47,19 +47,21 @@
             }
 		});
 	});
-  $('.fa-plus').on('click', function() {
+  $('.add_phone').on('click', function() {
       var fieldHTML = '<div class="col-lg-8 col-sm-8 pull-right">' +
       '<div class="input-group">' +
-      '<input class="form-control input-sm" required="true" id="order_phone_number[]" type="text" name="order_phone_number[]">' +
+      '<input class="form-control input-sm phone" required="true" id="order_phone_number[]" type="text" name="order_phone_number[]">' +
       '<span class="input-group-addon"><i class="fa fa-close"></i></span>' +
       '</div>' +
       '</div>';
 
       $(fieldHTML).appendTo('.phone_order');
+      $('.phone').inputmask('(999[9]) 999 999[9]');
   });
   $('.phone_order').on('click', '.fa-close', function(e) {
     $(this).parent().parent('div').remove();
   });
+  $('.phone').inputmask('(999[9]) 999 999[9]');
 })(jQuery);
 
 

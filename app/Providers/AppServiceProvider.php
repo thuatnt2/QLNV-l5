@@ -10,9 +10,11 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UnitController;
 use App\Kind;
 use App\Order;
+use App\Purpose;
 use App\Repositories\CategoryRepository;
 use App\Repositories\KindRepository;
 use App\Repositories\OrderRepository;
+use App\Repositories\PurposeRepository;
 use App\Repositories\UnitRepository;
 use App\Repositories\UserRepository;
 use App\Unit;
@@ -33,13 +35,15 @@ class AppServiceProvider extends ServiceProvider
             $categories = new CategoryRepository(new Category);
             $kinds = new KindRepository(new Kind);
             $users = new UserRepository(new User);
+            $purposes = new PurposeRepository(new Purpose); 
 
             $units = $units->formatData($units->all(['id', 'symbol']));
             $categories = $categories->formatData($categories->all(['id', 'symbol']));
             $kinds = $kinds->formatData($kinds->all(['id', 'symbol']));
             $users = $users->formatData($users->all(['id as id', 'name as symbol' ]));
-            $purposes = ['giám sát', 'xmctb', 'list', 'email'];
-            $view->with(compact('units', 'categories', 'kinds', 'purposes', 'users'));
+            $purposes = $purposes->formatPurpose($purposes->all(['id', 'symbol']));
+            // $purposes = ['GS', 'xmctb', 'list', 'email'];
+            $view->with(compact('units', 'categories', 'kinds', 'purpose', 'purposes', 'users'));
         });
     }
 

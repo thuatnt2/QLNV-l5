@@ -17,9 +17,6 @@ class CreateOrdersTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
 
-            $table->integer('purpose_id')->unsigned();
-            $table->foreign('purpose_id')->references('id')->on('purposes');
-
             $table->integer('kind_id')->unsigned();
             $table->foreign('kind_id')->references('id')->on('kinds');
 
@@ -29,15 +26,16 @@ class CreateOrdersTable extends Migration
             $table->integer('unit_id')->unsigned();
             $table->foreign('unit_id')->references('id')->on('units');
 
-            $table->string('customer_name');
-            $table->string('order_name');
-            $table->string('order_phone');
             $table->integer('number_cv');
             $table->integer('number_cv_pa71');
-            $table->text('comment')->nullable();
+            $table->string('order_name');
+            $table->string('order_phone');
+            $table->string('customer_name')->nullable();
+            $table->string('customer_phone')->nullable();
             $table->text('file_attach')->nullable();
             $table->string('slug');
-            $table->timestamp('date_submit');
+            $table->text('comment')->nullable();
+            $table->timestamp('date_order');
             $table->timestamp('date_begin');
             $table->timestamp('date_end');
             $table->timestamps();

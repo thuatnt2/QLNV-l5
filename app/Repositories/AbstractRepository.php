@@ -20,12 +20,46 @@ abstract class AbstractRepository implements Repository
     }
     public function all($columns = ['*'])
     {
-        return $this->model->orderBy('created_at', 'desc')->get($columns);
+        return $this->model
+                    ->orderBy('created_at', 'desc')
+                    ->get($columns);
     }
 
-    public function findById($id)
+    public function findById($id, $columns = ['*'])
     {
-        return $this->model->find($id);
+        return $this->model
+                    ->orderBy('created_at', 'desc')
+                    ->where('id', $id)
+                    ->get($columns);
+    }
+    /**
+     *
+     * @param string $field
+     * @param string $value
+     * @param array $columns
+     */
+    public function findBy($field, $value, $columns = ['*'])
+    {
+        return $this->model
+                    ->orderBy('created_at', 'desc')
+                    ->where($field, $value)
+                    ->first($columns);
+
+    }
+
+    /**
+     *
+     * @param string $field
+     * @param string $value
+     * @param array $columns
+     */
+    public function findAllBy($field, $value, $columns = ['*']) 
+    {
+        return $this->model
+                    ->orderBy('created_at', 'desc')
+                    ->where($field, $value)
+                    ->get($columns);
+
     }
 
     public function delete($id)
@@ -66,6 +100,15 @@ abstract class AbstractRepository implements Repository
             $output[$item->id] = $item->symbol;
         }
         
+        return $output;
+    }
+
+    public function formatPurpose($items)
+    {
+        $output = [];
+        foreach ($items as $item) {
+            $output[$item->symbol] = ['value' => $item->id];
+        }
         return $output;
     }
 }

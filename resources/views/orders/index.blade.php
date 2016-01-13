@@ -31,14 +31,14 @@
         </div> 
         <div class="col-sm-4">
             {!! Former::text('order_phone[]', 'Số điện thoại ĐT')
-                ->append('<i class="fa fa-plus"></i>')
+                ->append('<i class="fa fa-plus add_phone"></i>')
                 ->required()
-                ->addClass('input-sm')
+                ->addClass('input-sm phone')
                 ->addGroupClass('phone_order')
              !!}
             {!! Former::select('category')->label('Loại đối tượng')->options($categories)->addClass('input-sm') !!}
             {!! Former::select('kind')->label('Tính chất')->options($kinds)->addClass('input-sm') !!}
-            {!! Former::checkboxes('Mục đích yêu cầu')->checkboxes($purposes)->inline() !!}
+            {!! Former::checkboxes('purposes[]','Mục đích yêu cầu')->checkboxes($purposes)->inline() !!}
             {!! Former::text('time_order', 'Thời gian yêu cầu')
                 ->required()
                 ->addClass('input-sm daterange')
@@ -48,7 +48,7 @@
             {!! Former::text('customer_name', 'Tên trinh sát')->addClass('input-sm'); !!}
             {!! Former::text('customer_phone', 'Số điện thoại TS')
                 ->append('<i class="fa fa-phone"></i>')
-                ->addClass('input-sm'); 
+                ->addClass('input-sm phone'); 
             !!}
            {!! Former::file('file','File đính kèm')->accept('doc', 'docx', 'xls', 'xlsx', 'pdf') !!}
            {!! Former::select('user')->label('Người nhận yêu cầu')->options($users)->addClass('input-sm') !!}

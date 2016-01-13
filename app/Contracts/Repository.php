@@ -10,8 +10,33 @@ namespace App\Contracts;
 
 interface Repository
 {
+	/**
+     *
+     * @param array $columns
+     */
     public function all($columns = ['*']);
-    public function findById($id);
+    /**
+     *
+     * @param string|int $id
+     * @param array $columns
+     */
+    public function findById($id, $columns = ['*']);
+
+    /**
+     *
+     * @param string $field
+     * @param string $value
+     * @param array $columns
+     */
+    public function findBy($field, $value, $columns = ['*']);
+
+    /**
+     *
+     * @param string $field
+     * @param string $value
+     * @param array $columns
+     */
+    public function findAllBy($field, $value, $columns = ['*']);
     public function delete($id);
     public function create(array $input);
     public function update($id, array $input);

@@ -27,7 +27,12 @@ class OrderController extends Controller
         $orders = $this->order->all();
         return view('orders.index', compact('orders'));
     }
+    public function orderList()
+    {
+        $orders = $this->order->all();
 
+        return view('orders.index', compact('orders'));
+    }
     /**
      * Show the form for creating a new resource.
      *
