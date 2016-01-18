@@ -32,7 +32,7 @@ class CreateOrdersTable extends Migration
             $table->string('order_phone');
             $table->string('customer_name')->nullable();
             $table->string('customer_phone')->nullable();
-            $table->text('file_attach')->nullable();
+            $table->text('file')->nullable();
             $table->string('slug');
             $table->text('comment')->nullable();
             $table->timestamp('date_order');

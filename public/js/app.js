@@ -61,7 +61,7 @@
   $('.phone_order').on('click', '.fa-close', function(e) {
     $(this).parent().parent('div').remove();
   });
-  $('.phone').on('click', function() {
+  $('.phone').on('focus', function() {
     $(this).inputmask('(999[9]) 999 999[9]');
   })
 })(jQuery);

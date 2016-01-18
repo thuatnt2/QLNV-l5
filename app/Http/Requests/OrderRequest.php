@@ -24,7 +24,7 @@ class OrderRequest extends Request
     public function rules()
     {
         $rules = [
-            'purposes' => 'required',
+            'purpose' => 'required',
         ];
         return $rules;
     }
@@ -32,7 +32,7 @@ class OrderRequest extends Request
     public function messages()
     {
         $messages = [
-            'purposes.required' => ':attribute phải có ít nhất một lựa chọn',
+            'purpose.required' => ':attribute phải có ít nhất một lựa chọn',
         ];
 
         return $messages;
@@ -41,7 +41,7 @@ class OrderRequest extends Request
     public function attributes()
     {
         $attributes = [
-            'purposes' => 'Mục đích yêu cầu',
+            'purpose' => 'Mục đích yêu cầu',
         ];
 
         return $attributes;

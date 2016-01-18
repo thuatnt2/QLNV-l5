@@ -12,7 +12,7 @@ class CreateOrderPurposeTable extends Migration
      */
     public function up()
     {
-        Schema::create('order_perpose', function (Blueprint $table) {
+        Schema::create('order_purpose', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('order_id')->unsigned();
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');

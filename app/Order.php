@@ -24,7 +24,7 @@ class Order extends Model
 	}
 
 
-    public function purpose()
+    public function purposes()
     {
 
     	return $this->belongsToMany(Purpose::class);

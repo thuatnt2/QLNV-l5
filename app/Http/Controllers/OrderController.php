@@ -63,8 +63,15 @@ class OrderController extends Controller
                 'kind',
                 'unit',
                 'category',
-                'order_name'
+                'purpose',
+                'order_name',
+                'order_phone',
+                'date_request',
+                'customer_name',
+                'customer_phone',
+                'comment'
                 ));
+            return redirect()->back();
             
         } catch (Exception $e) {
             return redirect()->back()->withInput()->with('error', $e->error);
