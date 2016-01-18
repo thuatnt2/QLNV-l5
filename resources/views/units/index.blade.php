@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@section('css')
+<link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
+@stop
 @section('content')
 @include('partials.flash')
 @include('partials.confirm')
@@ -71,4 +74,8 @@
     </div><!-- /.box -->
 </div>
     
-@endsection
+@stop
+@section('javascript')
+{{-- app.js --}}
+<script src="{{ URL::asset('js/app.js') }}"></script>
+@stop

@@ -23,8 +23,27 @@ class OrderRequest extends Request
      */
     public function rules()
     {
-        return [
-            //
+        $rules = [
+            'purposes' => 'required',
         ];
+        return $rules;
+    }
+
+    public function messages()
+    {
+        $messages = [
+            'purposes.required' => ':attribute phải có ít nhất một lựa chọn',
+        ];
+
+        return $messages;
+    }
+
+    public function attributes()
+    {
+        $attributes = [
+            'purposes' => 'Mục đích yêu cầu',
+        ];
+
+        return $attributes;
     }
 }

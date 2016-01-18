@@ -16,6 +16,7 @@ class OrderRepository extends AbstractRepository
 
     public function create(array $input)
     {
+        dd($input);
     	$this->order->user_id = $input['user'];
     	$this->order->kind_id = $input['kind'];
     	$this->order->category_id = $input['category'];
@@ -26,6 +27,8 @@ class OrderRepository extends AbstractRepository
     	$this->order->order_phone = $input['order_phone'];
     	$this->order->customer_name = $input['customer_name'];
     	$this->order->customer_phone = $input['customer_phone'];
+
+        $this->order->save();
 
     }
 }

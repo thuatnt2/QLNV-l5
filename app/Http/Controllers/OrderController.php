@@ -36,6 +36,9 @@ class OrderController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     *
+     *
+     * 
      * @return \Illuminate\Http\Response
      */
     public function create()
@@ -52,10 +55,19 @@ class OrderController extends Controller
     public function store(OrderRequest $request)
     {
         try {
-            dd($request);
+            $this->order->create($request->only(
+                'created_at',
+                'number_cv',
+                'number_cv_pa71',
+                'user',
+                'kind',
+                'unit',
+                'category',
+                'order_name'
+                ));
             
         } catch (Exception $e) {
-            // return redirect()->back()->withInput()->with('error', $e->error);
+            return redirect()->back()->withInput()->with('error', $e->error);
         }
     }
 
