@@ -61,6 +61,11 @@ abstract class AbstractRepository implements Repository
                     ->get($columns);
 
     }
+    public function paginate($currentPage = 1, $perPage = 5, $columns = ['*'])
+    {
+        $result = $this->model->paginate($perPage,$columns);
+        return $result;
+    }
 
     public function delete($id)
     {

@@ -24,7 +24,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = $this->order->all();
+        $orders = $this->order->paginate();
         return view('orders.index', compact('orders'));
     }
     public function orderList()

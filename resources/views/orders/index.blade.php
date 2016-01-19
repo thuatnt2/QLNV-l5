@@ -59,8 +59,8 @@
         </div>
         <div class="form-group">
             <div class="col-lg-offset-5 col-sm-offset-5 col-lg-8 col-sm-8">
-               <button type="submit" class="btn btn-success btn-small"><i class="fa fa-plus">&nbsp</i>Thêm</button>
-               <button type="reset" class="btn btn-default btn-small"><i class="fa fa-refresh">&nbsp</i>Làm mới</button>
+               <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-plus">&nbsp</i>Thêm</button>
+               <button type="reset" class="btn btn-default btn-sm"><i class="fa fa-refresh">&nbsp</i>Làm mới</button>
            </div>
             </div>
         </fieldset>
@@ -71,18 +71,34 @@
 <div class="row">
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">Danh sách đơn vị yêu cầu</h3>
+            <h3 class="box-title">Yêu cầu giám sát</h3>
+            <div class="box-tools">
+                <ul class="pagination pagination-sm no-margin pull-right">
+                  <li><a href="#">«</a></li>
+                  <li><a href="#">1</a></li>
+                  <li><a href="#">2</a></li>
+                  <li><a href="#">3</a></li>
+                  <li><a href="#">»</a></li>
+                </ul>
+            </div>
         </div><!-- /.box-header -->
         <div class="box-body">
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th class="text-center">STT</th>
-                        <th class="text-center">Tên đơn vị</th>
-                        <th class="text-center">Kí hiệu</th>
-                        <th class="text-center">Khối</th>
-                        <th class="text-center">Ngày tạo</th>
-                        <th class="text-center">Ngày sửa</th>
+                        <th class="text-center">Ngày tháng</th>
+                        <th class="text-center">Số Cv đơn vị</th>
+                        <th class="text-center">Số Cv PA71</th>
+                        <th class="text-center">Tên đối tượng</th>
+                        <th clsas="text-center">Số điện thoại</th>
+                        <th clsas="text-center">Loại ĐT</th>
+                        <th clsas="text-center">Tính chất</th>
+                        <th clsas="text-center">Thời gian yêu cầu</th>
+                        <th clsas="text-center">Mục đích y/c</th>
+                        <th style='width:15%'>TS y/c (Số ĐT)</th>
+                        <th style='width:1%'>Tình trạng</th>
+                        <th style='width:5%'>Ghi chú</th>
                         <th class="text-center">Thao tác</th>
                     </tr>
                 </thead>
@@ -90,7 +106,10 @@
                     @foreach ($orders as $index => $order)
                     <tr>
                         <td class="text-center">{{ ++$index }}</td>
-                        <td class="text-center">{{ $order->description }}</td>
+                        <td class="text-center">{{ $order->date_order->format('d/m/Y') }}</td>
+                        <td class="text-center">{{ $order->number_cv }}</td>
+                        <td class="text-center">{{ $order->number_cv_pa71 }}</td>
+                        <td class="text-center">{{ $order->order_name }}</td>
                         <td class="text-center">{{ $order->symbol }}</td>
                         <td class="text-center">{{ $order->block }}</td>
                         <td class="text-center">{{ $order->created_at->format('d/m/Y') }}</td>

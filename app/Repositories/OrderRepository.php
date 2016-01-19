@@ -17,7 +17,6 @@ class OrderRepository extends AbstractRepository
 
     public function create(array $input)
     {
-
     	$this->order->user_id = $input['user'];
     	$this->order->kind_id = $input['kind'];
     	$this->order->category_id = $input['category'];
@@ -26,13 +25,16 @@ class OrderRepository extends AbstractRepository
     	$this->order->number_cv_pa71 = $input['number_cv_pa71'];
     	$this->order->order_name = $input['order_name'];
     	// $this->order->order_phone = $input['order_phone'];
+       
     	$this->order->customer_name = $input['customer_name'];
     	$this->order->customer_phone = $input['customer_phone'];
     	$this->order->date_order = $input['created_at'];
-
+        dd($this->order->date_order);
     	$date_request = explode('-', $input['date_request']);
     	$this->order->date_end = array_pop($date_request);
+        $this->order->date_end->format('Y-m-d');
     	$this->order->date_begin = array_pop($date_request);
+        $this->order->date_begin->format('Y-m-d');
     	$this->order->comment = $input['comment'];
     	$this->order->slug = str_slug($this->vn_str_filter($input['order_name']), '-');
 

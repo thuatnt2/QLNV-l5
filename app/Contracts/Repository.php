@@ -37,6 +37,7 @@ interface Repository
      * @param array $columns
      */
     public function findAllBy($field, $value, $columns = ['*']);
+    public function paginate($currentPage = 1, $perPage = 5, $columns = ['*']);
     public function delete($id);
     public function create(array $input);
     public function update($id, array $input);
