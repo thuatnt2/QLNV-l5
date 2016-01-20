@@ -90,16 +90,16 @@
                         <th class="text-center">Ngày tháng</th>
                         <th class="text-center">Số Cv đơn vị</th>
                         <th class="text-center">Số Cv PA71</th>
-                        <th class="text-center">Tên đối tượng</th>
-                        <th clsas="text-center">Số điện thoại</th>
+                        <th class="text-center" width="15%">Tên đối tượng</th>
+                        <th clsas="text-center" width="10%">Số điện thoại</th>
                         <th clsas="text-center">Loại ĐT</th>
                         <th clsas="text-center">Tính chất</th>
-                        <th clsas="text-center">Thời gian yêu cầu</th>
+                        <th clsas="text-center" width="13%">Thời gian yêu cầu</th>
                         <th clsas="text-center">Mục đích y/c</th>
-                        <th >TS y/c (Số ĐT)</th>
-                        <th>Tình trạng</th>
-                        <th>Ghi chú</th>
-                        <th class="text-center">Thao tác</th>
+                        <th width="12%">TS y/c (Số ĐT)</th>
+                        <th width="4%">Tình trạng</th>
+                        <th width="8%">Ghi chú</th>
+                        <th class="text-center" width="6%">Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -110,7 +110,7 @@
                         <td class="text-center">{{ $order->number_cv . '/' . $order->unit->symbol }}</td>
                         <td class="text-center">{{ $order->number_cv_pa71 }}</td>
                         <td class="text-center">{{ $order->order_name }}</td>
-                        <td class="text-center">
+                        <td class="text-left">
                             @foreach($order->phones as $index => $phone)
                                 {{ $phone->number }} <br>    
                             @endforeach
@@ -128,11 +128,11 @@
                         <td>{{ $order->customer_name }} <br> {{ $order->customer_phone }}</td>
                         <td>
                             @foreach($order->phones as $index=> $phone)
-                                {{ $phone->status }}
+                            <span class="label label-success">{{ $phone->status }}</span><br>
                             @endforeach
                         </td>
                         <td>{{ $order->comment }}</td>
-                        <td class="text-center"width="6%">
+                        <td class="text-center">
                             <button class="btn btn-warning btn-xs fa fa-edit" data-url="{{ action('OrderController@edit', $order->id) }}" type="button" title="Sửa"></button>
                             <!-- TODO: Delete Button -->
                             &nbsp

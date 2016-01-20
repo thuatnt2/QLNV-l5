@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Repository;
+use App\Contracts\findById;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
 use App\Repositories\UnitRepository;
@@ -97,7 +98,8 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        //
+        $order = $this->order->findById($id);
+        return view('orders.edit', compact('order'));
     }
 
     /**

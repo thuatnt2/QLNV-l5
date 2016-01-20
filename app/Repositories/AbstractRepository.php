@@ -28,7 +28,6 @@ abstract class AbstractRepository implements Repository
     public function findById($id, $columns = ['*'])
     {
         return $this->model
-                    ->orderBy('created_at', 'desc')
                     ->where('id', $id)
                     ->get($columns);
     }
@@ -41,7 +40,6 @@ abstract class AbstractRepository implements Repository
     public function findBy($field, $value, $columns = ['*'])
     {
         return $this->model
-                    ->orderBy('created_at', 'desc')
                     ->where($field, $value)
                     ->first($columns);
 
