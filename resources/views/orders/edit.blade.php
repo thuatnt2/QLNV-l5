@@ -8,7 +8,7 @@
                 ->addClass('input-sm daterange')
                 ->value($order->date_order->format('d/m/Y'))
                 
-             !!}
+            !!}
             {!! Former::text('number_cv', 'Số công văn yêu cầu')
                 ->required()
                 ->addClass('input-sm')
@@ -40,7 +40,6 @@
             {!! Former::select('category', 'Loại đối tượng')
                 ->options($categories, $order->category_id)
                 ->addClass('input-sm')
-                ->value($order->category->symbol)
             !!}
             {!! Former::select('kind')->label('Tính chất')->options($kinds, $order->kind_id)->addClass('input-sm') !!}
             {!! Former::checkboxes('purpose[]','Mục đích yêu cầu')

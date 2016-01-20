@@ -58,7 +58,7 @@ abstract class AbstractRepository implements Repository
                     ->get($columns);
 
     }
-    public function paginate($currentPage = 1, $perPage = 5, $columns = ['*'])
+    public function paginate($perPage = 5, $columns = ['*'])
     {
         $result = $this->model->orderBy('created_at', 'desc')->paginate($perPage,$columns);
         return $result;
@@ -105,15 +105,7 @@ abstract class AbstractRepository implements Repository
         return $output;
     }
 
-    public function formatPurpose($items)
-    {
-        $output = [];
-        foreach ($items as $item) {
-            $output[$item->symbol] = ['value' => $item->id];
-        }
-        return $output;
-    }
-    
+
     public function vn_str_filter ($str){
 
        $unicode = array(
