@@ -50,7 +50,7 @@
   $('.add_phone').on('click', function() {
       var fieldHTML = '<div class="col-lg-8 col-sm-8 pull-right">' +
       '<div class="input-group">' +
-      '<input class="form-control input-sm phone" required="true" id="order_phone_number[]" type="text" name="order_phone_number[]">' +
+      '<input class="form-control input-sm phone" required="true" id="order_phone[]" type="text" name="order_phone[]">' +
       '<span class="input-group-addon"><i class="fa fa-close"></i></span>' +
       '</div>' +
       '</div>';

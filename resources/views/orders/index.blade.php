@@ -71,7 +71,7 @@
 <div class="row">
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">Yêu cầu giám sát</h3>
+            <h3 class="box-title">DS Yêu cầu giám sát</h3>
             <div class="box-tools">
                 <ul class="pagination pagination-sm no-margin pull-right">
                   <li><a href="#">«</a></li>
@@ -96,9 +96,9 @@
                         <th clsas="text-center">Tính chất</th>
                         <th clsas="text-center">Thời gian yêu cầu</th>
                         <th clsas="text-center">Mục đích y/c</th>
-                        <th style='width:15%'>TS y/c (Số ĐT)</th>
-                        <th style='width:1%'>Tình trạng</th>
-                        <th style='width:5%'>Ghi chú</th>
+                        <th >TS y/c (Số ĐT)</th>
+                        <th>Tình trạng</th>
+                        <th>Ghi chú</th>
                         <th class="text-center">Thao tác</th>
                     </tr>
                 </thead>
@@ -107,13 +107,31 @@
                     <tr>
                         <td class="text-center">{{ ++$index }}</td>
                         <td class="text-center">{{ $order->date_order->format('d/m/Y') }}</td>
-                        <td class="text-center">{{ $order->number_cv }}</td>
+                        <td class="text-center">{{ $order->number_cv . '/' . $order->unit->symbol }}</td>
                         <td class="text-center">{{ $order->number_cv_pa71 }}</td>
                         <td class="text-center">{{ $order->order_name }}</td>
-                        <td class="text-center">{{ $order->symbol }}</td>
-                        <td class="text-center">{{ $order->block }}</td>
-                        <td class="text-center">{{ $order->created_at->format('d/m/Y') }}</td>
-                        <td class="text-center">{{ $order->updated_at->format('d/m/Y') }}</td>
+                        <td class="text-center">
+                            @foreach($order->phones as $index => $phone)
+                                {{ $phone->number }} <br>    
+                            @endforeach
+                            
+                        </td>
+                        <td class="text-center">{{ $order->category->symbol }}</td>
+                        <td class="text-center">{{ $order->kind->symbol }}</td>
+                        <td class="text-center">{{ $order->date_begin->format('d/m/Y') . ' &rarr; ' . $order->date_end->format('d/m/Y')  }}</td>
+                        <td>
+                            @foreach($order->purposes as $index=>$purpose)
+                                {{ $purpose->symbol }}
+                            @endforeach
+                        
+                        </td>
+                        <td>{{ $order->customer_name }} <br> {{ $order->customer_phone }}</td>
+                        <td>
+                            @foreach($order->phones as $index=> $phone)
+                                {{ $phone->status }}
+                            @endforeach
+                        </td>
+                        <td>{{ $order->comment }}</td>
                         <td class="text-center"width="6%">
                             <button class="btn btn-warning btn-xs fa fa-edit" data-url="{{ action('OrderController@edit', $order->id) }}" type="button" title="Sửa"></button>
                             <!-- TODO: Delete Button -->
