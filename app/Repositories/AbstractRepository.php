@@ -28,8 +28,7 @@ abstract class AbstractRepository implements Repository
     public function findById($id, $columns = ['*'])
     {
         return $this->model
-                    ->where('id', $id)
-                    ->get($columns);
+                    ->find($id, $columns);
     }
     /**
      *

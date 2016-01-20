@@ -13,4 +13,14 @@ class PurposeRepository extends AbstractRepository
         $this->purpose = $purpose;
         parent::__construct($this->purpose);
     }
+
+    public function formatPurpose($items)
+    {
+        $output = [];
+        foreach ($items as $item) {
+            $output[$item->symbol] = ['name' => 'purpose['.$item->id.']', 'value' => $item->id];
+        }
+        return $output;
+    }
+    
 }

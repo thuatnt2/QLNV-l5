@@ -71,7 +71,7 @@ class OrderController extends Controller
                 'customer_name',
                 'customer_phone',
                 'comment'
-                ));
+            ));
             return redirect()->back();
             
         } catch (Exception $e) {
@@ -99,7 +99,11 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = $this->order->findById($id);
-        return view('orders.edit', compact('order'));
+        $checked = [];
+        foreach ($order->purposes as $purpose) {
+            $checked['purpose['.$purpose->id.']'] = true;
+        }
+        return view('orders.edit', compact('order', 'checked'));
     }
 
     /**
@@ -111,7 +115,17 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $this->unit->update($id, $request->only(
+                'description'
+            ));
+
+            return redirect()->action('OrderController@index');
+            
+        } catch (Exception $e) {
+
+            return redirect()->back()->withInput()->with('error', 'Không thể truy vấn dữ liệu');
+        }
     }
 
     /**
@@ -122,7 +136,9 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->order->delete($id);
+
+        return redirect()->back();
     }
 
 }
