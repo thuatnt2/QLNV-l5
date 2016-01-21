@@ -55,7 +55,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">List - XMCTB&nbsp;&nbsp;<span class="fa fa-caret-down"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Yêu cầu</a></li>
+                                <li><a href="{{ url('order-list') }}">Yêu cầu</a></li>
                                 <li><a href="#">Giao list-xmctb</a></li>
                              </ul>
                         </li>

@@ -25,6 +25,7 @@ Route::group(['middleware' => ['web']], function () {
 		Route::post('register', 'Auth\AuthController@postRegister');
 		// Orders
 	    Route::resource('orders', 'OrderController');
+	    Route::get('order-list', ['as' => 'order.list', 'uses' => 'OrderController@orderList']);
 	    // Orders
 	    Route::resource('statistics', 'StatisticController');
         // Units

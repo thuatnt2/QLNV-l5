@@ -15,7 +15,16 @@ class OrderRepository extends AbstractRepository
         $this->order = $order;
         parent::__construct($this->order);
     }
-
+    public function paginate($perPage = 5, $condition = '=', $columns = ['*'])
+    {
+        return $this->order
+                    ->with('unit', 'kind', 'category', 'user', 'phones', 'purposes')
+                    ->whereHas('purposes', function($q) use ($condition) {
+                        $q->where( 'group', $condition , 'list');
+                    })
+                    ->orderBy('created_at', 'desc')
+                    ->paginate($perPage, $columns);
+    }
     public function create(array $input)
     {
     	$this->order->user_id = $input['user'];
