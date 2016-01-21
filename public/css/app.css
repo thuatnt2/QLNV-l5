@@ -24,6 +24,9 @@ legend {
 	padding-left: 10px;
 	padding-right: 10px;
 }
+.col-md-4, .col-sm-4 {
+	padding-left: 0px;
+}
 .input-sm {
 	font-size: 18px;
 	padding: 4px;

@@ -123,8 +123,9 @@
                         <td>{{ $order->customer_name }} <br> {{ $order->customer_phone }}</td>
                         <td>
                             @foreach($order->phones as $index=> $phone)
-                            <span class="btn btn-success btn-xs" data-toggle="modal" data-target="#confirmModal">{{ $phone->status }}</span><br>
+                            <span class="btn btn-success btn-xs" data-toggle="modal" data-target="#exampleModal" data-url="{{ action('OrderController@destroy', $phone->id) }}">{{ $phone->status }}</span><br>
                             @endforeach
+                            @include('partials.status_modal')
                         </td>
                         <td>{{ $order->comment }}</td>
                         <td class="text-center">
