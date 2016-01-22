@@ -92,7 +92,7 @@
                         <th clsas="text-center" width="13%">Thời gian yêu cầu</th>
                         <th clsas="text-center">Mục đích y/c</th>
                         <th width="12%">TS y/c (Số ĐT)</th>
-                        <th width="4%">Tình trạng</th>
+                        <th class="text-center"width="4%">Tình trạng</th>
                         <th width="8%">Ghi chú</th>
                         <th class="text-center" width="6%">Thao tác</th>
                     </tr>
@@ -121,9 +121,18 @@
                         
                         </td>
                         <td>{{ $order->customer_name }} <br> {{ $order->customer_phone }}</td>
-                        <td>
+                        <td class="text-center">
                             @foreach($order->phones as $index=> $phone)
-                            <span class="btn btn-success btn-xs" data-toggle="modal" data-target="#exampleModal" data-url="{{ action('OrderController@destroy', $phone->id) }}">{{ $phone->status }}</span><br>
+                            <span class="btn btn-{{ $phone->status }} btn-xs" data-toggle="modal" data-target="#statusModal" data-url="{{ action('OrderController@updateStatus', $phone->id) }}" data-status="{{ $phone->status }}" data-number="{{ $phone->number }}" >
+                                @if ($phone->status == 'success')
+                                    <i class="fa fa-link " title="Kết nối"></i>
+                                @elseif($phone->status == 'warning')
+                                    <i class="fa fa-hourglass-half" title="Đang chờ"></i>
+                                @else
+                                    <i class="fa fa-times" title="Đóng hoặc không kết nôi" ></i>
+                                @endif
+                            </span>
+                            <br>
                             @endforeach
                             @include('partials.status_modal')
                         </td>

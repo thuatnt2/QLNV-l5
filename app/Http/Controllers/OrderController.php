@@ -6,7 +6,9 @@ use App\Contracts\Repository;
 use App\Contracts\findById;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
+use App\Phone;
 use App\Repositories\UnitRepository;
+use Illuminate\Http\Request;
 
 
 class OrderController extends Controller
@@ -127,7 +129,20 @@ class OrderController extends Controller
             return redirect()->back()->withInput()->with('error', 'Không thể truy vấn dữ liệu');
         }
     }
+    public function updateStatus(Request $request, $phoneId)
+    {
+        $phone = Phone::find($phoneId);
+        $order = $this->order->findById($phone->order_id);
+        $order->comment = $request->get('comment');
+        $order->save();
+        
+        $phone->status = $request->get('status');
+        $phone->save();
 
+        
+        
+        return redirect()->back();
+    }
     /**
      * Remove the specified resource from storage.
      *
