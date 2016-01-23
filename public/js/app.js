@@ -76,7 +76,7 @@
             }
 		});
 	});
-  $('.fa-plus').on('click', function() {
+  $('.add_phone').on('click', function() {
       var fieldHTML = '<div class="form-group">' +
       '<label for="order_phone[]" class="control-label col-lg-4 col-sm-4">&nbsp;</label>' +
       '<div class="col-lg-8 col-sm-8">' +

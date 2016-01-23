@@ -75,22 +75,21 @@ class OrderController extends Controller
     public function store(OrderRequest $request)
     {
         try {
-            $this->order->create($request->only(
-                'created_at',
-                'number_cv',
-                'number_cv_pa71',
-                'user',
-                'kind',
-                'unit',
-                'category',
-                'purpose',
-                'order_name',
-                'order_phone',
-                'date_request',
-                'customer_name',
-                'customer_phone',
-                'comment'
-            ));
+            if($request->file('file')->isValid()) {
+                $file = $request->file('file');    
+                $alowedExtension = ['doc', 'docx', 'pdf', 'xls', 'xlsx'];
+                $extention = $file->getClientOriginalExtension();
+                $fileName = str_slug($request->get('order_name')) . '_' . \Carbon\Carbon::now()->timestamp . '.' . $extention;
+                $destinationPath = public_path() . '/uploads/orders';
+                if (in_array($extention, $alowedExtension)) {
+
+                    $file->move($destinationPath, $fileName);
+                };
+                $this->order->create($request->only($this->dataGet), $fileName);
+            }
+            else {
+                $this->order->create($request->only($this->dataGet));
+            }
             return redirect()->back();
             
         } catch (Exception $e) {
@@ -135,6 +134,7 @@ class OrderController extends Controller
     public function update(OrderRequest $request, $id)
     {
         try {
+
             $this->order->update($id, $request->only($this->dataGet));
 
             return redirect()->back();

@@ -37,6 +37,7 @@ class OrderRepository extends AbstractRepository
     	$this->order->customer_name = $input['customer_name'];
     	$this->order->customer_phone = $input['customer_phone'];
     	$this->order->date_order = Carbon::createFromFormat('d/m/Y', $input['created_at']);
+        // $this->order->file = $fileName;;
     	$date_request = explode('-', $input['date_request']);
     	$this->order->date_end = Carbon::createFromFormat('d/m/Y', trim(array_pop($date_request)));
     	$this->order->date_begin = Carbon::createFromFormat('d/m/Y', trim(array_pop($date_request)));
@@ -44,14 +45,13 @@ class OrderRepository extends AbstractRepository
     	$this->order->slug = str_slug($this->vn_str_filter($input['order_name']), '-');
 
         $this->order->save();
-	    foreach ($input['order_phone'] as $phone) {
+        foreach ($input['order_phone'] as $phone) {
             $newPhone = new Phone();
             $newPhone->number = $phone;
-            $newPhone->status = 'pendding';
+            $newPhone->status = 'warning';
             $this->order->phones()->save($newPhone);
         }
         $this->order->purposes()->sync($input['purpose']);
-
 
     }
 
