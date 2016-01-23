@@ -1,5 +1,6 @@
   {!! Former::setOption('TwitterBootstrap3.labelWidths', ['large' => 4, 'small' => 4]) !!}
         {!! Former::open_for_files(action('OrderController@update', $order->id))->id('form-edit') !!}
+        {{ method_field('PUT') }}
         <fieldset>
         {!! Former::legend('Thêm yêu cầu giám sát') !!}
         <div class="col-sm-4">
@@ -30,13 +31,29 @@
             !!}
           
         </div> 
+
         <div class="col-sm-4">
-            {!! Former::text('order_phone[]', 'Số điện thoại ĐT')
-                ->append('<i class="fa fa-plus add_phone"></i>')
-                ->required()
-                ->addClass('input-sm phone')
-                ->addGroupClass('phone_order')
-            !!}
+            @foreach ($order->phones as $index => $phone)
+                @if ($index < 1)
+                    {!! Former::text('order_phone[]', 'Số điện thoại ĐT')
+                        ->append('<i class="fa fa-plus add_phone"></i>')
+                        ->required()
+                        ->addClass('input-sm phone')
+                        ->addGroupClass('phone_order')
+                        ->value($phone->number)
+                        ->id($phone->id)
+                    !!}
+                @else 
+                    {!! Former::text('order_phone[]', '&nbsp')
+                        ->append('<i class="fa fa-close"></i>')
+                        ->addClass('input-sm phone')
+                        ->addGroupClass('phone_order')
+                        ->value($phone->number)
+                        ->id($phone->id)
+                    !!}
+                @endif
+            @endforeach
+            
             {!! Former::select('category', 'Loại đối tượng')
                 ->options($categories, $order->category_id)
                 ->addClass('input-sm')

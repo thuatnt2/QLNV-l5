@@ -47,11 +47,35 @@ class OrderRepository extends AbstractRepository
 	    foreach ($input['order_phone'] as $phone) {
             $newPhone = new Phone();
             $newPhone->number = $phone;
-            $newPhone->status = 'new';
+            $newPhone->status = 'pendding';
             $this->order->phones()->save($newPhone);
         }
         $this->order->purposes()->sync($input['purpose']);
 
 
+    }
+
+    public function update($id, array $input)
+    {
+        $order = $this->findById($id);
+
+        $order->user_id = $input['user'];
+        $order->kind_id = $input['kind'];
+        $order->category_id = $input['category'];
+        $order->unit_id = $input['unit'];
+        $order->number_cv = $input['number_cv'];
+        $order->number_cv_pa71 = $input['number_cv_pa71'];
+        $order->order_name = $input['order_name'];
+        $order->customer_name = $input['customer_name'];
+        $order->customer_phone = $input['customer_phone'];
+        $order->date_order = Carbon::createFromFormat('d/m/Y', $input['created_at']);
+        $date_request = explode('-', $input['date_request']);
+        $order->date_end = Carbon::createFromFormat('d/m/Y', trim(array_pop($date_request)));
+        $order->date_begin = Carbon::createFromFormat('d/m/Y', trim(array_pop($date_request)));
+        $order->comment = $input['comment'];
+        // update Order
+        $order->save();
+        // update Purpose
+        $order->purposes()->sync($input['purpose']);
     }
 }

@@ -16,6 +16,23 @@ class OrderController extends Controller
     protected $order;
     protected $unit;
 
+    protected $dataGet = [
+                        'created_at',
+                        'number_cv',
+                        'number_cv_pa71',
+                        'user',
+                        'kind',
+                        'unit',
+                        'category',
+                        'purpose',
+                        'order_name',
+                        'order_phone',
+                        'date_request',
+                        'customer_name',
+                        'customer_phone',
+                        'comment'
+                        ];
+
     public function __construct(Repository $order)
     {
         $this->order = $order;
@@ -115,14 +132,12 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(OrderRequest $request, $id)
     {
         try {
-            $this->unit->update($id, $request->only(
-                'description'
-            ));
+            $this->order->update($id, $request->only($this->dataGet));
 
-            return redirect()->action('OrderController@index');
+            return redirect()->back();
             
         } catch (Exception $e) {
 

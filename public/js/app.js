@@ -47,29 +47,56 @@
             	$('#form-create').hide();
             	$('#form-edit').remove();
             	$('.row-form').append(data);
+              $('.fa-close').on('click', function() {
+                $(this).parents().eq(3).remove(); // eq increase 0
+
+              });
+              $('.daterange').each(function() {
+                var options = {
+                  locale: {"format": "DD/MM/YYYY"},
+                  "autoApply": true,
+                  "autoUpdateInput": false,
+                  "linkedCalendars": false,
+                  "endDate": moment().add(7, 'days'),
+                };
+                if($(this).attr('name') == 'created_at') {
+                  options.singleDatePicker = true;
+                };
+                $(this).daterangepicker(options);  
+              });
+              $('input[name=created_at]').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('DD/MM/YYYY'));
+              });
+              $('input[name=date_request]').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+              });
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log('ajax fa-edit co loi');
             }
 		});
 	});
-  $('.add_phone').on('click', function() {
-      var fieldHTML = '<div class="col-lg-8 col-sm-8 pull-right">' +
+  $('.fa-plus').on('click', function() {
+      var fieldHTML = '<div class="form-group">' +
+      '<label for="order_phone[]" class="control-label col-lg-4 col-sm-4">&nbsp;</label>' +
+      '<div class="col-lg-8 col-sm-8">' +
       '<div class="input-group">' +
       '<input class="form-control input-sm phone" required="true" id="order_phone[]" type="text" name="order_phone[]">' +
       '<span class="input-group-addon"><i class="fa fa-close"></i></span>' +
       '</div>' +
+      '</div>' +
       '</div>';
 
-      $(fieldHTML).appendTo('.phone_order');
+      $('.phone_order').after(fieldHTML);
       $('.phone').inputmask('(999[9]) 999 999[9]');
+      $('.fa-close').on('click', function() {
+        $(this).parents().eq(3).remove(); // eq increase 0
+      });
   });
-  $('.phone_order').on('click', '.fa-close', function(e) {
-    $(this).parent().parent('div').remove();
-  });
+  
   $('.phone').on('focus', function() {
     $(this).inputmask('(999[9]) 999 999[9]');
-  })
+  });
 })(jQuery);
 
 
