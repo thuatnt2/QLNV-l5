@@ -49,14 +49,14 @@
                             <a href="#" class="dropdown-toggle " data-toggle="dropdown" aria-expanded="false">Giám sát&nbsp;&nbsp;<span class="fa fa-caret-down"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('orders') }}">Yêu cầu</a></li>
-                                <li><a href="{{ url('ship_news') }}">Giao tin</a></li>
+                                <li><a href="{{ url('ships_news') }}">Giao tin</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">List - XMCTB&nbsp;&nbsp;<span class="fa fa-caret-down"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('order-list') }}">Yêu cầu</a></li>
-                                <li><a href="#">Giao list-xmctb</a></li>
+                                <li><a href="{{ url('ships') }}">Giao list-xmctb</a></li>
                              </ul>
                         </li>
                         <li ><a href="{{ url('statistics') }}">Thống kê</a></li>

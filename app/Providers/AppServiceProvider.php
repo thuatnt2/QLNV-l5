@@ -7,6 +7,7 @@ use App\Contracts\Repository;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\KindController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ShipController;
 use App\Http\Controllers\UnitController;
 use App\Kind;
 use App\Order;
@@ -15,8 +16,10 @@ use App\Repositories\CategoryRepository;
 use App\Repositories\KindRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\PurposeRepository;
+use App\Repositories\ShipRepository;
 use App\Repositories\UnitRepository;
 use App\Repositories\UserRepository;
+use App\Ship;
 use App\Unit;
 use App\User;
 use Illuminate\Support\ServiceProvider;
@@ -70,6 +73,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->when(OrderController::class)->needs(Repository::class)->give(function($app) {
 
             return new OrderRepository(new Order);
+        });
+        $this->app->when(ShipController::class)->needs(Repository::class)->give(function($app) {
+
+            return new ShipRepository(new Ship);
         });
 
     }

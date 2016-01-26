@@ -19,10 +19,10 @@ class Ship extends Model
 
     }
 
-    public function shipNew()
+    public function shipNews()
     {
 
-    	return $this->hasOne(ShipNew::class);
+    	return $this->hasOne(ShipsNews::class);
 
     }
 
