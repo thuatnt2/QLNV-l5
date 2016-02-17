@@ -76,7 +76,7 @@
                 ->value($order->customer_name)
             !!}
             {!! Former::text('customer_phone', 'Số điện thoại TS')
-                ->append('<i class="fa fa-phone"></i>')
+                ->append('<i class="fa fa-phone add_phone"></i>')
                 ->addClass('input-sm phone')
                 ->value($order->customer_phone) 
             !!}

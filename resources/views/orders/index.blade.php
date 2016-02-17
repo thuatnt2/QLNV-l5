@@ -31,7 +31,7 @@
         </div> 
         <div class="col-sm-4">
             {!! Former::text('order_phone[]', 'Số điện thoại ĐT')
-                ->append('<i class="fa fa-plus"></i>')
+                ->append('<i class="fa fa-plus add_phone"></i>')
                 ->required()
                 ->addClass('input-sm phone')
                 ->addGroupClass('phone_order')

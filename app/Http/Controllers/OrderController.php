@@ -75,7 +75,7 @@ class OrderController extends Controller
     public function store(OrderRequest $request)
     {
         try {
-            if($request->file('file')->isValid()) {
+            if($request->hasFile('file')) {
                 $file = $request->file('file');    
                 $alowedExtension = ['doc', 'docx', 'pdf', 'xls', 'xlsx'];
                 $extention = $file->getClientOriginalExtension();
