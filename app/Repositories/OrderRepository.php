@@ -15,6 +15,18 @@ class OrderRepository extends AbstractRepository
         $this->order = $order;
         parent::__construct($this->order);
     }
+    public function findAllBy($status, $condition = '=', $columns = ['*'])
+    {
+        return $this->order
+                    ->with(['unit', 'phones' => function($q) use ($status) {
+                        $q->where('status', '=', $status);
+                    }])
+                    ->whereHas('purposes', function($q) use ($condition) {
+                        $q->where( 'group', $condition , 'list');
+                    })
+                    ->orderBy('created_at', 'desc')
+                    ->get($columns);
+    }
     public function paginate($perPage = 5, $condition = '=', $columns = ['*'])
     {
         return $this->order

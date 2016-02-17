@@ -6,14 +6,17 @@ use App\Category;
 use App\Contracts\Repository;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\KindController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ShipController;
 use App\Http\Controllers\UnitController;
 use App\Kind;
+use App\News;
 use App\Order;
 use App\Purpose;
 use App\Repositories\CategoryRepository;
 use App\Repositories\KindRepository;
+use App\Repositories\NewsRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\PurposeRepository;
 use App\Repositories\ShipRepository;
@@ -74,9 +77,13 @@ class AppServiceProvider extends ServiceProvider
 
             return new OrderRepository(new Order);
         });
-        $this->app->when(ShipController::class)->needs(Repository::class)->give(function($app) {
+        // $this->app->when(ListController::class)->needs(Repository::class)->give(function($app) {
 
-            return new ShipRepository(new Ship);
+        //     return new ListRepository(new List);
+        // });
+        $this->app->when(NewsController::class)->needs(Repository::class)->give(function($app) {
+
+            return new NewsRepository(new News);
         });
 
     }
