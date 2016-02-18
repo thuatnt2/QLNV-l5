@@ -24,6 +24,9 @@ class OrderRepository extends AbstractRepository
                     ->whereHas('purposes', function($q) use ($condition) {
                         $q->where( 'group', $condition , 'list');
                     })
+                    ->whereHas('phones', function($q) use ($status) {
+                        $q->where( 'status', '=', $status);
+                    })
                     ->orderBy('created_at', 'desc')
                     ->get($columns);
     }

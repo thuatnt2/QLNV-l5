@@ -12,7 +12,7 @@
 <div class="row">
 	<div class="box row-form">
 		{!! Former::setOption('TwitterBootstrap3.labelWidths', ['large' => 4, 'small' => 4]) !!}
-        {!! Former::horizontal_open(url('news'))->id('form-create') !!}
+        {!! Former::open_for_files(url('news'))->id('form-create') !!}
         <fieldset>
         {!! Former::legend('Giao Tin') !!}
         <div class="col-sm-4">
@@ -24,7 +24,6 @@
                 <label for="customer_id" class="control-label col-lg-4 col-sm-4">Số Cv - Thuê bao</label>
                 <div class="col-lg-8 col-sm-8">
                     <select class="form-control input-sm" id="customer_id" name="customer_id" placeholder="Chọn thuê bao đã đăng ký">
-                        <option></option>
                         @foreach($orders as $order)
                         <optgroup label="{{$order->number_cv . '/' . $order->unit->symbol}}">
                             @foreach ($order->phones as $index => $phone)
@@ -41,6 +40,7 @@
         <div class="col-sm-4">
             {!! Former::text('number_news', 'Số bản tin')->required()->addClass('input-sm'); !!}
             {!! Former::text('page_number', 'Số trang tin')->required()->addClass('input-sm'); !!}
+            {!! Former::file('file','File đính kèm')->required()->accept('doc', 'docx', 'xls', 'xlsx', 'pdf') !!}
         </div>
         <div class="col-sm-4">
             {!! Former::text('order_name', 'Người nhận')->addClass('input-sm'); !!}
