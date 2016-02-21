@@ -35,9 +35,9 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('categories', 'CategoryController');
         // kind
         Route::resource('kinds', 'KindController');
-        // ships
-        Route::resource('lists', 'ListController');
-        // ships_news
+        // ship_lists
+        Route::resource('ships', 'ShipController');
+        // ship_news
         Route::resource('news', 'NewsController');
 	});
 

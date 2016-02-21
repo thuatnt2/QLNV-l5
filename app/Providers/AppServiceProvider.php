@@ -77,7 +77,7 @@ class AppServiceProvider extends ServiceProvider
 
             return new OrderRepository(new Order);
         });
-        $this->app->when(ListController::class)->needs(Repository::class)->give(function($app) {
+        $this->app->when(ShipController::class)->needs(Repository::class)->give(function($app) {
 
             return new ShipRepository(new Ship);
         });

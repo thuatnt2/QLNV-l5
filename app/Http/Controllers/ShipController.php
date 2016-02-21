@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Contracts\Repository;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
+use App\Order;
+use App\Repositories\OrderRepository;
+use App\Repositories\UserRepository;
+use App\User;
 use Illuminate\Http\Request;
 
 class ShipController extends Controller
@@ -14,6 +18,17 @@ class ShipController extends Controller
     public function __construct(Repository $ship)
     {
         $this->ship = $ship;
+        $this->user = new UserRepository(new User);
+        $this->order = new OrderRepository(new Order);
+
+        view()->composer(['ships.index', 'ships.edit'], function($view) {
+            $users = $this->user->formatData($this->user->all(['id as id', 'name as symbol' ]));
+            $orders = $this->order->findAllBy('warning');
+            $view->with(array(
+                'orders' => $orders,
+                'users' => $users
+            ));
+        });
     }
     /**
      * Display a listing of the resource.
@@ -42,9 +57,13 @@ class ShipController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ShipRequest $request)
     {
-        //
+        try {
+            return redirect()->back();
+        } catch (Exception $e) {
+            
+        }
     }
 
     /**

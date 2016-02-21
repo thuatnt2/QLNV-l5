@@ -4,16 +4,16 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class ShipRequest extends Request
+class NewsRequest extends Request
 {
     public $rules = [
         'number_cv_pa71' => 'required|numeric',
+        'number_news' => 'required|numeric',
         'page_number' => 'required|numeric'
     ];
-
     public $messages = [
-        'number_cv_pa71.required' => ':attribute bắt buộc',
-        'number_cv_pa71.numeric' => ':attribute phải là kiểu số nguyên',
+        'number_news.required' => ':attribute bắt buộc',
+        'number_news.numeric' => ':attribute phải là kiểu số nguyên',
         'page_number.required' => ':attribute bắt buộc',
         'page_number.numeric' => ':attribute phải là kiểu số nguyên'
     ];
@@ -24,7 +24,7 @@ class ShipRequest extends Request
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -44,8 +44,8 @@ class ShipRequest extends Request
 
     public function attributes()
     {
-        return [
-            'number_cv_pa71' => 'Số công văn',
+        return  [
+            'number_news' => 'Số bản tin',
             'page_number' => 'Số trang tin'
         ];
     }

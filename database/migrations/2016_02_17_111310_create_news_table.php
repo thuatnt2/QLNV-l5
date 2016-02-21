@@ -24,6 +24,7 @@ class CreateNewsTable extends Migration
             $table->integer('number_news');
             $table->timestamp('date_submit');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\News;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -22,5 +23,11 @@ class Phone extends Model
     {
     	return $this->hasMany(Ship::class);
     	
+    }
+
+     public function news()
+    {
+        return $this->hasMany(News::class);
+        
     }
 }

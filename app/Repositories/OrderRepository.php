@@ -40,7 +40,7 @@ class OrderRepository extends AbstractRepository
                     ->orderBy('created_at', 'desc')
                     ->paginate($perPage, $columns);
     }
-    public function create(array $input)
+    public function create(array $input, $fileName = '')
     {
     	$this->order->user_id = $input['user'];
     	$this->order->kind_id = $input['kind'];
@@ -52,7 +52,7 @@ class OrderRepository extends AbstractRepository
     	$this->order->customer_name = $input['customer_name'];
     	$this->order->customer_phone = $input['customer_phone'];
     	$this->order->date_order = Carbon::createFromFormat('d/m/Y', $input['created_at']);
-        // $this->order->file = $fileName;;
+        $this->order->file = $fileName;
     	$date_request = explode('-', $input['date_request']);
     	$this->order->date_end = Carbon::createFromFormat('d/m/Y', trim(array_pop($date_request)));
     	$this->order->date_begin = Carbon::createFromFormat('d/m/Y', trim(array_pop($date_request)));
