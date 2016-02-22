@@ -36,7 +36,6 @@
                     </select>
                 </div>
             </div>
-            {!! Former::text('number_cv_pa71', 'Số công văn PA71')->required()->addClass('input-sm'); !!}
         </div>
         <div class="col-sm-4">
             {!! Former::text('page_number', 'Số trang tin')->required()->addClass('input-sm'); !!}
@@ -66,32 +65,47 @@
 	<div class="box">
 		<div class="box-header">
             <h3 class="box-title">DS List-XMCTB đã giao</h3>
+            <div class="box-tools">
+                @include('pagination.limit_link', ['paginator' => $ships])            
+            </div>
         </div><!-- /.box-header -->
         <div class="box-body">
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th class="text-center">STT</th>
-                        <th class="text-center">Loại đối tượng</th>
-                        <th class="text-center">Kí hiệu</th>
-                        <th class="text-center">Ngày tạo</th>
-                        <th class="text-center">Ngày sửa</th>
-                        <th class="text-center">Thao tác</th>
+                        <th class="text-center">Ngày tháng</th>
+                        <th class="text-center">So cv Don vi</th>
+                        <th class="text-center">So cv PA71</th>
+                        <th class="text-center" width="15%">Tên đối tượng</th>
+                        <th clsas="text-center" width="10%">Số điện thoại</th>
+                        <th clsas="text-center">Loại ĐT</th>
+                        <th clsas="text-center">Tính chất</th>
+                        <th clsas="text-center" width="13%">Thời gian yêu cầu</th>
+                        <th clsas="text-center">Số trang tin</th>
+                        <th width="8%">Ghi chú</th>
+                        <th class="text-center" width="6%">Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($ships as $index => $ship)
                     <tr>
                         <td class="text-center">{{ ++$index }}</td>
-                        <td class="text-center">{{ $ship->description }}</td>
-                        <td class="text-center">{{ $ship->symbol }}</td>
-                        <td class="text-center">{{ $ship->created_at->format('d/m/Y') }}</td>
-                        <td class="text-center">{{ $ship->updated_at->format('d/m/Y') }}</td>
+                        <td class="text-center">{{ $ship->date_submit->format('d/m/Y') }}</td>
+                        <td class="text-center">{{ $ship->phone->order->number_cv . '/' . $ship->phone->order->unit->symbol }}</td>
+                        <td class="text-center">{{ $ship->phone->order->number_cv_pa71 }}</td>
+                        <td class="text-center">{{ $ship->phone->order->order_name }}</td>
+                        <td class="text-center">{{ $ship->phone->number }}</td>
+                        <td class="text-center">{{ $ship->phone->order->category->symbol }}</td>
+                        <td class="text-center">{{ $ship->phone->order->kind->symbol }}</td>
+                        <td class="text-center">{{ $ship->phone->order->date_begin->format('d/m/Y') . ' &rarr; ' . $ship->phone->order->date_end->format('d/m/Y')  }}</td>
+                        <td class="text-center">{{ $ship->page_number}}</td>
+                        <td class="text-center">{{ $ship->phone->order->comment}}</td>
                         <td class="text-center"width="6%">
-                            <button class="btn btn-warning btn-xs fa fa-edit" data-url="{{ action('shipController@edit', $ship->id) }}" type="button" title="Sửa"></button>
+                            <button class="btn btn-warning btn-xs fa fa-edit" data-url="{{ action('ShipController@edit', $ship->id) }}" type="button" title="Sửa"></button>
                             <!-- TODO: Delete Button -->
                             &nbsp
-                            <button class="btn btn-danger btn-xs fa fa-trash" data-toggle="modal" data-target="#confirmModal" data-url="{{ action('shipController@destroy', $ship->id) }}" title="Xóa"></button>
+                            <button class="btn btn-danger btn-xs fa fa-trash" data-toggle="modal" data-target="#confirmModal" data-url="{{ action('ShipController@destroy', $ship->id) }}" title="Xóa"></button>
                         </td>
                     </tr>
                     @endforeach

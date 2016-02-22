@@ -7,13 +7,10 @@ use App\Http\Requests\Request;
 class ShipRequest extends Request
 {
     public $rules = [
-        'number_cv_pa71' => 'required|numeric',
         'page_number' => 'required|numeric'
     ];
 
     public $messages = [
-        'number_cv_pa71.required' => ':attribute bắt buộc',
-        'number_cv_pa71.numeric' => ':attribute phải là kiểu số nguyên',
         'page_number.required' => ':attribute bắt buộc',
         'page_number.numeric' => ':attribute phải là kiểu số nguyên'
     ];
@@ -45,7 +42,6 @@ class ShipRequest extends Request
     public function attributes()
     {
         return [
-            'number_cv_pa71' => 'Số công văn',
             'page_number' => 'Số trang tin'
         ];
     }

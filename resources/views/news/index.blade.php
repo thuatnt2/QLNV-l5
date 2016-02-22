@@ -80,6 +80,7 @@
                     <tr>
                         <th class="text-center">STT</th>
                         <th class="text-center">Ngày tháng</th>
+                        <th class="text-center">Số Cv donvi</th>
                         <th class="text-center">Số Cv PA71</th>
                         <th class="text-center" width="15%">Tên đối tượng</th>
                         <th clsas="text-center" width="10%">Số điện thoại</th>
@@ -97,6 +98,7 @@
                     <tr>
                         <td class="text-center">{{ ++$index }}</td>
                         <td class="text-center">{{ $new->date_submit->format('d/m/Y') }}</td>
+                        <td class="text-center">{{ $new->phone->order->number_cv . '/' . $new->phone->order->unit->symbol }}</td>
                         <td class="text-center">{{ $new->number_cv_pa71 }}</td>
                         <td class="text-center">{{ $new->phone->order->order_name }}</td>
                         <td class="text-center">{{ $new->phone->number }}</td>

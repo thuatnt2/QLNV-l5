@@ -9,7 +9,7 @@ class Ship extends Model
 {
     use SoftDeletes;
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['date_submit'];
 
 
     public function phone()
