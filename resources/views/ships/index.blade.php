@@ -12,7 +12,7 @@
 <div class="row">
 	<div class="box row-form">
 		{!! Former::setOption('TwitterBootstrap3.labelWidths', ['large' => 4, 'small' => 4]) !!}
-        {!! Former::horizontal_open(url('categories'))->id('form-create') !!}
+        {!! Former::open_for_files(url('ships'))->id('form-create') !!}
         <fieldset>
         {!! Former::legend('Giao List-XMCTB') !!}
         <div class="col-sm-4">
@@ -43,10 +43,8 @@
             <div class="form-group required">
                 <label for="file" class="control-label col-lg-4 col-sm-4">File đính kèm<sup>*</sup></label>
                 <div class="col-lg-8 col-sm-8">
-                    <div class="input-group">
-                        <input type="text" class="form-control input-sm"></input>
-                        <input accept="application/msword|application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/pdf" id="file" type="file" name="file" style="width: 0px; height: 0px">
-                    </div>
+                    <input type="text" class="form-control input-sm">
+                    <input accept="application/msword|application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/pdf" id="file" type="file" name="file" style="width: 0px; height: 0px">
                 </div>
             </div>
         </div>

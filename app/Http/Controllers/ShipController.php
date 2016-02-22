@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contracts\Repository;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
+use App\Http\Requests\ShipRequest;
 use App\Order;
 use App\Repositories\OrderRepository;
 use App\Repositories\UserRepository;
@@ -14,6 +15,15 @@ use Illuminate\Http\Request;
 class ShipController extends Controller
 {
     protected $ship;
+
+    private $dataGet = [
+        'created_at',
+        'phone',
+        'number_cv_pa71',
+        'page_number',
+        'receive_name',
+        'user_name'
+    ];
 
     public function __construct(Repository $ship)
     {
@@ -60,9 +70,10 @@ class ShipController extends Controller
     public function store(ShipRequest $request)
     {
         try {
+            $this->ship->create($request->only($this->dataGet));
             return redirect()->back();
         } catch (Exception $e) {
-            
+            return redirect()->back()->withInput()->with('error', 'Xãy ra lỗi khi thêm dữ liệu');
         }
     }
 

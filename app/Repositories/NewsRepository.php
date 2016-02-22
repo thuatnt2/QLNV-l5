@@ -14,14 +14,6 @@ class NewsRepository extends AbstractRepository
         $this->news = $news;
         parent::__construct($this->news);
     }
-    public function paginate($perPage = 5, $columns = ['*'])
-    {
-    	return $this->news
-    				->with('phone', 'files')
-    				->orderBy('created_at', 'desc')
-                    ->paginate($perPage, $columns);
-    }
-
     public function create(array $input)
     {
     	$this->news->date_submit = Carbon::createFromFormat('d/m/Y', $input['created_at']);

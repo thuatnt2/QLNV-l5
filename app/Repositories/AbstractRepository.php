@@ -58,9 +58,10 @@ abstract class AbstractRepository implements Repository
                     ->get($columns);
 
     }
-    public function paginate($perPage = 5, $columns = ['*'])
+    public function paginate($perPage = 5, $with = [''], $columns = ['*'])
     {
         $result = $this->model
+                      ->with($with)
                       ->orderBy('created_at', 'desc')
                       ->paginate($perPage,$columns);
         return $result;
