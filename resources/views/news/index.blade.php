@@ -100,7 +100,7 @@
                         <td class="text-center">{{ $new->date_submit->format('d/m/Y') }}</td>
                         <td class="text-center">{{ $new->phone->order->number_cv . '/' . $new->phone->order->unit->symbol }}</td>
                         <td class="text-center">{{ $new->number_cv_pa71 }}</td>
-                        <td class="text-center">{{ $new->phone->order->order_name }}</td>
+                        <td class="text-center"><a href="{{ action('OrderController@show', $new->phone->order->id) }}">{{ $new->phone->order->order_name }}</a></td>
                         <td class="text-center">{{ $new->phone->number }}</td>
                         <td class="text-center">{{ $new->phone->order->category->symbol }}</td>
                         <td class="text-center">{{ $new->phone->order->kind->symbol }}</td>

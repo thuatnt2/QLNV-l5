@@ -94,7 +94,7 @@
                         <td class="text-center">{{ $ship->date_submit->format('d/m/Y') }}</td>
                         <td class="text-center">{{ $ship->phone->order->number_cv . '/' . $ship->phone->order->unit->symbol }}</td>
                         <td class="text-center">{{ $ship->phone->order->number_cv_pa71 }}</td>
-                        <td class="text-center">{{ $ship->phone->order->order_name }}</td>
+                        <td class="text-center"><a href="{{ action('OrderController@show', $ship->phone->order->id) }}">{{ $ship->phone->order->order_name }}</a></td>
                         <td class="text-center">{{ $ship->phone->number }}</td>
                         <td class="text-center">{{ $ship->phone->order->category->symbol }}</td>
                         <td class="text-center">{{ $ship->phone->order->kind->symbol }}</td>
