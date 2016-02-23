@@ -22,7 +22,7 @@
                 ->required()
                 ->addClass('input-sm daterange')
                 
-             !!}
+            !!}
             {!! Former::text('number_cv', 'Số công văn yêu cầu')->required()->addClass('input-sm'); !!}
             {!! Former::select('unit')->label('Đơn vị yêu cầu')->options($units)->addClass('input-sm') !!}
             {!! Former::text('number_cv_pa71', 'Số công văn PA71')->required()->addClass('input-sm'); !!}
@@ -101,7 +101,7 @@
                         <td class="text-center">{{ $order->date_order->format('d/m/Y') }}</td>
                         <td class="text-center">{{ $order->number_cv . '/' . $order->unit->symbol }}</td>
                         <td class="text-center">{{ $order->number_cv_pa71 }}</td>
-                        <td class="text-center">{{ $order->order_name }}</td>
+                        <td class="text-center"><a href="{{ action('OrderController@show', $order->id) }}">{{ $order->order_name }}</a></td>
                         <td class="text-left">
                             @foreach($order->phones as $index => $phone)
                                 {{ $phone->number }} <br>    

@@ -105,7 +105,8 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $object = $this->order->findBy('slug', $id);
+        return view('orders.show', compact('object'));
     }
 
     /**
@@ -163,6 +164,12 @@ class OrderController extends Controller
         
         
         return redirect()->back();
+    }
+
+    public function detail($name)
+    {
+        dd($name);
+      
     }
     /**
      * Remove the specified resource from storage.

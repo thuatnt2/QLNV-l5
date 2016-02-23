@@ -49,7 +49,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = $this->news->paginate(1, ['phone', 'files', 'order']);
+        $news = $this->news->paginate(1, ['phone', 'files']);
         return view('news.index', compact('news'));
     }
 
