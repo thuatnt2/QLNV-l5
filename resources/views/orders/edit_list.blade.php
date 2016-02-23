@@ -69,6 +69,7 @@
                 ->addClass('input-sm daterange')
                 ->value($order->date_begin->format('d/m/Y') .'-'. $order->date_end->format('d/m/Y'))
              !!}
+            {!! Former::file('file','File đính kèm')->accept('doc', 'docx', 'xls', 'xlsx', 'pdf') !!}
         </div>
         <div class="col-sm-4">
             {!! Former::text('customer_name', 'Tên trinh sát')
@@ -80,7 +81,6 @@
                 ->addClass('input-sm phone')
                 ->value($order->customer_phone) 
             !!}
-           {!! Former::file('file','File đính kèm')->accept('doc', 'docx', 'xls', 'xlsx', 'pdf') !!}
            {!! Former::select('user', 'Người nhận yêu cầu')
                 ->options($users, $order->user_id)
                 ->addClass('input-sm')

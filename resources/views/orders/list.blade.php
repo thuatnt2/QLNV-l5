@@ -46,6 +46,7 @@
                 ->required()
                 ->addClass('input-sm daterange')
              !!}
+            {!! Former::file('file','File đính kèm')->accept('doc', 'docx', 'xls', 'xlsx', 'pdf') !!}
         </div>
         <div class="col-sm-4">
             {!! Former::text('customer_name', 'Tên trinh sát')->addClass('input-sm'); !!}
@@ -53,7 +54,7 @@
                 ->append('<i class="fa fa-phone"></i>')
                 ->addClass('input-sm phone'); 
             !!}
-           {!! Former::file('file','File đính kèm')->accept('doc', 'docx', 'xls', 'xlsx', 'pdf') !!}
+           
            {!! Former::select('user')->label('Người nhận yêu cầu')->options($users)->addClass('input-sm') !!}
            {!! Former::textarea('comment')->label('Ghi chú') !!}
         </div>
@@ -104,7 +105,7 @@
                         <td class="text-center">{{ $order->date_order->format('d/m/Y') }}</td>
                         <td class="text-center">{{ $order->number_cv . '/' . $order->unit->symbol }}</td>
                         <td class="text-center">{{ $order->number_cv_pa71 }}</td>
-                        <td class="text-center">{{ $order->order_name }}</td>
+                        <td class="text-center"><a href="{{ action('OrderController@show', $order->id) }}">{{ $order->order_name }}</a></td>
                         <td class="text-left">
                             @foreach($order->phones as $index => $phone)
                                 {{ $phone->number }} <br>    

@@ -75,7 +75,7 @@
                     <tr>
                         <th class="text-center">STT</th>
                         <th class="text-center">Ngày tháng</th>
-                        <th class="text-center">Số Cv/Đơn vị</th>
+                        <th class="text-center">Số Cv/Đơn vị</th> 
                         <th class="text-center">Số Cv/PA71</th>
                         <th class="text-center" width="15%">Tên đối tượng</th>
                         <th class="text-center" width="10%">Số điện thoại</th>
