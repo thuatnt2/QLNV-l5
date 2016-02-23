@@ -11,8 +11,34 @@
 @section('content')
 @include('partials.flash')
 @include('partials.confirm')
-
-    TNT
+<div class="row">
+<div class="col-sm-6">
+<div class="box">
+	<div class="box-body">
+		<div class="box-header">
+            <h3 class="box-title">Thông tin yêu cầu</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            <table id="example1" class="table table-bordered table-striped">
+                    <tr>
+                        <th class="text-center" width="30%">Ngày đăng ký:</th>
+                        <td>22/12/2016</td>
+                    </tr>
+            </table>
+        </div><!-- /.box-body -->
+	</div>
+</div>
+</div>
+<div class="col-sm-6">
+<div class="box">
+	<div class="box-body">
+		<div class="box-header">
+            <h3 class="box-title">Kết quả thực hiện</h3>
+        </div><!-- /.box-header -->
+	</div>
+</div>
+</div>
+</div>
 @stop
 
 @section('javascript')
