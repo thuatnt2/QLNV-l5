@@ -36,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer(['orders.index', 'orders.edit'], function($view) {
+        view()->composer(['orders.index', 'orders.edit', 'orders.list', 'orders.edit_list'], function($view) {
             $units = new UnitRepository(new  Unit);
             $categories = new CategoryRepository(new Category);
             $kinds = new KindRepository(new Kind);
@@ -47,8 +47,11 @@ class AppServiceProvider extends ServiceProvider
             $categories = $categories->formatData($categories->all(['id', 'symbol']));
             $kinds = $kinds->formatData($kinds->all(['id', 'symbol']));
             $users = $users->formatData($users->all(['id as id', 'name as symbol' ]));
-            $purposes = $purposes->formatPurpose($purposes->all(['id', 'symbol']));
-            // $purposes = ['GS', 'xmctb', 'list', 'email'];
+            $purpose = $purposes->findAllBy('group', 'monitor', ['id', 'symbol']);
+            foreach ($purpose as $key => $value) {
+                $purpose = $value;
+            }
+            $purposes = $purposes->formatPurpose($purposes->findAllBy('group', 'list', ['id', 'symbol']));
             $view->with(compact('units', 'categories', 'kinds', 'purpose', 'purposes', 'users'));
         });
     }

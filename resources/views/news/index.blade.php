@@ -80,16 +80,16 @@
                     <tr>
                         <th class="text-center">STT</th>
                         <th class="text-center">Ngày tháng</th>
-                        <th class="text-center">Số Cv donvi</th>
-                        <th class="text-center">Số Cv PA71</th>
+                        <th class="text-center">Số Cv/Đơn vị</th>
+                        <th class="text-center">Số Cv/PA71</th>
                         <th class="text-center" width="15%">Tên đối tượng</th>
-                        <th clsas="text-center" width="10%">Số điện thoại</th>
-                        <th clsas="text-center">Loại ĐT</th>
-                        <th clsas="text-center">Tính chất</th>
-                        <th clsas="text-center" width="13%">Thời gian yêu cầu</th>
-                        <th clsas="text-center">Số bản tin</th>
-                        <th clsas="text-center">Số trang tin</th>
-                        <th width="8%">Ghi chú</th>
+                        <th class="text-center" width="10%">Số điện thoại</th>
+                        <th class="text-center">Loại ĐT</th>
+                        <th class="text-center">Tính chất</th>
+                        <th class="text-center" width="13%">Thời gian yêu cầu</th>
+                        <th class="text-center">Số bản tin</th>
+                        <th class="text-center">Số trang tin</th>
+                        <th class="text-center" width="8%">Ghi chú</th>
                         <th class="text-center" width="6%">Thao tác</th>
                     </tr>
                 </thead>

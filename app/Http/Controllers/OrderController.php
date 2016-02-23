@@ -51,7 +51,7 @@ class OrderController extends Controller
     {
         $orders = $this->order->paginate(2);
 
-        return view('orders.index', compact('orders'));
+        return view('orders.list', compact('orders'));
     }
     /**
      * Show the form for creating a new resource.
@@ -117,13 +117,19 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = $this->order->findById($id);
+        
+        return view('orders.edit', compact('order'));
+    }
+
+    public function editList($id)
+    {
+        $order = $this->order->findById($id);
         $checked = [];
         foreach ($order->purposes as $purpose) {
             $checked['purpose['.$purpose->id.']'] = true;
         }
-        return view('orders.edit', compact('order', 'checked'));
+        return view('orders.edit_list', compact('order', 'checked'));
     }
-
     /**
      * Update the specified resource in storage.
      *

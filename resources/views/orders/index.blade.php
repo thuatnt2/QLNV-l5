@@ -38,14 +38,12 @@
              !!}
             {!! Former::select('category')->label('Loại đối tượng')->options($categories)->addClass('input-sm') !!}
             {!! Former::select('kind')->label('Tính chất')->options($kinds)->addClass('input-sm') !!}
-            {!! Former::checkboxes('purpose[]','Mục đích yêu cầu')
-                ->checkboxes($purposes)
-                ->inline()
-            !!}
+            <input type="hidden" name="purpose[]" value="{{ $purpose->id }}">
             {!! Former::text('date_request', 'Thời gian yêu cầu')
                 ->required()
                 ->addClass('input-sm daterange')
-             !!}
+            !!}
+            {!! Former::file('file','File đính kèm')->accept('doc', 'docx', 'xls', 'xlsx', 'pdf') !!}
         </div>
         <div class="col-sm-4">
             {!! Former::text('customer_name', 'Tên trinh sát')->addClass('input-sm'); !!}
@@ -53,7 +51,6 @@
                 ->append('<i class="fa fa-phone"></i>')
                 ->addClass('input-sm phone'); 
             !!}
-           {!! Former::file('file','File đính kèm')->accept('doc', 'docx', 'xls', 'xlsx', 'pdf') !!}
            {!! Former::select('user')->label('Người nhận yêu cầu')->options($users)->addClass('input-sm') !!}
            {!! Former::textarea('comment')->label('Ghi chú') !!}
         </div>

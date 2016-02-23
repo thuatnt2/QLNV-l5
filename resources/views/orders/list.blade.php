@@ -12,19 +12,68 @@
 @include('partials.flash')
 @include('partials.confirm')
 <div class="row">
+    <div class="box row-form">
+        {!! Former::setOption('TwitterBootstrap3.labelWidths', ['large' => 4, 'small' => 4]) !!}
+        {!! Former::open_for_files(url('orders'))->id('form-create') !!}
+        <fieldset>
+        {!! Former::legend('Thêm yêu cầu List-XMCTB') !!}
+        <div class="col-sm-4">
+            {!! Former::text('created_at', 'Ngày yêu cầu')
+                ->required()
+                ->addClass('input-sm daterange')
+                
+             !!}
+            {!! Former::text('number_cv', 'Số công văn yêu cầu')->required()->addClass('input-sm'); !!}
+            {!! Former::select('unit')->label('Đơn vị yêu cầu')->options($units)->addClass('input-sm') !!}
+            {!! Former::text('number_cv_pa71', 'Số công văn PA71')->required()->addClass('input-sm'); !!}
+            {!! Former::text('order_name', 'Tên đối tượng')->required()->addClass('input-sm'); !!}
+          
+        </div> 
+        <div class="col-sm-4">
+            {!! Former::text('order_phone[]', 'Số điện thoại ĐT')
+                ->append('<i class="fa fa-plus add_phone"></i>')
+                ->required()
+                ->addClass('input-sm phone')
+                ->addGroupClass('phone_order')
+             !!}
+            {!! Former::select('category')->label('Loại đối tượng')->options($categories)->addClass('input-sm') !!}
+            {!! Former::select('kind')->label('Tính chất')->options($kinds)->addClass('input-sm') !!}
+            {!! Former::checkboxes('purpose[]','Mục đích yêu cầu')
+                ->checkboxes($purposes)
+                ->inline()
+            !!}
+            {!! Former::text('date_request', 'Thời gian yêu cầu')
+                ->required()
+                ->addClass('input-sm daterange')
+             !!}
+        </div>
+        <div class="col-sm-4">
+            {!! Former::text('customer_name', 'Tên trinh sát')->addClass('input-sm'); !!}
+            {!! Former::text('customer_phone', 'Số điện thoại TS')
+                ->append('<i class="fa fa-phone"></i>')
+                ->addClass('input-sm phone'); 
+            !!}
+           {!! Former::file('file','File đính kèm')->accept('doc', 'docx', 'xls', 'xlsx', 'pdf') !!}
+           {!! Former::select('user')->label('Người nhận yêu cầu')->options($users)->addClass('input-sm') !!}
+           {!! Former::textarea('comment')->label('Ghi chú') !!}
+        </div>
+        <div class="form-group">
+            <div class="col-lg-offset-5 col-sm-offset-5 col-lg-8 col-sm-8">
+               <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-plus">&nbsp</i>Thêm</button>
+               <button type="reset" class="btn btn-default btn-sm"><i class="fa fa-refresh">&nbsp</i>Làm mới</button>
+           </div>
+            </div>
+        </fieldset>
+        {!! Former::close() !!}
+    </div>
+</div>
+
+<div class="row">
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">Yêu cầu List - XMCTB</h3>
+            <h3 class="box-title">DS Yêu cầu List-XMCTB</h3>
             <div class="box-tools">
-				<!-- Large modal -->
-				<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".bs-example-modal-lg" style="margin-right: 5px;"><i class="fa fa-plus"></i>&nbsp;Thêm mới</button>
-				<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-				<div class="modal-dialog modal-lg">
-				    <div class="modal-content">
-				      ...
-				    </div>
-				  </div>
-				</div>
+
                 @include('pagination.limit_link', ['paginator' => $orders])            
             </div>
         </div><!-- /.box-header -->
@@ -43,7 +92,7 @@
                         <th clsas="text-center" width="13%">Thời gian yêu cầu</th>
                         <th clsas="text-center">Mục đích y/c</th>
                         <th width="12%">TS y/c (Số ĐT)</th>
-                        <th width="4%">Tình trạng</th>
+                        <th class="text-center"width="4%">Tình trạng</th>
                         <th width="8%">Ghi chú</th>
                         <th class="text-center" width="6%">Thao tác</th>
                     </tr>
@@ -72,14 +121,24 @@
                         
                         </td>
                         <td>{{ $order->customer_name }} <br> {{ $order->customer_phone }}</td>
-                        <td>
+                        <td class="text-center">
                             @foreach($order->phones as $index=> $phone)
-                            <span class="label label-success">{{ $phone->status }}</span><br>
+                            <span class="btn btn-{{ $phone->status }} btn-xs" data-toggle="modal" data-target="#statusModal" data-url="{{ action('OrderController@updateStatus', $phone->id) }}" data-status="{{ $phone->status }}" data-number="{{ $phone->number }}" >
+                                @if ($phone->status == 'success')
+                                    <i class="fa fa-check" title="Đã giao"></i>
+                                @elseif($phone->status == 'warning')
+                                    <i class="fa fa-hourglass-half" title="Chờ xử lý"></i>
+                                @else
+                                    <i class="fa fa-times" title="Không có dữ liệu" ></i>
+                                @endif
+                            </span>
+                            <br>
                             @endforeach
+                            @include('partials.status_list_modal')
                         </td>
                         <td>{{ $order->comment }}</td>
                         <td class="text-center">
-                            <button class="btn btn-warning btn-xs fa fa-edit" data-url="{{ action('OrderController@edit', $order->id) }}" type="button" title="Sửa"></button>
+                            <button class="btn btn-warning btn-xs fa fa-edit" data-url="{{ action('OrderController@editList', $order->id) }}" type="button" title="Sửa"></button>
                             <!-- TODO: Delete Button -->
                             &nbsp
                             <button class="btn btn-danger btn-xs fa fa-trash" data-toggle="modal" data-target="#confirmModal" data-url="{{ action('OrderController@destroy', $order->id) }}" title="Xóa"></button>

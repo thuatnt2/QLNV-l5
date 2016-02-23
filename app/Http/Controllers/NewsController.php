@@ -49,7 +49,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = $this->news->paginate(1, ['phone', 'files']);
+        $news = $this->news->paginate(1, ['phone', 'files', 'order']);
         return view('news.index', compact('news'));
     }
 
@@ -123,6 +123,7 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->news->delete($id);
+        return redirect()->back();
     }
 }

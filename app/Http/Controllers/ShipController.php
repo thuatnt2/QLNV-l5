@@ -47,7 +47,7 @@ class ShipController extends Controller
      */
     public function index()
     {
-        $ships = $this->ship->paginate(1);
+        $ships = $this->ship->paginate(1, ['phone']);
         return view('ships.index', compact('ships'));
     }
 
@@ -119,6 +119,7 @@ class ShipController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->ship->delete($id);
+        return redirect()->back();
     }
 }

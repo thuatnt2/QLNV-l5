@@ -2,8 +2,9 @@
 namespace App\Repositories;
 
 use App\Contracts\Repository;
-use Carbon\Carbon;
+use App\Phone;
 use App\Ship;
+use Carbon\Carbon;
 
 class ShipRepository extends AbstractRepository
 {
@@ -15,14 +16,6 @@ class ShipRepository extends AbstractRepository
         parent::__construct($this->ship);
     }
 
-    public function paginate($perPage = 5, $columns = ['*'])
-    {
-    	return $this->ship
-    				->with(['phone'])
-    				->orderBy('created_at', 'desc')
-                    ->paginate($perPage, $columns);
-    }
-
     public function create(array $input)
     {
     	$this->ship->date_submit = Carbon::createFromFormat('d/m/Y', $input['created_at']);
@@ -32,5 +25,10 @@ class ShipRepository extends AbstractRepository
     	$this->ship->user_id = $input['user_name'];
 
     	$this->ship->save();
+
+        // update phone number status
+        $phone = Phone::find($input['phone']);
+        $phone->status = 'success';
+        $phone->save();
     }
 }

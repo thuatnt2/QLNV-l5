@@ -2,7 +2,7 @@
         {!! Former::open_for_files(action('OrderController@update', $order->id))->id('form-edit') !!}
         {{ method_field('PUT') }}
         <fieldset>
-        {!! Former::legend('Sửa yêu cầu giám sát') !!}
+        {!! Former::legend('Sửa yêu cầu List-XMCTB') !!}
         <div class="col-sm-4">
             {!! Former::text('created_at', 'Ngày yêu cầu')
                 ->required()
@@ -59,13 +59,16 @@
                 ->addClass('input-sm')
             !!}
             {!! Former::select('kind')->label('Tính chất')->options($kinds, $order->kind_id)->addClass('input-sm') !!}
-            <input type="hidden" name="purpose[]" value="{{ $purpose->id }}"></input>
+            {!! Former::checkboxes('purpose[]','Mục đích yêu cầu')
+                ->checkboxes($purposes)
+                ->inline()
+                ->check($checked)
+            !!}
             {!! Former::text('date_request', 'Thời gian yêu cầu')
                 ->required()
                 ->addClass('input-sm daterange')
                 ->value($order->date_begin->format('d/m/Y') .'-'. $order->date_end->format('d/m/Y'))
-            !!}
-            {!! Former::file('file','File đính kèm')->accept('doc', 'docx', 'xls', 'xlsx', 'pdf') !!}
+             !!}
         </div>
         <div class="col-sm-4">
             {!! Former::text('customer_name', 'Tên trinh sát')
@@ -77,6 +80,7 @@
                 ->addClass('input-sm phone')
                 ->value($order->customer_phone) 
             !!}
+           {!! Former::file('file','File đính kèm')->accept('doc', 'docx', 'xls', 'xlsx', 'pdf') !!}
            {!! Former::select('user', 'Người nhận yêu cầu')
                 ->options($users, $order->user_id)
                 ->addClass('input-sm')
