@@ -20,10 +20,26 @@
         </div><!-- /.box-header -->
         <div class="box-body">
             <table id="example1" class="table table-bordered table-striped">
-                    <tr>
-                        <th class="text-center" width="30%">Ngày đăng ký:</th>
-                        <td>22/12/2016</td>
-                    </tr>
+                       <tr>
+                                  <th class="text-left" width="30%">Ngày đăng ký</th>
+                                  <td>{{  $order->date_order->format('d/m/Y')  }}</td>
+                       </tr>
+                       <tr>
+                                  <th class="text-left" width="30%">Số công văn yêu cầu</th>
+                                  <td>{{  $order->number_cv . '/ ' . $order->unit->symbol }}</td>
+                       </tr>
+                       <tr>
+                                  <th class="text-left" width="30%">Số công văn PA71</th>
+                                  <td>{{  $order->number_cv_pa71  }}</td>
+                       </tr>
+                       <tr>
+                                  <th class="text-left" width="30%">Họ tên ĐT</th>
+                                  <td>{{  $order->order_name  }}</td>
+                       </tr>
+                       <tr>
+                                  <th class="text-left" width="30%">Ngày đăng ký:</th>
+                                  <td>{{  $order->date_order->format('d/m/Y')  }}</td>
+                       </tr>
             </table>
         </div><!-- /.box-body -->
 	</div>

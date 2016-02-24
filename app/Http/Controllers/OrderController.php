@@ -105,8 +105,8 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $object = $this->order->findBy('slug', $id);
-        return view('orders.show', compact('object'));
+        $order = $this->order->findById($id);
+        return view('orders.show', compact('order'));
     }
 
     /**
