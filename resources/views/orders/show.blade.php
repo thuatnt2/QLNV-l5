@@ -14,81 +14,104 @@
 <div class="row">
 <div class="col-sm-6">
 <div class="box">
-	<div class="box-body">
-		<div class="box-header">
+	<div class="box-header">
             <h3 class="box-title">Thông tin yêu cầu</h3>
-        </div><!-- /.box-header -->
-        <div class="box-body">
-            <table id="example1" class="table table-bordered table-striped">
-                       <tr>
-                                  <th class="text-left" width="30%">Ngày đăng ký</th>
-                                  <td>{{  $order->date_order->format('d/m/Y')  }}</td>
-                       </tr>
-                       <tr>
-                                  <th class="text-left" width="30%">Số công văn yêu cầu</th>
-                                  <td>{{  $order->number_cv . '/' . $order->unit->symbol }}</td>
-                       </tr>
-                       <tr>
-                                  <th class="text-left" width="30%">Số công văn PA71</th>
-                                  <td>{{  $order->number_cv_pa71  }}</td>
-                       </tr>
-                       <tr>
-                                  <th class="text-left" width="30%">Họ tên ĐT</th>
-                                  <td>{{  $order->order_name  }}</td>
-                       </tr>
-                       <tr>
-                                  <th class="text-left" width="30%">Số điện thoại yêu cầu</th>
-                                  <td>
-                                  @foreach($order->phones as $index=>$phone)
-                                        {{  $phone->number  }} 
-                                      <br>
-                                  @endforeach
-                                  </td> 
-                       </tr>
-                       <tr>
-                                  <th class="text-left" width="30%">Loại đối tượng</th>
-                                  <td>{{  $order->category->symbol  }}</td>
-                       </tr>
-                       <tr>
-                                  <th class="text-left" width="30%">Tính chất </th>
-                                  <td>{{  $order->kind->symbol  }}</td>
-                       </tr>
-                       <tr>
-                                  <th class="text-left" width="30%">Ngày bắt đầu</th>
-                                  <td>{{  $order->date_begin->format('d/m/Y')  }}</td>
-                       </tr>
-                       <tr>
-                                  <th class="text-left" width="30%">Ngày kết thúc</th>
-                                  <td>{{  $order->date_end->format('d/m/Y')  }}</td>
-                       </tr>
-                        <tr>
-                                  <th class="text-left" width="30%">File đính kèm</th>
-                                  <td>{{  $order->filename  }}</td>
-                       </tr>
-                         <tr>
-                                  <th class="text-left" width="30%">Trinh sát yêu cầu</th>
-                                  <td>{{  $order->customer_name  }}</td>
-                       </tr>
-                         <tr>
-                                  <th class="text-left" width="30%">Số điện thoại</th>
-                                  <td>{{  $order->customer_phone }}</td>
-                       </tr>
-                         <tr>
-                                  <th class="text-left" width="30%">Ghi chú</th>
-                                  <td>{{  $order->comment  }}</td>
-                       </tr>
-                        <tr>
-                                  <th class="text-left" width="30%">Ngày thêm dữ liệu</th>
-                                  <td>{{  $order->created_at->format('d/m/Y')  }}</td>
-                       </tr>
-                        <tr>
-                                  <th class="text-left" width="30%">Ngày cập nhật dữ liệu</th>
-                                  <td>{{  $order->updated_at->format('d/m/Y')  }}</td>
-                       </tr>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+    	<table id="example1" class="table table-bordered table-striped">
+    		<tr>
+    			<th class="text-left" width="30%">Ngày đăng ký</th>
+    			<td>{{  $order->date_order->format('d/m/Y')  }}</td>
+    		</tr>
+    		<tr>
+    			<th class="text-left" width="30%">Số công văn yêu cầu</th>
+    			<td>{{  $order->number_cv . '/' . $order->unit->symbol }}</td>
+    		</tr>
+    		<tr>
+    			<th class="text-left" width="30%">Số công văn PA71</th>
+    			<td>{{  $order->number_cv_pa71  }}</td>
+    		</tr>
+    		<tr>
+    			<th class="text-left" width="30%">Họ tên ĐT</th>
+    			<td>{{  $order->order_name  }}</td>
+    		</tr>
+    		<tr>
+    			<th class="text-left" width="30%">Số điện thoại yêu cầu</th>
+    			<td width="50%">
+    				@foreach($order->phones as $index=>$phone)
+    				{{  $phone->number  }} 
+    				<span class="label label-{{ $phone->status }}"style="float:right; margin-right: 20px">
+    					@if ($phone->status == 'success')
+    					Kết nối
+    					@elseif($phone->status == 'warning')
+    					Chờ kết nối
+    					@else
+    					Đóng hoặc không có dữ liệu
+    					@endif
+    				</span>
+    				<br>
+    				@endforeach
+    			</td> 
+    		</tr>
+    		<tr>
+    			<th class="text-left" width="30%">Loại đối tượng</th>
+    			<td>{{  $order->category->symbol  }}</td>
+    		</tr>
+    		<tr>
+    			<th class="text-left" width="30%">Tính chất </th>
+    			<td>{{  $order->kind->symbol  }}</td>
+    		</tr>
+    		<tr>
+    			<th class="text-left" width="30%">Mục đích yêu cầu </th>
+    			<td>
+    			<?php
+    			foreach ($order->purposes as $index=>$purpose):
+    				$group = $purpose->group;
+    				echo $purpose->symbol;
+    			endforeach
+    			?>
+    			</td>
+    		</tr>
+    		<tr>
+    			<th class="text-left" width="30%">Ngày bắt đầu</th>
+    			<td>{{  $order->date_begin->format('d/m/Y')  }}</td>
+    		</tr>
+    		<tr>
+    			<th class="text-left" width="30%">Ngày kết thúc</th>
+    			<td>{{  $order->date_end->format('d/m/Y')  }}</td>
+    		</tr>
+    		<tr>
+    			<th class="text-left" width="30%">File đính kèm</th>
+    			<td>{{  $order->filename  }}</td>
+    		</tr>
+    		<tr>
+    			<th class="text-left" width="30%">Trinh sát yêu cầu</th>
+    			<td>{{  $order->customer_name  }}</td>
+    		</tr>
+    		<tr>
+    			<th class="text-left" width="30%">Số điện thoại</th>
+    			<td>{{  $order->customer_phone }}</td>
+    		</tr>
+    		<tr>
+    			<th class="text-left" width="30%">Người nhận yêu cầu</th>
+    			<td>{{  $order->user->name }}</td>
+    		</tr>
 
-            </table>
-        </div><!-- /.box-body -->
-	</div>
+    		<tr>
+    			<th class="text-left" width="30%">Ghi chú</th>
+    			<td>{{  $order->comment  }}</td>
+    		</tr>
+    		<tr>
+    			<th class="text-left" width="30%">Ngày thêm dữ liệu</th>
+    			<td>{{  $order->created_at->format('d/m/Y')  }}</td>
+    		</tr>
+    		<tr>
+    			<th class="text-left" width="30%">Ngày cập nhật dữ liệu</th>
+    			<td>{{  $order->updated_at->format('d/m/Y')  }}</td>
+    		</tr>
+
+    	</table>
+    </div><!-- /.box-body -->
 </div>
 </div>
 <div class="col-sm-6">
@@ -97,6 +120,33 @@
 		<div class="box-header">
             <h3 class="box-title">Kết quả thực hiện</h3>
         </div><!-- /.box-header -->
+        <div class="box-body">
+        	<table id="example2" class="table table-bordered table-striped">
+        		@if ($group == "list" )
+        			@foreach ($order->phones as $phone)
+        				<tr>
+        					<th rowspan="3">{{ $phone->number }}</th>
+        					<td>Số trang tin1:</td>
+        				</tr>
+        				<tr>
+        					<td>Số trang tin2:</td>
+        				</tr>
+        				<tr>
+        					<td>Số trang tin3:</td>
+        				</tr>
+        			@endforeach
+        		@else
+        			@foreach ($order->phones as $phone)
+        				<caption>Đầu số: {{ $phone->number }}</caption>
+        				<tr>
+        					<th>Số bản tin :</th>
+        				</tr>
+        			@endforeach
+        		@endif
+
+        		
+        	</table>
+        </div>
 	</div>
 </div>
 </div>
