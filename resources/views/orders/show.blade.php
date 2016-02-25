@@ -26,7 +26,7 @@
                        </tr>
                        <tr>
                                   <th class="text-left" width="30%">Số công văn yêu cầu</th>
-                                  <td>{{  $order->number_cv . '/ ' . $order->unit->symbol }}</td>
+                                  <td>{{  $order->number_cv . '/' . $order->unit->symbol }}</td>
                        </tr>
                        <tr>
                                   <th class="text-left" width="30%">Số công văn PA71</th>
@@ -37,9 +37,55 @@
                                   <td>{{  $order->order_name  }}</td>
                        </tr>
                        <tr>
-                                  <th class="text-left" width="30%">Ngày đăng ký:</th>
-                                  <td>{{  $order->date_order->format('d/m/Y')  }}</td>
+                                  <th class="text-left" width="30%">Số điện thoại yêu cầu</th>
+                                  <td>
+                                  @foreach($order->phones as $index=>$phone)
+                                        {{  $phone->number  }} 
+                                      <br>
+                                  @endforeach
+                                  </td> 
                        </tr>
+                       <tr>
+                                  <th class="text-left" width="30%">Loại đối tượng</th>
+                                  <td>{{  $order->category->symbol  }}</td>
+                       </tr>
+                       <tr>
+                                  <th class="text-left" width="30%">Tính chất </th>
+                                  <td>{{  $order->kind->symbol  }}</td>
+                       </tr>
+                       <tr>
+                                  <th class="text-left" width="30%">Ngày bắt đầu</th>
+                                  <td>{{  $order->date_begin->format('d/m/Y')  }}</td>
+                       </tr>
+                       <tr>
+                                  <th class="text-left" width="30%">Ngày kết thúc</th>
+                                  <td>{{  $order->date_end->format('d/m/Y')  }}</td>
+                       </tr>
+                        <tr>
+                                  <th class="text-left" width="30%">File đính kèm</th>
+                                  <td>{{  $order->filename  }}</td>
+                       </tr>
+                         <tr>
+                                  <th class="text-left" width="30%">Trinh sát yêu cầu</th>
+                                  <td>{{  $order->customer_name  }}</td>
+                       </tr>
+                         <tr>
+                                  <th class="text-left" width="30%">Số điện thoại</th>
+                                  <td>{{  $order->customer_phone }}</td>
+                       </tr>
+                         <tr>
+                                  <th class="text-left" width="30%">Ghi chú</th>
+                                  <td>{{  $order->comment  }}</td>
+                       </tr>
+                        <tr>
+                                  <th class="text-left" width="30%">Ngày thêm dữ liệu</th>
+                                  <td>{{  $order->created_at->format('d/m/Y')  }}</td>
+                       </tr>
+                        <tr>
+                                  <th class="text-left" width="30%">Ngày cập nhật dữ liệu</th>
+                                  <td>{{  $order->updated_at->format('d/m/Y')  }}</td>
+                       </tr>
+
             </table>
         </div><!-- /.box-body -->
 	</div>
