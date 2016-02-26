@@ -23,4 +23,9 @@ class News extends Model
     {
     	return $this->hasMany(File::class);
     }
+
+    public function user()
+    {
+            return $this->belongsTo(User::class);
+    }
 }

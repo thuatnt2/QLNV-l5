@@ -124,23 +124,62 @@
         	<table id="example2" class="table table-bordered table-striped">
         		@if ($group == "list" )
         			@foreach ($order->phones as $phone)
-        				<tr>
-        					<th rowspan="3">{{ $phone->number }}</th>
-        					<td>Số trang tin1:</td>
-        				</tr>
-        				<tr>
-        					<td>Số trang tin2:</td>
-        				</tr>
-        				<tr>
-        					<td>Số trang tin3:</td>
-        				</tr>
+                                                    <tr>
+                                                        <th colspan="2" bgcolor="#99CCFF">{{ $phone->number }}</th>
+                                                    </tr>
+                                                    @foreach($phone->ships as $index=>$ship)
+                				<tr>
+                                                                            <th rowspan="6" style="background-color:  white;">Lần : {{ ++$index}}</th`>
+                                                                            <td>Ngày giao: {{ $ship->date_submit->format('d/m/Y') }}</td>
+                                                                  </tr>
+                                                                  <tr>
+                                                                            <td>Số công văn PA71: {{ $order->number_cv_pa71 }}</td>
+                                                                  </tr>
+                                                                  <tr>
+                                                                            <td>Số trang tin: {{ $ship->page_number }}</td>
+                                                                  </tr>
+                                                                  <tr>
+                                                                            <td>File đính kèm: {{ $ship->page_number }}</td>
+                                                                  </tr>
+                                                                  <tr>
+                                                                            <td>Người nhận: {{ $ship->receive_name }}</td>
+                                                                  </tr>
+                                                                  <tr>
+                                                                            <td>Người giao: {{ $ship->user->name }}</td>
+                                                                  </tr>
+                                                    @endforeach
         			@endforeach
         		@else
         			@foreach ($order->phones as $phone)
-        				<caption>Đầu số: {{ $phone->number }}</caption>
-        				<tr>
-        					<th>Số bản tin :</th>
-        				</tr>
+
+                                                    <tr>
+                                                        <th colspan="2" bgcolor="#99CCFF">{{ $phone->number }}</th>
+                                                    </tr>
+                                                    @foreach($phone->news as $index=>$new)
+                                                                <tr>
+                                                                            <th rowspan="7">Lần : {{ ++$index}}</th`>
+                                                                            <td>Ngày giao: {{ $new->date_submit->format('d/m/Y') }}</td>
+                                                                  </tr>
+                                                                  <tr>
+                                                                            <td>Số công văn PA71: {{ $new->number_cv_pa71 }}</td>
+                                                                  </tr>
+                                                                  <tr>
+                                                                            <td>Số bản tin: {{ $new->number_news }}</td>
+                                                                  </tr>
+                                                                  <tr>
+                                                                            <td>Số trang tin: {{ $new->page_number }}</td>
+                                                                  </tr>
+                                                                  <tr>
+                                                                            <td>File đính kèm: {{ $new->page_number }}</td>
+                                                                  </tr>
+                                                                  <tr>
+                                                                            <td>Người nhận: {{ $new->receive_name }}</td>
+                                                                  </tr>
+                                                                  <tr>
+                                                                            <td>Người giao: {{ $new->user->name }}</td>
+                                                                  </tr>
+                                                    @endforeach
+        				
         			@endforeach
         		@endif
 
