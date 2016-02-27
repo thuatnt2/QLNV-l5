@@ -40,6 +40,14 @@ class OrderRepository extends AbstractRepository
                     ->orderBy('created_at', 'desc')
                     ->paginate($perPage, $columns);
     }
+
+    public function statistics($startDate, $endDate)
+    {
+        return $this->order
+                    ->where('date_begin', '>=', $startDate)
+                    ->where('date_end', '<=', $endDate)
+                    ->get();
+    }
     public function create(array $input, $fileName = '')
     {
     	$this->order->user_id = $input['user'];

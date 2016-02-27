@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use App\Contracts\Repository;
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
+use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class StatisticController extends Controller
 {
+
+    private $order;
+
+    public function __construct(Repository $order)
+    {
+        $this->order = $order;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -37,7 +45,12 @@ class StatisticController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $reportrange = explode('-', $request['reportrange']);
+        $endDate = Carbon::createFromFormat('d/m/Y', trim(array_pop($reportrange)))->toDateString();
+        $startDate =  Carbon::createFromFormat('d/m/Y', trim(array_pop($reportrange)))->toDateString();
+        $result = $this->order->statistics($startDate, $endDate);
+
+        return view('statistics.index', compact('result'));
     }
 
     /**

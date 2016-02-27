@@ -9,6 +9,7 @@ use App\Http\Controllers\KindController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ShipController;
+use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\UnitController;
 use App\Kind;
 use App\News;
@@ -77,6 +78,10 @@ class AppServiceProvider extends ServiceProvider
             return new KindRepository(new Kind);
         });
         $this->app->when(OrderController::class)->needs(Repository::class)->give(function($app) {
+
+            return new OrderRepository(new Order);
+        });
+        $this->app->when(StatisticController::class)->needs(Repository::class)->give(function($app) {
 
             return new OrderRepository(new Order);
         });
