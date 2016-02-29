@@ -151,8 +151,6 @@
 @stop
 
 @section('javascript')
-{{-- Select2 4.0.1 --}}
-<script src="{{ URL::asset('js/plugins/select2.min.js') }}"></script>
 {{-- Daterangepicker for Daterangepicker --}}
 <script src="{{ URL::asset('js/plugins/moment.min.js') }}"></script>
 {{-- Daterangepicker --}}

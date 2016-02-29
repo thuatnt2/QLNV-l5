@@ -18,7 +18,8 @@
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{ URL::asset('css/_all-skins.min.css') }}">
     
- 
+    {{-- Select2 --}}
+    <link rel="stylesheet" href="{{ URL::asset('css/plugins/select2.min.css') }}">
     @yield('css')
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -72,7 +73,7 @@
                     </ul>
                     <form class="navbar-form navbar-left" role="search">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="navbar-search-input" placeholder="Tìm kiếm">
+                            <select class="form-control" id="navbar-search-input" multiple="multiple" placeholder="tìm kiếm"></select>
                         </div>
                     </form>
                 </div><!-- /.navbar-collapse -->
@@ -222,7 +223,8 @@
 <script src="{{ URL::asset('js/jQuery-2.1.4.min.js') }}"></script>
 <!-- Bootstrap 3.3.5 -->
 <script src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
-
+{{-- Select2 4.0.1 --}}
+<script src="{{ URL::asset('js/plugins/select2.min.js') }}"></script>
 @yield('javascript')
 </body>
 </html>
