@@ -28,7 +28,7 @@ Route::group(['middleware' => ['web']], function () {
 	    Route::get('order-list', ['as' => 'order.list', 'uses' => 'OrderController@orderList']);
 	    Route::get('edit-list/{id}', ['as' => 'order.edit-list', 'uses' => 'OrderController@editList']);
 	    Route::post('update-status/{id}', ['as' => 'update.status', 'uses' => 'OrderController@updateStatus']);
-	    Route::get('search/{query}', ['as' => 'search', 'uses' => 'OrderController@search']);
+	    Route::get('search', ['as' => 'search', 'uses' => 'OrderController@search']);
 	    // Orders
 	    Route::resource('statistics', 'StatisticController');
         // Units

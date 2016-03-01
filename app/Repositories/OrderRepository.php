@@ -30,6 +30,15 @@ class OrderRepository extends AbstractRepository
                     ->orderBy('created_at', 'desc')
                     ->get($columns);
     }
+
+    public function search($query)
+    {
+        return $this->order
+                    ->with('unit')
+                    ->where('order_name', 'like', '%'.$query.'%')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+    }
     public function paginate($perPage = 5, $condition = '=', $columns = ['*'])
     {
         return $this->order

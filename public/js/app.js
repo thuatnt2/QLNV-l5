@@ -97,15 +97,16 @@
   $('.phone').on('focus', function() {
     $(this).inputmask('(999[9]) 999 999[9]');
   });
-  $('#navbar-search-input').select2({
+  $('#search').select2({
+    multiple: true,
     placeholder: "Tìm kiếm.......",
     ajax: {
-      url: "https://qlyc.app/search",
+      url: "http://qlyc.app/search",
       dataType: 'json',
       delay: 250,
       data: function (params) {
       return {
-        q: params.term, // search term
+        query: params.term, // search term
         page: params.page
       };
     },
@@ -115,9 +116,12 @@
       // alter the remote JSON data, except to indicate that infinite
       // scrolling can be used
       params.page = params.page || 1;
-
+      for (var i = 0; i < data.length; i++) {
+        console.log(data[i].order_name);  
+      }
+      
       return {
-        results: data.items,
+        results: data,
         pagination: {
           more: (params.page * 30) < data.total_count
         }
@@ -127,7 +131,9 @@
   },
   escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
   minimumInputLength: 1,
-  //templateResult: formatRepo, // omitted for brevity, see the source of this page
+  templateResult: function(data) {
+    // console.log(data);
+  },
   //templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
   });
 })(jQuery);

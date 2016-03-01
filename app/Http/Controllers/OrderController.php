@@ -44,13 +44,12 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = $this->order->paginate(1, '<>');
+        $orders = $this->order->paginate(3, '<>');
         return view('orders.index', compact('orders'));
     }
     public function orderList()
     {
         $orders = $this->order->paginate(2);
-
         return view('orders.list', compact('orders'));
     }
     /**
@@ -153,10 +152,10 @@ class OrderController extends Controller
         return redirect()->back();
     }
 
-    public function search($query)
+    public function search()
     {
-        dd($query);
-      
+        $result = $this->order->search(request()->input('query'));
+        return  response()->json($result);
     }
     /**
      * Remove the specified resource from storage.

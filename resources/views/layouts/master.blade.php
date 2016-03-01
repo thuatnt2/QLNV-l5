@@ -73,7 +73,7 @@
                     </ul>
                     <form class="navbar-form navbar-left" role="search">
                         <div class="form-group">
-                            <select class="form-control" id="navbar-search-input" multiple="multiple" placeholder="tìm kiếm"></select>
+                            <select class="form-control" id="search"  placeholder="tìm kiếm"></select>
                         </div>
                     </form>
                 </div><!-- /.navbar-collapse -->
