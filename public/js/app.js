@@ -102,7 +102,7 @@
     ajax: {
       url: "https://qlyc.app/search",
       dataType: 'json',
-      delay: 50,
+      delay: 250,
       data: function (params) {
       return {
         q: params.term, // search term
