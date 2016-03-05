@@ -34,7 +34,7 @@ class OrderRepository extends AbstractRepository
     public function search($query)
     {
         return $this->order
-                    ->with('unit')
+                    ->with('unit','phones')
                     ->where('order_name', 'like', '%'.$query.'%')
                     ->orderBy('created_at', 'desc')
                     ->get();

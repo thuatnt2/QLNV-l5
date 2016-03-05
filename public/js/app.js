@@ -31,7 +31,6 @@
     var number = button.data('number');
 
 		var modal = $(this);
-    console.log(number);
         modal.find('.modal-title').append('Số DDT yêu cầu: ' +number);
   		  modal.find('form').attr('action', action);
         modal.find('#'+ status).prop('checked', 'checked');
@@ -99,11 +98,9 @@
   });
   $('#search').select2({
     multiple: true,
-    placeholder: "Tìm kiếm.......",
     ajax: {
-      url: "http://qlyc.app/search",
       dataType: 'json',
-      delay: 250,
+      delay: 50,
       data: function (params) {
       return {
         query: params.term, // search term
@@ -111,15 +108,7 @@
       };
     },
     processResults: function (data, params) {
-      // parse the results into the format expected by Select2
-      // since we are using custom formatting functions we do not need to
-      // alter the remote JSON data, except to indicate that infinite
-      // scrolling can be used
       params.page = params.page || 1;
-      for (var i = 0; i < data.length; i++) {
-        console.log(data[i].order_name);  
-      }
-      
       return {
         results: data,
         pagination: {
@@ -127,15 +116,36 @@
         }
       };
     },
-    cache: true
   },
   escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
-  minimumInputLength: 1,
-  templateResult: function(data) {
-    // console.log(data);
-  },
-  //templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+  minimumInputLength: 2,
+  templateResult: templateResult,
+  templateSelection: formatSelection,
+  }).on('select2:select', function(e) {
+    window.location.href = 'http://qlyc.app/orders/' + e.params.data.id;
   });
+  function templateResult(item) {
+
+      var markup = "";
+      var phones = ""
+      for (var i in item.phones) {
+            if(i > 0) {
+              phones += "/";
+            }
+            phones += item.phones[i].number;
+      }
+      if (item.order_name !== undefined) {
+          markup += "<table><tr><th>" + item.number_cv + "/" + item.unit.symbol + "</th></tr>" +
+          "<tr><td>" + item.order_name + " &#9866; " + phones + "</td></tr>";
+      }
+      else {
+        markup += "<option>" + item.text + "</option";
+      }
+      return markup;
+  }
+  function formatSelection(item) {
+    return item.order_name;
+  }
 })(jQuery);
 
 
