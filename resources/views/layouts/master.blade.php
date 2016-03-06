@@ -73,7 +73,7 @@
                     </ul>
                     <form class="navbar-form navbar-left" role="search">
                         <div class="form-group">
-                            <select class="form-control" id="search" allowClear="disable" data-placeholder="Tìm kiếm...." data-ajax--url="{{ route('search') }}" data-ajax--cache="true"></select>
+                            <select class="form-control" id="search" allowClear="disable" data-placeholder="Tìm kiếm...." data-ajax--url="{{ route('search') }}" data-ajax--cache="true" style="-webkit-appearance: none;-moz-appearance: none;"></select>
                         </div>
                     </form>
                 </div><!-- /.navbar-collapse -->

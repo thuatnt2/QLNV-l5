@@ -18,6 +18,7 @@ class CreateShipsTable extends Migration
             $table->foreign('phone_id')->references('id')->on('phones');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->string('file_name');
             $table->string('receive_name');
             $table->integer('page_number');
             $table->timestamp('date_submit');

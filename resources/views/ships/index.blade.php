@@ -41,9 +41,9 @@
             {!! Former::text('page_number', 'Số trang tin')->required()->addClass('input-sm'); !!}
             <div class="form-group required">
                 <label for="file" class="control-label col-lg-4 col-sm-4">File đính kèm<sup>*</sup></label>
-                <div class="col-lg-8 col-sm-8">
-                    <input type="text" class="form-control input-sm">
-                    <input accept="application/msword|application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/pdf" id="file" type="file" name="file" style="width: 0px; height: 0px">
+                <div class="col-lg-8 col-sm-8" id="uploadFile">
+                    <input type="text" class="form-control input-sm" name="file_name">
+                    <input accept="application/msword|application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/pdf" id="file" type="file" name="file" style="width: 0px; height: 0px; display: none;">
                 </div>
             </div>
         </div>

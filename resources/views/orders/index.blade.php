@@ -1,8 +1,7 @@
 @extends('layouts.master')
 
 @section('css')
-{{-- Select2 --}}
-<link rel="stylesheet" href="{{ URL::asset('css/plugins/select2.min.css') }}">
+
 {{-- DateRangepicker --}}
 <link rel="stylesheet" href="{{ URL::asset('css/plugins/daterangepicker.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
@@ -68,11 +67,27 @@
 <div class="row">
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">DS Yêu cầu giám sát</h3>
-            <div class="box-tools">
-
-                @include('pagination.limit_link', ['paginator' => $orders])            
+            <!-- <h3 class="box-title">DS Yêu cầu giám sát</h3> -->
+            <!-- <div class="box-tools"> -->
+            <div class="col-sm-3" >
+                <form class="form-horizontal" id="perPage">
+                    <div class="form-group">
+                        <label class="control-label col-lg-6 col-sm-6">DS yêu cầu giám sát</label>
+                        <div class="col-lg-4 col-sm-4">
+                            <select class="form-control input-sm">
+                                <option value="10"{{ $orders->perPage()==10 ? "selected":"" }}>10</option>
+                                <option value="25" {{ $orders->perPage()==25 ? "selected":"" }}>25</option>
+                                <option value="50" {{ $orders->perPage()==50 ? "selected":"" }}>50</option>
+                                <option value="100" {{ $orders->perPage()==100 ? "selected":"" }}>100</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
             </div>
+            <div class="col-sm-9">
+                @include('pagination.limit_link', ['paginator' => $orders])          
+            </div>    
+            <!-- </div> -->
         </div><!-- /.box-header -->
         <div class="box-body">
             <table id="example1" class="table table-bordered table-striped">

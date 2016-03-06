@@ -46,7 +46,7 @@
                 <div class="col-lg-8 col-sm-8">
                     <div class="input-group">
                         <input type="text" class="form-control input-sm"></input>
-                        <input accept="application/msword|application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/pdf" id="file" type="file" name="file" style="width: 0px; height: 0px">
+                        <input accept="application/msword|application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/pdf" id="file" type="file" name="file" style="width: 0px; height: 0px; display: none;">
                         <span class="input-group-addon"><i class="fa fa-plus add_phone"></i></span>
                     </div>
                 </div>

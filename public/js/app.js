@@ -96,6 +96,17 @@
   $('.phone').on('focus', function() {
     $(this).inputmask('(999[9]) 999 999[9]');
   });
+  $('#perPage').on('change', 'select', function() {
+    window.location.href = 'http://qlyc.app/orders?perPage=' + $(this).val() + '&page=1';
+  });
+  $('#uploadFile').on('click', 'input:first', function() {
+    $(':file').click();
+    $(':file').change(function(){
+      var filename = $(this).val().replace(/.*(\/|\\)/, '');
+      $('#uploadFile input:first').val(filename);
+    });
+    
+  });
   $('#search').select2({
     multiple: true,
     ajax: {
@@ -117,12 +128,18 @@
       };
     },
   },
+  "language": {
+       "noResults": function(){
+           return "Không tìm thấy kết quả nào...";
+       }
+   },
   escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
   minimumInputLength: 2,
   templateResult: templateResult,
   templateSelection: formatSelection,
   }).on('select2:select', function(e) {
     window.location.href = 'http://qlyc.app/orders/' + e.params.data.id;
+    $(this).val([]).trigger('change');
   });
   function templateResult(item) {
 
@@ -146,6 +163,7 @@
   function formatSelection(item) {
     return item.order_name;
   }
+
 })(jQuery);
 
 
