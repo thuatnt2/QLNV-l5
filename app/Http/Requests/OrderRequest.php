@@ -25,6 +25,7 @@ class OrderRequest extends Request
     {
         $rules = [
             'purpose' => 'required',
+            'file' => 'mimes:doc,docx,xls,xlsx,pdf'
         ];
         return $rules;
     }
@@ -33,6 +34,7 @@ class OrderRequest extends Request
     {
         $messages = [
             'purpose.required' => ':attribute phải có ít nhất một lựa chọn',
+            'file.mimes' => 'Chỉ upload file doc,docx,xls,xlsx,pdf'
         ];
 
         return $messages;
@@ -42,6 +44,7 @@ class OrderRequest extends Request
     {
         $attributes = [
             'purpose' => 'Mục đích yêu cầu',
+            'file' => 'File'
         ];
 
         return $attributes;

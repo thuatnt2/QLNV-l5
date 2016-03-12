@@ -5,6 +5,7 @@ use App\Contracts\Repository;
 use App\Order;
 use App\Phone;
 use Carbon\Carbon;
+use DB;
 
 class OrderRepository extends AbstractRepository
 {
@@ -52,10 +53,38 @@ class OrderRepository extends AbstractRepository
 
     public function statistics($startDate, $endDate)
     {
-        return $this->order
+        $query =  DB::table('orders')
+                    ->join('phones', 'orders.id', '=', 'phones.order_id')
+                    ->where('status', '=', 'success')
                     ->where('date_begin', '>=', $startDate)
-                    ->where('date_end', '<=', $endDate)
-                    ->get();
+                    ->where('date_end', '>=', $endDate)
+                    ->whereNull('orders.deleted_at');
+        $query1 = clone $query;
+        $query2 = clone $query;
+        $order = $query->count();
+        $news = $query->join('news', 'phones.id', '=', 'news.phone_id');
+        $number_news = $news->sum('number_news');
+        $page_number = $news->sum('page_number');
+
+        $units = $query->join('units', 'units.id', '=', 'orders.unit_id')
+                       ->join('order_purpose', 'order_purpose.order_id', '=', 'orders.id')
+                       ->join('purposes', 'order_purpose.purpose_id', '=', 'purposes.id')
+                       ->select('units.symbol', DB::raw('count(orders.id) as total'), DB::raw('count(news.id) as totalNews'),  DB::raw('sum(news.page_number) as totalPage'))
+                       ->groupBy('units.symbol')
+                       ->get();
+
+        $list = $query2->join('ships', 'phones.id', '=', 'ships.phone_id')
+                       ->sum('page_number');  
+
+        $units2 = $query2->join('units', 'units.id', '=', 'orders.unit_id')
+                       ->distinct('units.symbol')
+                       ->select('units.symbol', DB::raw('count(orders.id) as total'), DB::raw('sum(ships.page_number) as totalPageList'))
+                       ->groupBy('units.symbol')
+                       ->get();
+                       dd($units2);
+
+
+        return compact('order', 'number_news', 'page_number', 'list', 'units');
     }
     public function create(array $input, $fileName = '')
     {
@@ -69,7 +98,7 @@ class OrderRepository extends AbstractRepository
     	$this->order->customer_name = $input['customer_name'];
     	$this->order->customer_phone = $input['customer_phone'];
     	$this->order->date_order = Carbon::createFromFormat('d/m/Y', $input['created_at']);
-        $this->order->file = $fileName;
+        $this->order->file_name = $fileName;
     	$date_request = explode('-', $input['date_request']);
     	$this->order->date_end = Carbon::createFromFormat('d/m/Y', trim(array_pop($date_request)));
     	$this->order->date_begin = Carbon::createFromFormat('d/m/Y', trim(array_pop($date_request)));

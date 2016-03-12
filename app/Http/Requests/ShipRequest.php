@@ -7,12 +7,16 @@ use App\Http\Requests\Request;
 class ShipRequest extends Request
 {
     public $rules = [
-        'page_number' => 'required|numeric'
+        'phone' => 'required',
+        'page_list' => 'required|numeric',
+        'file' => 'mimes:doc,docx,xls,xlsx,pdf'
     ];
 
     public $messages = [
-        'page_number.required' => ':attribute bắt buộc',
-        'page_number.numeric' => ':attribute phải là kiểu số nguyên'
+        'phone.required' => ':attribute bắt buộc',
+        'page_list.required' => ':attribute bắt buộc',
+        'page_list.numeric' => ':attribute phải là kiểu số nguyên',
+        'file.mimes' => 'Chỉ upload file doc,docx,xls,xlsx,pdf'
     ];
     /**
      * Determine if the user is authorized to make this request.
@@ -42,7 +46,9 @@ class ShipRequest extends Request
     public function attributes()
     {
         return [
-            'page_number' => 'Số trang tin'
+            'phone' => 'Số công văn/ thuê bao',
+            'page_list' => 'Số trang list',
+            'file' => 'File'
         ];
     }
 }

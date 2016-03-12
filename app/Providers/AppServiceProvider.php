@@ -91,7 +91,7 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->when(NewsController::class)->needs(Repository::class)->give(function($app) {
 
-            return new NewsRepository(new News);
+            return new ShipRepository(new Ship);
         });
 
     }

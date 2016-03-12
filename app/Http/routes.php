@@ -29,8 +29,10 @@ Route::group(['middleware' => ['web']], function () {
 	    Route::get('edit-list/{id}', ['as' => 'order.edit-list', 'uses' => 'OrderController@editList']);
 	    Route::post('update-status/{id}', ['as' => 'update.status', 'uses' => 'OrderController@updateStatus']);
 	    Route::get('search', ['as' => 'search', 'uses' => 'OrderController@search']);
+	    Route::get('file/{folder}/{filename}', ['as' => 'file', 'uses' => 'OrderController@readFile']);
 	    // Orders
 	    Route::resource('statistics', 'StatisticController');
+	    Route::get('statistics/export/excel',['as' => 'excel', 'uses' => 'StatisticController@exportExcel']);
         // Units
         Route::resource('units', 'UnitController');
         // category

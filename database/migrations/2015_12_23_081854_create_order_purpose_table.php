@@ -30,6 +30,6 @@ class CreateOrderPurposeTable extends Migration
      */
     public function down()
     {
-        Schema::drop('order_perpose');
+        Schema::drop('order_purpose');
     }
 }

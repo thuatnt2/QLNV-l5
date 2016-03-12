@@ -9,8 +9,9 @@ use App\Http\Requests\OrderRequest;
 use App\Phone;
 use App\Repositories\UnitRepository;
 use Illuminate\Http\Request;
-
-
+use File;
+use Response;
+use App\Jobs\OfficeConversion;
 class OrderController extends Controller
 {
     protected $order;
@@ -68,18 +69,13 @@ class OrderController extends Controller
     {
         try {
             if($request->hasFile('file')) {
-                $file = $request->file('file');    
-                $alowedExtension = ['doc', 'docx', 'pdf', 'xls', 'xlsx'];
-                $extention = $file->getClientOriginalExtension();
-                $fileName = str_slug($request->get('order_name')) . '_' . \Carbon\Carbon::now()->timestamp . '.' . $extention;
-                $destinationPath = public_path() . '/uploads/orders';
-                if (in_array($extention, $alowedExtension)) {
-
-                    $file->move($destinationPath, $fileName);
-                };
-                $this->order->create($request->only($this->dataGet), $fileName);
+                $fileInfo = $this->uploadFile($request->file('file'), 'orders');
+                if($fileInfo) {
+                   $this->order->create($request->only($this->dataGet), $fileInfo['name']);   
+                }
             }
             else {
+
                 $this->order->create($request->only($this->dataGet));
             }
             return redirect()->back();
@@ -153,8 +149,6 @@ class OrderController extends Controller
         $phone->status = $request->get('status');
         $phone->save();
 
-        
-        
         return redirect()->back();
     }
 
@@ -162,6 +156,39 @@ class OrderController extends Controller
     {
         $result = $this->order->search(request()->input('query'));
         return  response()->json($result);
+    }
+    public function readFile()
+    {
+        $urlPath = request()->path();
+        $fileArray = pathinfo($urlPath);
+        $fileName = $fileArray['filename'];
+        $fileExtension  = $fileArray['extension'];
+        $dirName = str_replace('file', '/data', $fileArray['dirname']) . '/';
+        $baseName = $fileArray['basename'];
+        $pathToFile = base_path(). $dirName . $baseName;
+
+        if (File::isFile($pathToFile))
+        {           
+            if($fileExtension == "doc" || $fileExtension == "docx" || $fileExtension == "xlsx" || $fileExtension == "pptx")
+            {
+                return response()->download($pathToFile);
+            }
+            $file = File::get($pathToFile);
+            $response = Response::make($file, 200);
+            $content_types = [
+                'application/octet-stream', // txt etc
+                'application/msword', // doc
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document', //docx
+                'application/vnd.ms-excel', // xls
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // xlsx
+                'application/pdf', // pdf
+            ];
+            // using this will allow you to do some checks on it (if pdf/docx/doc/xls/xlsx)
+            $response->header('Content-Type', $content_types);
+
+            return $response;
+        }
+        dd('chiu rooi');
     }
     /**
      * Remove the specified resource from storage.

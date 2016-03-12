@@ -10,10 +10,12 @@ use App\Repositories\OrderRepository;
 use App\Repositories\UserRepository;
 use App\User;
 use Illuminate\Http\Request;
+use App\File;
+use App\Repositories\FileRepository;
 
 class NewsController extends Controller
 {
-    protected $news;
+    protected $ship;
     protected $user;
     protected $order;
 
@@ -21,15 +23,17 @@ class NewsController extends Controller
         'created_at',
         'phone',
         'number_cv_pa71',
-        'number_news',
-        'page_number',
+        'news',
+        'page_news',
+        'page_list',
+        'page_xmctb',
         'receive_name',
         'user_name'
     ];
 
-    public function __construct(Repository $news)
+    public function __construct(Repository $ship)
     {
-        $this->news = $news;
+        $this->ship = $ship;
         $this->user = new UserRepository(new User);
         $this->order = new OrderRepository(new Order);
 
@@ -49,18 +53,11 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = $this->news->paginate(1, ['phone', 'files']);
+        $perPage = request()->input('perPage', 10);
+        $news = $this->ship->paginate($perPage, true, ['phone', 'file']);
+        $news->appends(['perPage' => $perPage]);
+        
         return view('news.index', compact('news'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -72,8 +69,22 @@ class NewsController extends Controller
     public function store(NewsRequest $request)
     {
         try {
-            $this->news->create($request->only($this->dataGet));
+            $request->merge(array('news' => 1));
 
+            if ($request->hasFile('file')) {
+                $fileInfo = $this->uploadFile($request->file('file'), 'news');
+                if ($fileInfo) {
+                    $ship = $this->ship->create($request->only($this->dataGet), $fileInfo['original-name']);   
+
+                    //save info file
+                    $file = new FileRepository(new File);
+                    $fileInfo['ship_id'] = $ship->id;
+                    $file->create($fileInfo);
+                }
+            } 
+            else {
+                 $this->ship->create($request->only($this->dataGet));        
+            }
             return redirect()->back();
 
         } catch (Exception $e) {
@@ -123,7 +134,7 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        $this->news->delete($id);
+        $this->ship->delete($id);
         return redirect()->back();
     }
 }

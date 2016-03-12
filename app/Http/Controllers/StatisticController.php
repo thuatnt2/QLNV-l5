@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-
+use Excel;
 class StatisticController extends Controller
 {
 
@@ -45,14 +45,27 @@ class StatisticController extends Controller
      */
     public function store(Request $request)
     {
-        $reportrange = explode('-', $request['reportrange']);
-        $endDate = Carbon::createFromFormat('d/m/Y', trim(array_pop($reportrange)))->toDateString();
-        $startDate =  Carbon::createFromFormat('d/m/Y', trim(array_pop($reportrange)))->toDateString();
+        $reportrange = array_reverse(explode('-', $request['reportrange']));
+        $startDate = Carbon::createFromFormat('d/m/Y', trim($reportrange[1]))->toDateString();
+        $endDate =  Carbon::createFromFormat('d/m/Y', trim($reportrange[0]))->toDateString();
         $result = $this->order->statistics($startDate, $endDate);
-
-        return view('statistics.index', compact('result'));
+        return view('statistics.index', compact('result', 'reportrange'));
     }
+    public function exportExcel()
+    {
+        $data = 10;
+        Excel::create('tnt', function($excel) use ($data) {
 
+        // Call them separately
+        $excel->setDescription('A demonstration to change the file properties');
+        $excel->sheet('First sheet', function($sheet) use ($data) {
+            $sheet->row(1, array(
+                'Tổng số yêu cầu thực hiện', $data
+                ));
+           
+        });
+        })->export('xlsx');
+    }
     /**
      * Display the specified resource.
      *

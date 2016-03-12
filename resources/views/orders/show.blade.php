@@ -82,7 +82,7 @@
     		</tr>
     		<tr>
     			<th class="text-left" width="30%">File đính kèm</th>
-    			<td>{{  $order->filename  }}</td>
+    			<td><a href="{{ url('file',['orders', $order->file_name]) }}" target="true">{{  $order->file_name  }}</a></td>
     		</tr>
     		<tr>
     			<th class="text-left" width="30%">Trinh sát yêu cầu</th>
@@ -136,10 +136,10 @@
         				<td>Số công văn PA71: {{ $order->number_cv_pa71 }}</td>
         			</tr>
         			<tr>
-        				<td>Số trang tin: {{ $ship->page_number }}</td>
+        				<td>Số trang list: {{ $ship->page_list }}</td>
         			</tr>
         			<tr>
-        				<td>File đính kèm: {{ $ship->page_number }}</td>
+        				<td>File đính kèm: <a href="{{ url('file', ['ships', $ship->file->name]) }}" target="true">{{ $ship->file_name }}</a></td>
         			</tr>
         			<tr>
         				<td>Người nhận: {{ $ship->receive_name }}</td>
@@ -150,38 +150,37 @@
         			@endforeach
         			@endforeach
         			@else
-        			@foreach ($order->phones as $phone)
-
-        			<tr>
-        				<th colspan="2" bgcolor="#99CCFF">{{ $phone->number }}</th>
-        			</tr>
-        			@foreach($phone->news as $index=>$new)
-        			<tr>
-        				<th rowspan="7">Lần : {{ ++$index}}</th`>
-        					<td>Ngày giao: {{ $new->date_submit->format('d/m/Y') }}</td>
-        				</tr>
-        				<tr>
-        					<td>Số công văn PA71: {{ $new->number_cv_pa71 }}</td>
-        				</tr>
-        				<tr>
-        					<td>Số bản tin: {{ $new->number_news }}</td>
-        				</tr>
-        				<tr>
-        					<td>Số trang tin: {{ $new->page_number }}</td>
-        				</tr>
-        				<tr>
-        					<td>File đính kèm: {{ $new->page_number }}</td>
-        				</tr>
-        				<tr>
-        					<td>Người nhận: {{ $new->receive_name }}</td>
-        				</tr>
-        				<tr>
-        					<td>Người giao: {{ $new->user->name }}</td>
-        				</tr>
-        				@endforeach
-        				
-        				@endforeach
-        				@endif
+        			    @foreach ($order->phones as $phone)
+            			<tr>
+            				<th colspan="2" bgcolor="#99CCFF">{{ $phone->number }}</th>
+            			</tr>
+                			@foreach($phone->ships as $index=>$new)
+                    			<tr>
+                    				<th rowspan="7">Lần : {{ ++$index}}</th`>
+                    					<td>Ngày giao: {{ $new->date_submit->format('d/m/Y') }}</td>
+                    				</tr>
+                    				<tr>
+                    					<td>Số công văn PA71: {{ $new->number_cv_pa71 }}</td>
+                    				</tr>
+                    				<tr>
+                    					<td>Số bản tin: {{ $new->news }}</td>
+                    				</tr>
+                    				<tr>
+                    					<td>Số trang tin: {{ $new->page_news }}</td>
+                    				</tr>
+                    				<tr>
+                    					<td>File đính kèm: <a href="{{ url('file', ['news', $new->file->name])}}" target="true">{{ $new->file_name }}</a></td>
+                    				</tr>
+                    				<tr>
+                    					<td>Người nhận: {{ $new->receive_name }}</td>
+                    				</tr>
+                    				<tr>
+                    					<td>Người giao: {{ $new->user->name }}</td>
+                    				</tr>
+                				@endforeach
+            				
+            			@endforeach
+        			@endif
 
 
         	</table>

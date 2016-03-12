@@ -20,6 +20,7 @@ class CreateNewsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('number_cv_pa71');
             $table->string('receive_name');
+            $table->string('file_name');
             $table->integer('page_number');
             $table->integer('number_news');
             $table->timestamp('date_submit');

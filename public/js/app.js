@@ -92,12 +92,27 @@
         $(this).parents().eq(3).remove(); // eq increase 0
       });
   });
-  
+  // $('.muitiUpload').on('click', '.add_file', function() {
+  //     var fieldHTML = '<div class="form-group">' +
+  //     '<label for="file[]" class="control-label col-lg-4 col-sm-4">&nbsp;</label>' +
+  //     '<div class="col-lg-8 col-sm-8">' +
+  //     '<div class="input-group">' +
+  //     '<input type="text" class="form-control input-sm" name="file_name_1"></input>' +
+  //     '<span class="input-group-addon"><i class="fa fa-close"></i></span>' +
+  //     '</div>' +
+  //     '</div>' +
+  //     '</div>';
+  //     $('.muitiUpload').after(fieldHTML);
+  //     $('.fa-close').on('click', function() {
+  //       $(this).parents().eq(3).remove(); // eq increase 0
+  //     });
+  // });
   $('.phone').on('focus', function() {
     $(this).inputmask('(999[9]) 999 999[9]');
   });
   $('#perPage').on('change', 'select', function() {
-    window.location.href = 'http://qlyc.app/orders?perPage=' + $(this).val() + '&page=1';
+    console.log();
+    window.location.href = window.location.href + '?perPage=' + $(this).val() + '&page=1';
   });
   $('#uploadFile').on('click', 'input:first', function() {
     $(':file').click();

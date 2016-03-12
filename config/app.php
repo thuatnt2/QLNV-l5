@@ -157,6 +157,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Former\FormerServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 //        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         // Laracasts\Generators\GeneratorsServiceProvider::class,
 
@@ -206,6 +207,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
         'Former'    => Former\Facades\Former::class,
+        'Excel'     => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 

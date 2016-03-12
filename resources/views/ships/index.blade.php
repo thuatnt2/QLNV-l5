@@ -20,8 +20,8 @@
                 ->required()
                 ->addClass('input-sm daterange')
             !!}
-            <div class="form-group">
-                <label for="phone" class="control-label col-lg-4 col-sm-4">Số Cv - Thuê bao</label>
+            <div class="form-group <?php if($errors->has('phone')) echo 'has-error'?>">
+                <label for="phone" class="control-label col-lg-4 col-sm-4">Số Cv - Thuê bao<sup>*</sup></label>
                 <div class="col-lg-8 col-sm-8">
                     <select class="form-control input-sm" id="phone" name="phone" placeholder="Chọn thuê bao đã đăng ký">
                         @foreach($orders as $order)
@@ -34,16 +34,22 @@
                         </optgroup>
                         @endforeach
                     </select>
+                    <span class="help-block">
+                        <?php echo $errors->first('phone') ?>
+                    </span>
                 </div>
             </div>
         </div>
         <div class="col-sm-4">
-            {!! Former::text('page_number', 'Số trang tin')->required()->addClass('input-sm'); !!}
-            <div class="form-group required">
+            {!! Former::text('page_list', 'Số trang list')->required()->addClass('input-sm'); !!}
+            <div class="form-group required <?php if($errors->has('file')) echo 'has-error'?>">
                 <label for="file" class="control-label col-lg-4 col-sm-4">File đính kèm<sup>*</sup></label>
                 <div class="col-lg-8 col-sm-8" id="uploadFile">
                     <input type="text" class="form-control input-sm" name="file_name">
                     <input accept="application/msword|application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/pdf" id="file" type="file" name="file" style="width: 0px; height: 0px; display: none;">
+                    <span class="help-block">
+                        <?php echo $errors->first('file') ?>
+                    </span>
                 </div>
             </div>
         </div>
@@ -64,10 +70,24 @@
 <div class="row">
 	<div class="box">
 		<div class="box-header">
-            <h3 class="box-title">DS List-XMCTB đã giao</h3>
-            <div class="box-tools">
-                @include('pagination.limit_link', ['paginator' => $ships])            
+            <div class="col-sm-3" >
+                <form class="form-horizontal" id="perPage">
+                    <div class="form-group">
+                        <label class="control-label col-lg-6 col-sm-6">DS List-XMCTB đã giao</label>
+                        <div class="col-lg-4 col-sm-4">
+                            <select class="form-control input-sm">
+                                <option value="10"{{ $ships->perPage()==10 ? "selected":"" }}>10</option>
+                                <option value="25" {{ $ships->perPage()==25 ? "selected":"" }}>25</option>
+                                <option value="50" {{ $ships->perPage()==50 ? "selected":"" }}>50</option>
+                                <option value="100" {{ $ships->perPage()==100 ? "selected":"" }}>100</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
             </div>
+            <div class="col-sm-9">
+                @include('pagination.limit_link', ['paginator' => $ships])          
+            </div>    
         </div><!-- /.box-header -->
         <div class="box-body">
             <table id="example1" class="table table-bordered table-striped">
@@ -82,7 +102,8 @@
                         <th class="text-center">Loại ĐT</th>
                         <th class="text-center">Tính chất</th>
                         <th class="text-center" width="13%">Thời gian yêu cầu</th>
-                        <th class="text-center">Số trang tin</th>
+                        <th class="text-center">Mục đích y/c</th>
+                        <th class="text-center">Số trang</th>
                         <th class="text-center" width="8%">Ghi chú</th>
                         <th class="text-center" width="6%">Thao tác</th>
                     </tr>
@@ -99,7 +120,15 @@
                         <td class="text-center">{{ $ship->phone->order->category->symbol }}</td>
                         <td class="text-center">{{ $ship->phone->order->kind->symbol }}</td>
                         <td class="text-center">{{ $ship->phone->order->date_begin->format('d/m/Y') . ' &rarr; ' . $ship->phone->order->date_end->format('d/m/Y')  }}</td>
-                        <td class="text-center">{{ $ship->page_number}}</td>
+                        <td>
+                            @foreach($ship->phone->order->purposes as $index=>$purpose)
+                                @if ($index > 0)
+                                    ;
+                                @endif
+                                {{ $purpose->symbol }}
+                            @endforeach
+                        </td>
+                        <td class="text-center">{{ $ship->page_list}}</td>
                         <td class="text-center">{{ $ship->phone->order->comment}}</td>
                         <td class="text-center"width="6%">
                             <button class="btn btn-warning btn-xs fa fa-edit" data-url="{{ action('ShipController@edit', $ship->id) }}" type="button" title="Sửa"></button>

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Repository;
+use App\File;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Http\Requests\ShipRequest;
 use App\Order;
+use App\Repositories\FileRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\UserRepository;
 use App\User;
@@ -20,7 +22,10 @@ class ShipController extends Controller
         'created_at',
         'phone',
         'number_cv_pa71',
-        'page_number',
+        'news',
+        'page_news',
+        'page_list',
+        'page_xmctb',
         'receive_name',
         'user_name'
     ];
@@ -47,7 +52,10 @@ class ShipController extends Controller
      */
     public function index()
     {
-        $ships = $this->ship->paginate(1, ['phone']);
+        $perPage = request()->input('perPage', 10);
+        $ships = $this->ship->paginate($perPage, false, ['phone', 'file']);
+        $ships->appends(['perPage' => $perPage]);
+
         return view('ships.index', compact('ships'));
     }
 
@@ -70,8 +78,23 @@ class ShipController extends Controller
     public function store(ShipRequest $request)
     {
         try {
-            $this->ship->create($request->only($this->dataGet));
+            // Co the chua bat dc exeption khi upload file
+            if ($request->hasFile('file')) {
+                $fileInfo = $this->uploadFile($request->file('file'), 'ships');
+                if ($fileInfo) {
+                    $ship = $this->ship->create($request->only($this->dataGet), $fileInfo['original-name']);
+                    //save info file
+                    $file = new FileRepository(new File);
+                    $fileInfo['ship_id'] = $ship->id;
+                    $file->create($fileInfo);
+                }
+            }
+            else {
+                $this->ship->create($request->only($this->dataGet));    
+            }
+           
             return redirect()->back();
+
         } catch (Exception $e) {
             return redirect()->back()->withInput()->with('error', 'Xãy ra lỗi khi thêm dữ liệu');
         }
@@ -119,7 +142,7 @@ class ShipController extends Controller
      */
     public function destroy($id)
     {
-        $this->ship->delete($id);
+        $this->ship->delete($id, true);
         return redirect()->back();
     }
 }

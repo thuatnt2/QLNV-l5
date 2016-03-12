@@ -22,6 +22,10 @@ class PurposesTableSeeder extends Seeder {
                  "group"   => "list",
             ],
             [
+                 "symbol" => "imeil",
+                 "group"   => "list",
+            ],
+            [
                  "symbol" => "giám sát",
                  "group"   => "monitor",
             ],
