@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Contracts\Repository;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-use Illuminate\Http\Request;
+use App\Order;
+use App\Repositories\OrderRepository;
 use Carbon\Carbon;
 use Excel;
+use Illuminate\Http\Request;
 class StatisticController extends Controller
 {
 
@@ -53,16 +55,28 @@ class StatisticController extends Controller
     }
     public function exportExcel()
     {
-        $data = 10;
-        Excel::create('tnt', function($excel) use ($data) {
+        $date = request()->input('date');
+        $arrayDate = str_split( $date, 8);
+
+        $startDate = $this->order->stringToDate($arrayDate[0]); 
+        $endDate = $this->order->stringToDate($arrayDate[1]);
+        $orderRepo = new OrderRepository(new Order);
+
+        $data = $orderRepo->statistics($startDate, $endDate);
+        Excel::create($date, function($excel) use ($data) {
 
         // Call them separately
-        $excel->setDescription('A demonstration to change the file properties');
-        $excel->sheet('First sheet', function($sheet) use ($data) {
-            $sheet->row(1, array(
-                'Tổng số yêu cầu thực hiện', $data
-                ));
-           
+        $excel->setDescription('File created by TNT');
+        // Set top, right, bottom, left
+        $excel->sheet('tnt', function($sheet) use ($data) {
+            $sheet->setPageMargin(array(
+                0.25, 0.25, 0.25, 1
+            ));
+            // Font family
+            $sheet->setFontFamily('Times New Roman');
+            // Font size
+            $sheet->setFontSize(14);
+            $sheet->loadView('statistics.output', ['result' => $data]);
         });
         })->export('xlsx');
     }

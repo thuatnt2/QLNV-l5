@@ -33,6 +33,7 @@ Route::group(['middleware' => ['web']], function () {
 	    // Orders
 	    Route::resource('statistics', 'StatisticController');
 	    Route::get('statistics/export/excel',['as' => 'excel', 'uses' => 'StatisticController@exportExcel']);
+	    Route::get('statistics/export/pdf',['as' => 'pdf', 'uses' => 'StatisticController@exportPdf']);
         // Units
         Route::resource('units', 'UnitController');
         // category

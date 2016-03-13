@@ -25,6 +25,10 @@
 		</div>
 	</div>
 @if (isset($reportrange))
+  <?php 
+    $output = preg_replace( '/[^0-9]/', '', $reportrange );
+    $output = implode(array_reverse($output));
+  ?>
   <div class="row">
     <div class="box">
       {!! Former::setOption('TwitterBootstrap3.labelWidths', ['large' => 4, 'small' => 4]) !!}
@@ -33,7 +37,7 @@
             <legend>
               <span>Kết quả thống kê</span>
               <a href="#" style="float: right; margin-right: 15px"><img src="{{ asset('icon/pdf.png') }}"></a>
-              <a href="{{ route('excel') }} " style="float: right; margin-right: 15px"><img src="{{ asset('icon/excel.png') }}"></a>
+              <a href="{{ route('excel', 'date='.$output) }} " style="float: right; margin-right: 15px"><img src="{{ asset('icon/excel.png') }}"></a>
             </legend>
           
             @if (isset($result))

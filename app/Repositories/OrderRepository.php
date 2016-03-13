@@ -103,7 +103,7 @@ class OrderRepository extends AbstractRepository
                            }
                        }
                    }
-        return compact('order', 'purposes', 'total', 'units');
+        return compact('order', 'purposes', 'total', 'units', 'startDate', 'endDate');
     }
     public function create(array $input, $fileName = '')
     {

@@ -107,8 +107,16 @@ abstract class AbstractRepository implements Repository
         
         return $output;
     }
-
-
+    // return date formart (Y-m-d)
+    public function stringToDate($value = '')
+    {
+      $arr = str_split($value, 4);
+      $y = $arr[1];
+      $arr2 = str_split($arr[0], 2);
+      $d = $arr2[0];
+      $m = $arr2[1];
+      return $y . '-' . $m . '-' . $d;
+    }
     public function vn_str_filter ($str){
 
        $unicode = array(
