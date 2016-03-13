@@ -53,38 +53,57 @@ class OrderRepository extends AbstractRepository
 
     public function statistics($startDate, $endDate)
     {
+        // init query
         $query =  DB::table('orders')
                     ->join('phones', 'orders.id', '=', 'phones.order_id')
                     ->where('status', '=', 'success')
                     ->where('date_begin', '>=', $startDate)
                     ->where('date_end', '>=', $endDate)
                     ->whereNull('orders.deleted_at');
+        // init element copy
         $query1 = clone $query;
         $query2 = clone $query;
         $order = $query->count();
-        $news = $query->join('news', 'phones.id', '=', 'news.phone_id');
-        $number_news = $news->sum('number_news');
-        $page_number = $news->sum('page_number');
 
-        $units = $query->join('units', 'units.id', '=', 'orders.unit_id')
-                       ->join('order_purpose', 'order_purpose.order_id', '=', 'orders.id')
+        $query = $query->join('order_purpose', 'order_purpose.order_id', '=', 'orders.id')
                        ->join('purposes', 'order_purpose.purpose_id', '=', 'purposes.id')
-                       ->select('units.symbol', DB::raw('count(orders.id) as total'), DB::raw('count(news.id) as totalNews'),  DB::raw('sum(news.page_number) as totalPage'))
-                       ->groupBy('units.symbol')
-                       ->get();
-
-        $list = $query2->join('ships', 'phones.id', '=', 'ships.phone_id')
-                       ->sum('page_number');  
-
-        $units2 = $query2->join('units', 'units.id', '=', 'orders.unit_id')
-                       ->distinct('units.symbol')
-                       ->select('units.symbol', DB::raw('count(orders.id) as total'), DB::raw('sum(ships.page_number) as totalPageList'))
-                       ->groupBy('units.symbol')
-                       ->get();
-                       dd($units2);
-
-
-        return compact('order', 'number_news', 'page_number', 'list', 'units');
+                       ->select(DB::raw('count(orders.id) as purposeOrder'));
+        $query3 = clone $query;
+        // count purposes order                  
+        $purposes = $query->groupBy('purposes.group')
+                          ->get();
+        // sum new, sum page_new, sum page_list                  
+        $total = $query1->join('ships', 'phones.id', '=', 'ships.phone_id')
+                        ->select(DB::raw('sum(news) as news'),
+                            DB::raw('sum(page_news) as pageNews'), 
+                            DB::raw('sum(page_list) as pageList')
+                        )
+                        ->whereNull('ships.deleted_at')    
+                        ->get();
+        // count purpose order on unit                
+        $purposeUnit = $query3->join('units', 'units.id', '=', 'orders.unit_id') 
+                              ->select('units.symbol', DB::raw('count(orders.id) as purposeOrder'))
+                              ->groupBy('units.symbol')
+                              ->get();
+        $units = $query2->join('units', 'units.id', '=', 'orders.unit_id')
+                        ->join('ships', 'phones.id', '=', 'ships.phone_id')
+                        ->distinct('orders.symbol')
+                        ->select('units.symbol',
+                            DB::raw('sum(ships.news) as numberNews'),
+                            DB::raw('sum(ships.page_news) as pageNews'),
+                            DB::raw('sum(ships.page_list) as pageList')
+                        )
+                        ->whereNull('ships.deleted_at')  
+                        ->groupBy('units.symbol')
+                        ->get();
+                   foreach ($units as $index1 => $unit) {
+                       foreach ($purposeUnit as $key => $value) {
+                           if($value->symbol == $unit->symbol) {
+                             $unit->total = $value->purposeOrder;
+                           }
+                       }
+                   }
+        return compact('order', 'purposes', 'total', 'units');
     }
     public function create(array $input, $fileName = '')
     {

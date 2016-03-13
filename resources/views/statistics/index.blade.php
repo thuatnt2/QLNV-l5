@@ -47,17 +47,24 @@
                     <table class="table table-bordered">
                       <tr class="success">
                         <th class="text-center">Nội dung</th>
-                        <td class="text-center">Tổng số yêu cầu thực hiện</td>
-                        <td class="text-center">Tổng số bản tin đã giao</td>
-                        <td class="text-center">Tổng số trang tin đã giao</td>
-                        <td class="text-center">Tổng số trang tin list</td>
+                        <td class="text-center">Tổng số yêu cầu</td>
+                        <td class="text-center">Yêu cầu giám sát</td>
+                        <td class="text-center">Yêu cầu list</td>
+                        <td class="text-center">Tổng số bản tin </td>
+                        <td class="text-center">Tổng số trang tin </td>
+                        <td class="text-center">Tổng số trang list</td>
                       </tr>
                       <tr>
                         <th class="text-center">Kết quả</th>
                         <td class="text-center">{{ $result['order'] }}</td>
-                        <td class="text-center">{{ $result['number_news'] }}</td>
-                        <td class="text-center">{{ $result['page_number'] }}</td>
-                        <td class="text-center">{{ $result['list'] }}</td>
+                        @foreach ($result['purposes'] as $element)
+                          <td class="text-center"> {{ $element->purposeOrder }} </td>
+                        @endforeach
+                        @foreach ($result['total'] as $total)
+                          <td class="text-center"> {{ $total->news }} </td>
+                          <td class="text-center"> {{ $total->pageNews }} </td>
+                          <td class="text-center"> {{ $total->pageList }} </td>
+                        @endforeach
                       </tr>
                     </table>
                   </div><!-- /.box-body -->
@@ -73,26 +80,21 @@
                         <th class="text-center">STT</th>
                         <th class="text-center">Tên đơn vị</th>
                         <th class="text-center">Số yêu cầu</th>
+<!--                         <th class="text-center">Yêu cầu giám sát</th>
+                        <th class="text-center">Yêu cầu list</th> -->
                         <th class="text-center">Số bản tin</th>
                         <th class="text-center">Số trang tin</th>
                         <th class="text-center">Số trang list</th>
-                        <th class="text-center">Số trang xmctb</th>
-                        <th class="text-center">Số trang imeil</th>
-                        <th class="text-center">Số trang email</th>
                       </tr>
+                      
                       @foreach ($result['units'] as $index => $unit)
                         <tr>
-                          <td class="text-center">{{ ++$index }}</td>
-                          <td>{{ $unit->symbol }}</td>
-                          <td class="text-center">
-                            {{ $unit->total }}
-                          </td>
-                          <td class="text-center">
-                            {{ $unit->totalNews }}
-                          </td>
-                          <td class="text-center">
-                            {{ $unit->totalPage }}
-                          </td>
+                          <td class="text-center"> {{ ++$index }} </td>
+                          <td class="text-center"> {{ $unit->symbol }} </td>
+                          <td class="text-center"> {{ $unit->total }} </td>
+                          <td class="text-center"> {{ $unit->numberNews }} </td>
+                          <td class="text-center"> {{ $unit->pageNews }} </td>
+                          <td class="text-center"> {{ $unit->pageList }} </td>
                         </tr>
                       @endforeach
                       
