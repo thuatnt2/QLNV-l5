@@ -5,35 +5,44 @@
     tr, td {
       text-align: center;
     }
-/*    table {
+    table {
       border-collapse: collapse;
     }
-    table, td, th {
-      border: 1px solid black;
-    }*/
+    table > tr:first-child {
+      background-color: #dff0d8;
+    }
+    table > tr > td {
+      border: 1px solid #000000;
+    }
   </style>
 </head>
 <body>
   <tr>
+    <td colspan="2" style="font-weight: bold;">
+     CÔNG AN TỈNH QUẢNG BÌNH
+    </td>
+    <td></td>
+    <td></td>
+    <td colspan="4" style="font-weight: bold;">
+      CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+    </td>
+  </tr>
+  <tr>
     <td colspan="2">
-      <strong style="font-size: 14px">CÔNG AN TỈNH QUẢNG BÌNH</strong>PHÒNG KTNV II - ĐỘI BP3
+      PHÒNG KTNV II - ĐỘI BP3
     </td>
     <td></td>
     <td></td>
-    <td colspan="4">
-      <strong style="font-size: 14px">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</strong>
-      Độc lập - Tự do - Hạnh phúc
-    </td>
+    <td colspan="4">Độc lập - Tự do - Hạnh phúc</td>
   </tr>
+  <tr></tr>
   <tr>
     <td></td>
     <td></td>
     <td></td>
     <td></td>
-    <td></td>
-    <td></td>
-    <td>
-      <i>Quảng Bình, ngày <?php echo date('d') ?> tháng <?php echo date('m') ?> năm <?php echo date('Y') ?></i>
+    <td colspan="4" style="font-style: italic;">
+      Quảng Bình, ngày <?php echo date('d') ?> tháng <?php echo date('m') ?> năm <?php echo date('Y') ?>
     </td>
   </tr>
   <tr></tr>
@@ -41,55 +50,68 @@
   <tr></tr>
   <tr></tr>
   <tr>
-    <td>Kết quả thực hiện từ ngày</td>  
+    <td colspan="8" style="text-align: left;">
+    Kết quả thực hiện từ ngày {{ $result['startDate'] }} đến ngày {{ $result['endDate'] }}
+    </td>  
   </tr>
-  <table>
+  <tr></tr>
+  
   @if (isset($result))
     <tr>
-        <td>Kết quả chung</td> 
+        <td colspan="8" style="text-align: left;">Kết quả chung</td> 
     </tr>
-    <tr style="background-color: #dff0d8;">
-      <td>Nội dung</td>
-      <td>Tổng số yêu cầu</td>
-      <td>Yêu cầu giám sát</td>
-      <td>Yêu cầu list</td>
-      <td>Tổng số bản tin </td>
-      <td>Tổng số trang tin </td>
-      <td>Tổng số trang list</td>
-    </tr>
+    <tr></tr>
+    <table><!-- Table 1 -->
+        <tr>
+          <td >Nội dung</td>
+          <td>Tổng số yêu cầu</td>
+          <td>Yêu cầu giám sát</td>
+          <td>Yêu cầu list</td>
+          <td>Tổng số bản tin </td>
+          <td>Tổng số trang tin </td>
+          <td>Tổng số trang list</td>
+        </tr>
+        <tr>
+          <td>Kết quả</td>
+          <td>{{ $result['order'] }}</td>
+          @foreach ($result['purposes'] as $element)
+            <td> {{ $element->purposeOrder }} </td>
+          @endforeach
+          @foreach ($result['total'] as $total)
+            <td> {{ $total->news }} </td>
+            <td> {{ $total->pageNews }} </td>
+            <td> {{ $total->pageList }} </td>
+          @endforeach
+        </tr>
+    </table> <!-- End Table1 -->
+   
+    <tr></tr>
     <tr>
-      <td>Kết quả</td>
-      <td>{{ $result['order'] }}</td>
-      @foreach ($result['purposes'] as $element)
-        <td> {{ $element->purposeOrder }} </td>
+      <td colspan="2" style="text-align: left;">Cụ thể từng đơn vị</td>    
+    </tr>
+    <tr></tr>
+    <table>  <!-- Table 2 -->
+        <tr>
+          <td>STT</td>
+          <td>Tên đơn vị</td>
+          <td>Tổng số yêu cầu</td>
+          <td>Giám sát</td>
+          <td>List </td>
+          <td>Số bản tin</td>
+          <td>Số trang tin</td>
+          <td>Số trang list</td>
+        </tr>
+      @foreach ($result['units'] as $index => $unit)
+        <tr>
+          <td> {{ ++$index }} </td>
+          <td> {{ $unit->symbol }} </td>
+          <td> {{ $unit->total }} </td>
+          <td> {{ $unit->numberNews }} </td>
+          <td> {{ $unit->pageNews }} </td>
+          <td> {{ $unit->pageList }} </td>
+        </tr>
       @endforeach
-      @foreach ($result['total'] as $total)
-        <td> {{ $total->news }} </td>
-        <td> {{ $total->pageNews }} </td>
-        <td> {{ $total->pageList }} </td>
-      @endforeach
-    </tr>
-    <tr>
-      <td>Cụ thể từng đơn vị</td>    
-    </tr>
-    <tr style="background-color: #dff0d8;">
-      <td>STT</td>
-      <td>Tên đơn vị</td>
-      <td>Số yêu cầu</td>
-      <td>Số bản tin</td>
-      <td>Số trang tin</td>
-      <td>Số trang list</td>
-    </tr>
-    @foreach ($result['units'] as $index => $unit)
-      <tr>
-        <td> {{ ++$index }} </td>
-        <td> {{ $unit->symbol }} </td>
-        <td> {{ $unit->total }} </td>
-        <td> {{ $unit->numberNews }} </td>
-        <td> {{ $unit->pageNews }} </td>
-        <td> {{ $unit->pageList }} </td>
-      </tr>
-    @endforeach
+    </table> <!-- End Table2 -->
   @endif
   </table>
 </body>  

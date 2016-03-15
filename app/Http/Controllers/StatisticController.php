@@ -70,12 +70,12 @@ class StatisticController extends Controller
         // Set top, right, bottom, left
         $excel->sheet('tnt', function($sheet) use ($data) {
             $sheet->setPageMargin(array(
-                0.25, 0.25, 0.25, 1
+                0.75, 0.75, 0.75, 1.25
             ));
             // Font family
             $sheet->setFontFamily('Times New Roman');
             // Font size
-            $sheet->setFontSize(14);
+            $sheet->setFontSize(12);
             $sheet->loadView('statistics.output', ['result' => $data]);
         });
         })->export('xlsx');
