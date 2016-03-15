@@ -1,6 +1,6 @@
 <html>
 <head>
-  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <style type="text/css">
     tr, td {
       text-align: center;
@@ -23,7 +23,8 @@
     </td>
     <td></td>
     <td></td>
-    <td colspan="4" style="font-weight: bold;">
+    <td></td>
+    <td colspan="3" style="font-weight: bold;">
       CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
     </td>
   </tr>
@@ -33,7 +34,8 @@
     </td>
     <td></td>
     <td></td>
-    <td colspan="4">Độc lập - Tự do - Hạnh phúc</td>
+    <td></td>
+    <td colspan="3">Độc lập - Tự do - Hạnh phúc</td>
   </tr>
   <tr></tr>
   <tr>
@@ -41,7 +43,8 @@
     <td></td>
     <td></td>
     <td></td>
-    <td colspan="4" style="font-style: italic;">
+    <td></td>
+    <td colspan="3" style="font-style: italic;">
       Quảng Bình, ngày <?php echo date('d') ?> tháng <?php echo date('m') ?> năm <?php echo date('Y') ?>
     </td>
   </tr>

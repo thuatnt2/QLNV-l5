@@ -96,13 +96,15 @@ class OrderRepository extends AbstractRepository
                         ->whereNull('ships.deleted_at')  
                         ->groupBy('units.symbol')
                         ->get();
-                   foreach ($units as $index1 => $unit) {
-                       foreach ($purposeUnit as $key => $value) {
-                           if($value->symbol == $unit->symbol) {
-                             $unit->total = $value->purposeOrder;
-                           }
-                       }
-                   }
+        foreach ($units as $index1 => $unit) {
+            foreach ($purposeUnit as $key => $value) {
+                if($value->symbol == $unit->symbol) {
+                    $unit->total = $value->purposeOrder;
+                }
+            }
+        }
+        $startDate = Carbon::parse($startDate)->format('d/m/Y');
+        $endDate = Carbon::parse($endDate)->format('d/m/Y');
         return compact('order', 'purposes', 'total', 'units', 'startDate', 'endDate');
     }
     public function create(array $input, $fileName = '')

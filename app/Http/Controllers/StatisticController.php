@@ -9,6 +9,7 @@ use App\Order;
 use App\Repositories\OrderRepository;
 use Carbon\Carbon;
 use Excel;
+use PDF;
 use Illuminate\Http\Request;
 class StatisticController extends Controller
 {
@@ -72,10 +73,11 @@ class StatisticController extends Controller
             $sheet->setPageMargin(array(
                 0.75, 0.75, 0.75, 1.25
             ));
+            $sheet->setOrientation('landscape');
             // Font family
             $sheet->setFontFamily('Times New Roman');
             // Font size
-            $sheet->setFontSize(12);
+            $sheet->setFontSize(14);
             $sheet->loadView('statistics.output', ['result' => $data]);
         });
         })->export('xlsx');

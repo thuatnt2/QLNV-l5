@@ -31,12 +31,10 @@
   ?>
   <div class="row">
     <div class="box">
-      {!! Former::setOption('TwitterBootstrap3.labelWidths', ['large' => 4, 'small' => 4]) !!}
-        {!! Former::horizontal_open(url('statistics'))->id('form-create') !!}
+        <form>
           <fieldset>
             <legend>
               <span>Kết quả thống kê</span>
-              <a href="#" style="float: right; margin-right: 15px"><img src="{{ asset('icon/pdf.png') }}"></a>
               <a href="{{ route('excel', 'date='.$output) }} " style="float: right; margin-right: 15px"><img src="{{ asset('icon/excel.png') }}"></a>
             </legend>
           
@@ -109,7 +107,7 @@
               <p  style="font-size: 16px; margin-left: 10px">Không tìm thấy kết quả từ {{ trim(array_pop($reportrange)) }} đến ngày {{ trim(array_pop($reportrange)) }}</p>  
             @endif
           </fieldset>
-        {!! Former::close() !!}
+          </form>
     </div>
   </div>
 @endif
