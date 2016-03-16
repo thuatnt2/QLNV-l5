@@ -153,7 +153,8 @@
   templateResult: templateResult,
   templateSelection: formatSelection,
   }).on('select2:select', function(e) {
-    window.location.href = 'http://qlyc.app/orders/' + e.params.data.id;
+    console.log(window.location);
+   window.location.href = '/orders/' + e.params.data.id;
     $(this).val([]).trigger('change');
   });
   function templateResult(item) {

@@ -71,7 +71,7 @@ class StatisticController extends Controller
         // Set top, right, bottom, left
         $excel->sheet('tnt', function($sheet) use ($data) {
             $sheet->setPageMargin(array(
-                0.75, 0.75, 0.75, 1.25
+                0.25, 0.5, 0.5, 0.75
             ));
             $sheet->setOrientation('landscape');
             // Font family
