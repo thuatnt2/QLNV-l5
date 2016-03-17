@@ -40,15 +40,16 @@ class OrderRepository extends AbstractRepository
                     ->orderBy('created_at', 'desc')
                     ->get();
     }
-    public function paginate($perPage = 5, $condition = '=', $columns = ['*'])
+    public function paginate($perPage = 5, $condition = '', $columns = ['*'])
     {
-        return $this->order
-                    ->with('unit', 'kind', 'category', 'user', 'phones', 'purposes')
-                    ->whereHas('purposes', function($q) use ($condition) {
-                        $q->where( 'group', $condition , 'list');
-                    })
-                    ->orderBy('created_at', 'desc')
-                    ->paginate($perPage, $columns);
+        $query = $this->order
+                      ->with('unit', 'kind', 'category', 'user', 'phones', 'purpose')
+                      ->orderBy('created_at', 'desc');
+        if ($condition != '') {
+            $query->where('purpose_id', $condition);
+        }
+
+        return $query->paginate($perPage, $columns);
     }
 
     public function statistics($startDate, $endDate)
@@ -113,6 +114,7 @@ class OrderRepository extends AbstractRepository
     	$this->order->kind_id = $input['kind'];
     	$this->order->category_id = $input['category'];
     	$this->order->unit_id = $input['unit'];
+        $this->order->purpose_id = $input['purpose'];
     	$this->order->number_cv = $input['number_cv'];
     	$this->order->number_cv_pa71 = $input['number_cv_pa71'];
     	$this->order->order_name = $input['order_name'];
@@ -133,8 +135,6 @@ class OrderRepository extends AbstractRepository
             $newPhone->status = 'warning';
             $this->order->phones()->save($newPhone);
         }
-        $this->order->purposes()->sync($input['purpose']);
-
     }
 
     public function update($id, array $input)

@@ -26,6 +26,9 @@ class CreateOrdersTable extends Migration
             $table->integer('unit_id')->unsigned();
             $table->foreign('unit_id')->references('id')->on('units');
 
+            $table->integer('purpose_id')->unsigned();
+            $table->foreign('purpose_id')->references('id')->on('purposes');
+
             $table->integer('number_cv');
             $table->integer('number_cv_pa71');
             $table->string('order_name');

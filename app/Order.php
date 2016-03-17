@@ -24,10 +24,10 @@ class Order extends Model
 	}
 
 
-    public function purposes()
+    public function purpose()
     {
 
-    	return $this->belongsToMany(Purpose::class);
+    	return $this->belongsTo(Purpose::class);
 
     }
 

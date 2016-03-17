@@ -47,17 +47,16 @@
                     <ul class="nav navbar-nav">
                         <li><a href="{{ url('/') }}"><i class="fa fa-home fa-lg"></i></a></li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle " data-toggle="dropdown" aria-expanded="false">Giám sát&nbsp;&nbsp;<span class="fa fa-caret-down"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('orders') }}">Yêu cầu</a></li>
-                                <li><a href="{{ url('news') }}">Giao tin</a></li>
-                            </ul>
+                            <a href="{{ url('orders') }}">Đăng ký&nbsp;&nbsp;</a>
+                            
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">List - XMCTB&nbsp;&nbsp;<span class="fa fa-caret-down"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Giao yêu cầu&nbsp;&nbsp;<span class="fa fa-caret-down"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('order-list') }}">Yêu cầu</a></li>
-                                <li><a href="{{ url('ships') }}">Giao list-xmctb</a></li>
+                                <li><a href="{{ url('ships') }}">Giám sát</a></li>
+                                <li><a href="{{ url('ships') }}">List</a></li>
+                                <li><a href="{{ url('ships') }}">XMCTB</a></li>
+                                <li><a href="{{ url('ships') }}">Emei</a></li>
                              </ul>
                         </li>
                         <li ><a href="{{ url('statistics') }}">Thống kê</a></li>

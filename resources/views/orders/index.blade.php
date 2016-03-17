@@ -37,11 +37,11 @@
              !!}
             {!! Former::select('category')->label('Loại đối tượng')->options($categories)->addClass('input-sm') !!}
             {!! Former::select('kind')->label('Tính chất')->options($kinds)->addClass('input-sm') !!}
-            <input type="hidden" name="purpose[]" value="{{ $purpose->id }}">
             {!! Former::text('date_request', 'Thời gian yêu cầu')
                 ->required()
                 ->addClass('input-sm daterange')
             !!}
+            {!! Former::select('purpose')->label('Mục đích yêu cầu')->options($purposes)->addClass('input-sm') !!}
             {!! Former::file('file','File đính kèm')->accept('doc', 'docx', 'xls', 'xlsx', 'pdf') !!}
         </div>
         <div class="col-sm-4">
@@ -72,7 +72,7 @@
             <div class="col-sm-3" >
                 <form class="form-horizontal" id="perPage">
                     <div class="form-group">
-                        <label class="control-label col-lg-6 col-sm-6">DS yêu cầu giám sát</label>
+                        <label class="control-label col-lg-6 col-sm-6">Số bản ghi</label>
                         <div class="col-lg-4 col-sm-4">
                             <select class="form-control input-sm">
                                 <option value="10"{{ $orders->perPage()==10 ? "selected":"" }}>10</option>
@@ -84,7 +84,22 @@
                     </div>
                 </form>
             </div>
-            <div class="col-sm-9">
+            <div class="col-sm-4">
+                <form class="form-horizontal" id="condition">
+                    <div class="form-group">
+                        <label class="control-label col-lg-6 col-sm-6">Hiển thị</label>
+                        <div class="col-lg-4 col-sm-4">
+                            <select class="form-control input-sm">
+                                <option value="">Tất cả</option>
+                                @foreach ($purposes as $index=>$purpose)
+                                    <option value="{{ $index }}" {{ $condition == $index ? "selected":""}}>{{ studly_case($purpose) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-5">
                 @include('pagination.limit_link', ['paginator' => $orders])          
             </div>    
             <!-- </div> -->
@@ -103,9 +118,9 @@
                         <th clsas="text-center">Tính chất</th>
                         <th clsas="text-center" width="13%">Thời gian yêu cầu</th>
                         <th clsas="text-center">Mục đích y/c</th>
-                        <th width="12%">TS y/c (Số ĐT)</th>
+                        <th clsas="text-center" width="12%">TS y/c (Số ĐT)</th>
                         <th class="text-center"width="4%">Tình trạng</th>
-                        <th width="8%">Ghi chú</th>
+                        <th clsas="text-center" width="8%">Ghi chú</th>
                         <th class="text-center" width="6%">Thao tác</th>
                     </tr>
                 </thead>
@@ -126,13 +141,10 @@
                         <td class="text-center">{{ $order->category->symbol }}</td>
                         <td class="text-center">{{ $order->kind->symbol }}</td>
                         <td class="text-center">{{ $order->date_begin->format('d/m/Y') . ' &rarr; ' . $order->date_end->format('d/m/Y')  }}</td>
-                        <td>
-                            @foreach($order->purposes as $index=>$purpose)
-                                {{ $purpose->symbol }}
-                            @endforeach
-                        
+                        <td class="text-center">
+                            {{ $order->purpose->symbol }}                        
                         </td>
-                        <td>{{ $order->customer_name }} <br> {{ $order->customer_phone }}</td>
+                        <td class="text-center">{{ $order->customer_name }} <br> {{ $order->customer_phone }}</td>
                         <td class="text-center">
                             @foreach($order->phones as $index=> $phone)
                             <span class="btn btn-{{ $phone->status }} btn-xs" data-toggle="modal" data-target="#statusModal" data-url="{{ action('OrderController@updateStatus', $phone->id) }}" data-status="{{ $phone->status }}" data-number="{{ $phone->number }}" >
@@ -148,7 +160,7 @@
                             @endforeach
                             @include('partials.status_modal')
                         </td>
-                        <td>{{ $order->comment }}</td>
+                        <td class="text-center">{{ $order->comment }}</td>
                         <td class="text-center">
                             <button class="btn btn-warning btn-xs fa fa-edit" data-url="{{ action('OrderController@edit', $order->id) }}" type="button" title="Sửa"></button>
                             <!-- TODO: Delete Button -->

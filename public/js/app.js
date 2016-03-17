@@ -111,8 +111,10 @@
     $(this).inputmask('(999[9]) 999 999[9]');
   });
   $('#perPage').on('change', 'select', function() {
-    console.log();
-    window.location.href = window.location.href + '?perPage=' + $(this).val() + '&page=1';
+    window.location.href = '?perPage=' + $(this).val() + '&page=1&condition=' + $('#condition select').val();
+  });
+  $('#condition').on('change', 'select', function() {
+    window.location.href = '?perPage=' + $('#perPage select').val() + '&page=1&condition=' + $(this).val();
   });
   $('#uploadFile').on('click', 'input:first', function() {
     $(':file').click();

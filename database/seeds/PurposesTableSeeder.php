@@ -14,16 +14,12 @@ class PurposesTableSeeder extends Seeder {
                 "group"   => "list",
             ],
             [
-                 "symbol" => "email",
-                 "group"   => "list",
-            ],
-            [
                  "symbol" => "xmctb",
-                 "group"   => "list",
+                 "group"   => "xmctb",
             ],
             [
                  "symbol" => "imeil",
-                 "group"   => "list",
+                 "group"   => "emei",
             ],
             [
                  "symbol" => "giám sát",

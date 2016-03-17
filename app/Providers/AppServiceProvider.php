@@ -48,11 +48,7 @@ class AppServiceProvider extends ServiceProvider
             $categories = $categories->formatData($categories->all(['id', 'symbol']));
             $kinds = $kinds->formatData($kinds->all(['id', 'symbol']));
             $users = $users->formatData($users->all(['id as id', 'name as symbol' ]));
-            $purpose = $purposes->findAllBy('group', 'monitor', ['id', 'symbol']);
-            foreach ($purpose as $key => $value) {
-                $purpose = $value;
-            }
-            $purposes = $purposes->formatPurpose($purposes->findAllBy('group', 'list', ['id', 'symbol']));
+            $purposes = $purposes->formatData($purposes->all(['id', 'symbol']));
             $view->with(compact('units', 'categories', 'kinds', 'purpose', 'purposes', 'users'));
         });
     }

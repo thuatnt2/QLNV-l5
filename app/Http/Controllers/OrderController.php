@@ -46,10 +46,10 @@ class OrderController extends Controller
     public function index()
     {
         $perPage = request()->input('perPage', 10);
-        $orders = $this->order->paginate($perPage, '<>');
-        $orders->appends(['perPage' => $perPage]);
-
-        return view('orders.index', compact('orders'));
+        $condition = request()->input('condition', '');
+        $orders = $this->order->paginate($perPage, $condition);
+        $orders->appends(['perPage' => $perPage, 'condition' => $condition]);
+        return view('orders.index', compact('orders', 'condition'));
     }
     public function orderList()
     {
