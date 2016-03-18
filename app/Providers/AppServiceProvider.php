@@ -37,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer(['orders.index', 'orders.edit', 'orders.list', 'orders.edit_list'], function($view) {
+        view()->composer(['orders.index', 'orders.edit'], function($view) {
             $units = new UnitRepository(new  Unit);
             $categories = new CategoryRepository(new Category);
             $kinds = new KindRepository(new Kind);
@@ -49,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
             $kinds = $kinds->formatData($kinds->all(['id', 'symbol']));
             $users = $users->formatData($users->all(['id as id', 'name as symbol' ]));
             $purposes = $purposes->formatData($purposes->all(['id', 'symbol']));
-            $view->with(compact('units', 'categories', 'kinds', 'purpose', 'purposes', 'users'));
+            $view->with(compact('units', 'categories', 'kinds', 'purposes', 'users'));
         });
     }
 

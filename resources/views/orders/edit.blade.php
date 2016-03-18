@@ -59,7 +59,7 @@
                 ->addClass('input-sm')
             !!}
             {!! Former::select('kind')->label('Tính chất')->options($kinds, $order->kind_id)->addClass('input-sm') !!}
-            <input type="hidden" name="purpose[]" value="{{ $purpose->id }}"></input>
+            {!! Former::select('purpose')->label('Mục đích yêu cầu')->options($purposes, $order->purpose_id)->addClass('input-sm') !!}
             {!! Former::text('date_request', 'Thời gian yêu cầu')
                 ->required()
                 ->addClass('input-sm daterange')
