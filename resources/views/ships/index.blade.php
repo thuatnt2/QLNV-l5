@@ -121,12 +121,7 @@
                         <td class="text-center">{{ $ship->phone->order->kind->symbol }}</td>
                         <td class="text-center">{{ $ship->phone->order->date_begin->format('d/m/Y') . ' &rarr; ' . $ship->phone->order->date_end->format('d/m/Y')  }}</td>
                         <td>
-                            @foreach($ship->phone->order->purposes as $index=>$purpose)
-                                @if ($index > 0)
-                                    ;
-                                @endif
-                                {{ $purpose->symbol }}
-                            @endforeach
+                            {{ $ship->phone->order->purpose->symbol }}
                         </td>
                         <td class="text-center">{{ $ship->page_list}}</td>
                         <td class="text-center">{{ $ship->phone->order->comment}}</td>

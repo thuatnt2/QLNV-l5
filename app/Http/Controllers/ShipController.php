@@ -55,7 +55,6 @@ class ShipController extends Controller
         $perPage = request()->input('perPage', 10);
         $ships = $this->ship->paginate($perPage, false, ['phone', 'file']);
         $ships->appends(['perPage' => $perPage]);
-
         return view('ships.index', compact('ships'));
     }
 

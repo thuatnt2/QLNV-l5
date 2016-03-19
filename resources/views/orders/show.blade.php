@@ -64,12 +64,7 @@
     		<tr>
     			<th class="text-left" width="30%">Mục đích yêu cầu </th>
     			<td>
-    			<?php
-    			foreach ($order->purposes as $index=>$purpose):
-    				$group = $purpose->group;
-    				echo $purpose->symbol;
-    			endforeach
-    			?>
+                    {{ $order->purpose->symbol }}
     			</td>
     		</tr>
     		<tr>
@@ -122,7 +117,7 @@
         </div><!-- /.box-header -->
         <div class="box-body">
         	<table id="example2" class="table table-bordered table-striped">
-        		@if ($group == "list" )
+        		@if ($order->purpose->group != "monitor" )
         		@foreach ($order->phones as $phone)
         		<tr>
         			<th colspan="2" bgcolor="#99CCFF">{{ $phone->number }}</th>

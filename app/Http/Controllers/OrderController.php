@@ -129,9 +129,16 @@ class OrderController extends Controller
     public function update(OrderRequest $request, $id)
     {
         try {
-
-            $this->order->update($id, $request->only($this->dataGet));
-
+            if($request->hasFile('file')) {
+                $fileInfo = $this->uploadFile($request->file('file'), 'orders');
+                if ($fileInfo) {
+                    $this->order->update($id, $request->only($this->dataGet), $fileInfo['name']);
+                }
+            }
+            else {
+                $this->order->update($id, $request->only($this->dataGet));    
+            }
+            
             return redirect()->back();
             
         } catch (Exception $e) {

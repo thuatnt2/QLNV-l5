@@ -137,7 +137,7 @@ class OrderRepository extends AbstractRepository
         }
     }
 
-    public function update($id, array $input)
+    public function update($id, array $input, $fileName = '')
     {
         $order = $this->findById($id);
 
