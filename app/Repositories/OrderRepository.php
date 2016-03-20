@@ -16,14 +16,14 @@ class OrderRepository extends AbstractRepository
         $this->order = $order;
         parent::__construct($this->order);
     }
-    public function findAllBy($status, $condition = '=', $columns = ['*'])
+    public function findAllBy($status, $condition = '', $columns = ['*'])
     {
         return $this->order
                     ->with(['unit', 'phones' => function($q) use ($status) {
                         $q->where('status', '=', $status);
                     }])
-                    ->whereHas('purposes', function($q) use ($condition) {
-                        $q->where( 'group', $condition , 'list');
+                    ->whereHas('purpose', function($q) use ($condition) {
+                        $q->where( 'group', '=' , $condition);
                     })
                     ->whereHas('phones', function($q) use ($status) {
                         $q->where( 'status', '=', $status);

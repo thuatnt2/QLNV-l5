@@ -39,7 +39,7 @@ class NewsController extends Controller
 
         view()->composer(['news.index', 'news.edit'], function($view) {
             $users = $this->user->formatData($this->user->all(['id as id', 'name as symbol' ]));
-            $orders = $this->order->findAllBy('success', '<>');
+            $orders = $this->order->findAllBy('success', 'monitor');
             $view->with(array(
                 'orders' => $orders,
                 'users' => $users
@@ -83,7 +83,7 @@ class NewsController extends Controller
                 }
             } 
             else {
-                 $this->ship->create($request->only($this->dataGet));        
+                $this->ship->create($request->only($this->dataGet));        
             }
             return redirect()->back();
 
@@ -111,7 +111,9 @@ class NewsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $news = $this->ship->findById($id);
+
+        return view('news.edit', compact('news'));
     }
 
     /**
@@ -123,7 +125,24 @@ class NewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $request->merge(array('news' => 1));
+            if ($request->hasFile('file')) {
+                $fileInfo = $this->uploadFile($request->file('file'), 'news');
+                if ($fileInfo) {
+                
+                    $this->ship->update($id, $request->only($this->dataGet), $fileInfo['name']);
+                }
+            }
+            else {
+
+                $this->ship->update($id, $request->only($this->dataGet));    
+            }
+
+            return redirect()->back();
+        } catch (Exception $e) {
+            return redirect()->back()->withInput()->with('error', 'Không thể truy vấn dữ liệu');
+        }
     }
 
     /**

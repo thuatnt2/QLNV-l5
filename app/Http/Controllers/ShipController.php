@@ -38,7 +38,7 @@ class ShipController extends Controller
 
         view()->composer(['ships.index', 'ships.edit'], function($view) {
             $users = $this->user->formatData($this->user->all(['id as id', 'name as symbol' ]));
-            $orders = $this->order->findAllBy('warning');
+            $orders = $this->order->findAllBy('warning', 'list');
             $view->with(array(
                 'orders' => $orders,
                 'users' => $users
@@ -107,7 +107,6 @@ class ShipController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -118,7 +117,9 @@ class ShipController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ship = $this->ship->findById($id);
+        
+        return view('ships.edit', compact('ship'));
     }
 
     /**
@@ -128,9 +129,39 @@ class ShipController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ShipRequest $request, $id)
     {
-        //
+        try {
+            if ($request->hasFile('file')) {
+                $fileInfo = $this->uploadFile($request->file('file'), 'ships');
+                // if upload success
+                if ($fileInfo) {
+                
+                    $ship = $this->ship->update($id, $request->only($this->dataGet), $fileInfo['name']);
+
+                    // update file table if isset
+                    if (isset($ship->file)) {
+                        $file = $ship->file;
+                        $file->update($id, $fileInfo);
+                    }
+                    else {
+                        //save info file
+                        $file = new FileRepository(new File);
+                        $fileInfo['ship_id'] = $ship->id;
+                        $file->create($fileInfo);
+                    }
+                    
+                }
+            }
+            else {
+
+                $this->ship->update($id, $request->only($this->dataGet));    
+            }
+
+            return redirect()->back();
+        } catch (Exception $e) {
+            return redirect()->back()->withInput()->with('error', 'Không thể truy vấn dữ liệu');
+        }
     }
 
     /**

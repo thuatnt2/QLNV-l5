@@ -54,7 +54,37 @@ class ShipRepository extends AbstractRepository
         
         return $this->ship;
     }
+    public function update($id, array $input, $fileName='')
+    {
+        $ship = $this->findById($id);
+        // update phone status
+        if ($input['news'] == null) {
+            $phone = $ship->phone;
+            $phone->status = 'warning';
+            $phone->save(); 
 
+            $phone = Phone::find($input['phone']);
+            $phone->status = 'success';
+            $phone->save(); 
+        }
+        
+        // update ship
+        $ship->date_submit = Carbon::createFromFormat('d/m/Y', $input['created_at']);
+        $ship->phone_id = $input['phone'];
+        $ship->number_cv_pa71 = $input['number_cv_pa71'];
+        $ship->news = $input['news'];
+        $ship->page_news = $input['page_news'];
+        $ship->page_list = $input['page_list'];
+        $ship->page_xmctb = $input['page_xmctb'];
+        $ship->receive_name = $input['receive_name'];
+        $ship->user_id = $input['user_name'];
+        if ($fileName != '') {
+            $ship->file_name = $fileName;
+        }
+        $ship->save();
+
+        return $ship;
+    }
     public function delete($id, $update = false)
     {
         $ship = $this->findById($id);

@@ -41,9 +41,13 @@ Route::group(['middleware' => ['web']], function () {
         // kind
         Route::resource('kinds', 'KindController');
         // ship_lists
-        Route::resource('ships', 'ShipController');
+        Route::resource('ship/list-xmctb', 'ShipController');
         // ship_news
-        Route::resource('news', 'NewsController');
+        Route::resource('ship/news', 'NewsController');
+        // ship_news
+        // Route::resource('ship/xmctb', 'XMCTBController');
+        // ship_news
+        Route::resource('ship/imei', 'ImeiController');
 	});
 
 });

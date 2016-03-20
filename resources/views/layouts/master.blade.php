@@ -53,10 +53,9 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Giao yêu cầu&nbsp;&nbsp;<span class="fa fa-caret-down"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('ships') }}">Giám sát</a></li>
-                                <li><a href="{{ url('ships') }}">List</a></li>
-                                <li><a href="{{ url('ships') }}">XMCTB</a></li>
-                                <li><a href="{{ url('ships') }}">Emei</a></li>
+                                <li><a href="{{ url('ship/news') }}">Giám sát</a></li>
+                                <li><a href="{{ url('ship/list-xmctb') }}">List-XMCTB</a></li>
+                                <li><a href="{{ url('ship/imei') }}">Emei</a></li>
                              </ul>
                         </li>
                         <li ><a href="{{ url('statistics') }}">Thống kê</a></li>

@@ -63,11 +63,21 @@
                 };
                 $(this).daterangepicker(options);  
               });
+
               $('input[name=created_at]').on('apply.daterangepicker', function(ev, picker) {
                 $(this).val(picker.startDate.format('DD/MM/YYYY'));
               });
+
               $('input[name=date_request]').on('apply.daterangepicker', function(ev, picker) {
                 $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+              });
+
+              $('#uploadFile').on('click', 'input:first', function() {
+                $(':file').click();
+                $(':file').change(function(){
+                  var filename = $(this).val().replace(/.*(\/|\\)/, '');
+                  $('#uploadFile input:first').val(filename);
+                });
               });
             },
             error: function (jqXHR, textStatus, errorThrown) {

@@ -134,7 +134,7 @@
         				<td>Số trang list: {{ $ship->page_list }}</td>
         			</tr>
         			<tr>
-        				<td>File đính kèm: <a href="{{ url('file', ['ships', $ship->file->name]) }}" target="true">{{ $ship->file_name }}</a></td>
+        				<td>File đính kèm: <a href="{{ isset($ship->file->name) ? url('file', ['ships', $ship->file->name]):'#' }}" target="true">{{ $ship->file_name }}</a></td>
         			</tr>
         			<tr>
         				<td>Người nhận: {{ $ship->receive_name }}</td>
@@ -164,7 +164,7 @@
                     					<td>Số trang tin: {{ $new->page_news }}</td>
                     				</tr>
                     				<tr>
-                    					<td>File đính kèm: <a href="{{ url('file', ['news', $new->file->name])}}" target="true">{{ $new->file_name }}</a></td>
+                    					<td>File đính kèm: <a href="{{ isset($new->file->name) ? url('file', ['news', $new->file->name]):'#'}}" target="true">{{ $new->file_name }}</a></td>
                     				</tr>
                     				<tr>
                     					<td>Người nhận: {{ $new->receive_name }}</td>
