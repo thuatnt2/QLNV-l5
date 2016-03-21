@@ -25,7 +25,7 @@ class ShipController extends Controller
         'news',
         'page_news',
         'page_list',
-        'page_xmctb',
+        'page_imei',
         'receive_name',
         'user_name'
     ];

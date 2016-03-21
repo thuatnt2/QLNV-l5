@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Contracts\Repository;
 use App\Http\Requests;
+use App\Network;
 use App\Order;
+use App\Repositories\NetworkRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\UserRepository;
 use App\User;
@@ -13,6 +15,9 @@ use Illuminate\Http\Request;
 class ImeiController extends Controller
 {
     protected $ship;
+    protected $user;
+    protected $order;
+    protected $network;
     private $dataGet = [
         'created_at',
         'phone',
@@ -20,7 +25,8 @@ class ImeiController extends Controller
         'news',
         'page_news',
         'page_list',
-        'page_xmctb',
+        'page_imei',
+        'network',
         'receive_name',
         'user_name'
     ];
@@ -29,13 +35,16 @@ class ImeiController extends Controller
         $this->ship = $ship;
         $this->user = new UserRepository(new User);
         $this->order = new OrderRepository(new Order);
+        $this->network = new NetworkRepository(new Network);
 
         view()->composer(['imei.index', 'imei.edit'], function($view) {
             $users = $this->user->formatData($this->user->all(['id as id', 'name as symbol' ]));
             $orders = $this->order->findAllBy('warning', 'imei');
+            $networks = $this->network->formatData($this->network->all(['id as id', 'name as symbol']));
             $view->with(array(
                 'orders' => $orders,
-                'users' => $users
+                'users' => $users,
+                'networks' => $networks
             ));
         });
     }
@@ -71,7 +80,27 @@ class ImeiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            // Co the chua bat dc exeption khi upload file
+            if ($request->hasFile('file')) {
+                $fileInfo = $this->uploadFile($request->file('file'), 'imei');
+                if ($fileInfo) {
+                    $ship = $this->ship->create($request->only($this->dataGet), $fileInfo['original-name']);
+                    //save info file
+                    $file = new FileRepository(new File);
+                    $fileInfo['ship_id'] = $ship->id;
+                    $file->create($fileInfo);
+                }
+            }
+            else {
+                $this->ship->create($request->only($this->dataGet));    
+            }
+           
+            return redirect()->back();
+
+        } catch (Exception $e) {
+            return redirect()->back()->withInput()->with('error', 'Xãy ra lỗi khi thêm dữ liệu');
+        }
     }
 
     /**

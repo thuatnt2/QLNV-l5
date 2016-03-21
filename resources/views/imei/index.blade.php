@@ -42,6 +42,7 @@
         </div>
         <div class="col-sm-4">
             {!! Former::text('page_imei', 'Số trang Imei')->required()->addClass('input-sm'); !!}
+            {!! Former::checkboxes('network[]', 'Nhà mạng')->checkboxes($networks)->inline()->required() !!}
             <div class="form-group required <?php if($errors->has('file')) echo 'has-error'?>">
                 <label for="file" class="control-label col-lg-4 col-sm-4">File đính kèm<sup>*</sup></label>
                 <div class="col-lg-8 col-sm-8" id="uploadFile">
@@ -73,7 +74,7 @@
             <div class="col-sm-3" >
                 <form class="form-horizontal" id="perPage">
                     <div class="form-group">
-                        <label class="control-label col-lg-6 col-sm-6">DS List-XMCTB đã giao</label>
+                        <label class="control-label col-lg-6 col-sm-6">DS IMEI đã giao</label>
                         <div class="col-lg-4 col-sm-4">
                             <select class="form-control input-sm">
                                 <option value="10"{{ $ships->perPage()==10 ? "selected":"" }}>10</option>

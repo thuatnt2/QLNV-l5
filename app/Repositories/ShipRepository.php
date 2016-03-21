@@ -47,12 +47,15 @@ class ShipRepository extends AbstractRepository
     	$this->ship->news = $input['news'];
         $this->ship->page_news = $input['page_news'];
         $this->ship->page_list = $input['page_list'];
-        $this->ship->page_imei = $input['page_xmctb'];
+        $this->ship->page_imei = $input['page_imei'];
     	$this->ship->receive_name = $input['receive_name'];
     	$this->ship->user_id = $input['user_name'];
         $this->ship->file_name = $fileName;
     	$this->ship->save();
-
+        // syn network table
+        if (isset($input['network']) && $input['network'] != null) {
+            $this->ship->networks->syn($input['network']);
+        }
         // update phone number status
         if($input['news'] == null) {
             $phone = Phone::find($input['phone']);

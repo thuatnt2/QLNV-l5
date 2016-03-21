@@ -17,12 +17,14 @@ class DatabaseSeeder extends Seeder {
         DB::table('units')->delete();
         DB::table('categories')->delete();
         DB::table('purposes')->delete();
+        DB::table('networks')->delete();
         
 		$this->call(UserSeeder::class);
         $this->call(KindsTableSeeder::class);
         $this->call(CategoriesTableSeeder::class);
         $this->call(UnitsTableSeeder::class);
         $this->call(PurposesTableSeeder::class);
+        $this->call(NetworkTableSeeder::class);
                 
 	}
 
