@@ -16,16 +16,24 @@ class ShipRepository extends AbstractRepository
         parent::__construct($this->ship);
     }
 
-    public function paginate($perPage = 5, $news = true, $with = [''], $columns = ['*'])
+    public function paginate($purpose = '', $perPage = 5, $with = [''], $columns = ['*'])
     {
         $result = $this->model
                        ->with($with)
                        ->orderBy('created_at', 'desc');
-        if($news) {
-            $result->whereNotNull('news');
-        }
-        else {
-            $result->whereNull('news');
+        switch ($purpose) {
+            case 'monitor':
+                $result->whereNotNull('page_news');
+                break;
+            case 'list-xmctb':
+                $result->whereNotNull('page_list');
+                break;
+            case 'imei':
+                $result->whereNotNull('page_imei');
+                break;
+            default:
+                # code...
+                break;
         }
 
         return $result->paginate($perPage,$columns);
@@ -39,7 +47,7 @@ class ShipRepository extends AbstractRepository
     	$this->ship->news = $input['news'];
         $this->ship->page_news = $input['page_news'];
         $this->ship->page_list = $input['page_list'];
-        $this->ship->page_xmctb = $input['page_xmctb'];
+        $this->ship->page_imei = $input['page_xmctb'];
     	$this->ship->receive_name = $input['receive_name'];
     	$this->ship->user_id = $input['user_name'];
         $this->ship->file_name = $fileName;
@@ -75,7 +83,7 @@ class ShipRepository extends AbstractRepository
         $ship->news = $input['news'];
         $ship->page_news = $input['page_news'];
         $ship->page_list = $input['page_list'];
-        $ship->page_xmctb = $input['page_xmctb'];
+        $ship->page_imei = $input['page_xmctb'];
         $ship->receive_name = $input['receive_name'];
         $ship->user_id = $input['user_name'];
         if ($fileName != '') {

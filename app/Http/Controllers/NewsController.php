@@ -54,7 +54,7 @@ class NewsController extends Controller
     public function index()
     {
         $perPage = request()->input('perPage', 10);
-        $news = $this->ship->paginate($perPage, true, ['phone', 'file']);
+        $news = $this->ship->paginate('monitor', $perPage, ['phone', 'file']);
         $news->appends(['perPage' => $perPage]);
         
         return view('news.index', compact('news'));

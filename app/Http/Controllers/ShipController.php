@@ -53,7 +53,7 @@ class ShipController extends Controller
     public function index()
     {
         $perPage = request()->input('perPage', 10);
-        $ships = $this->ship->paginate($perPage, false, ['phone', 'file']);
+        $ships = $this->ship->paginate( 'list-xmctb',$perPage, ['phone', 'file']);
         $ships->appends(['perPage' => $perPage]);
         return view('ships.index', compact('ships'));
     }

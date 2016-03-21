@@ -22,7 +22,7 @@ class CreateShipsTable extends Migration
             $table->integer('news')->nullable();
             $table->integer('page_news')->nullable();
             $table->integer('page_list')->nullable();
-            $table->integer('page_xmctb')->nullable();
+            $table->integer('page_imei')->nullable();
             $table->string('file_name');
             $table->string('receive_name');
             $table->timestamp('date_submit');

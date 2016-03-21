@@ -55,7 +55,7 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('ship/news') }}">Giám sát</a></li>
                                 <li><a href="{{ url('ship/list-xmctb') }}">List-XMCTB</a></li>
-                                <li><a href="{{ url('ship/imei') }}">Emei</a></li>
+                                <li><a href="{{ url('ship/imei') }}">Quét Imei</a></li>
                              </ul>
                         </li>
                         <li ><a href="{{ url('statistics') }}">Thống kê</a></li>

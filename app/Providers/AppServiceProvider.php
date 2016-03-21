@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Category;
 use App\Contracts\Repository;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ImeiController;
 use App\Http\Controllers\KindController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\OrderController;
@@ -89,6 +90,11 @@ class AppServiceProvider extends ServiceProvider
 
             return new ShipRepository(new Ship);
         });
+        $this->app->when(ImeiController::class)->needs(Repository::class)->give(function($app) {
+
+            return new ShipRepository(new Ship);
+        });
+
 
     }
 }

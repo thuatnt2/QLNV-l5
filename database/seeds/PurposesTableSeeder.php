@@ -18,8 +18,8 @@ class PurposesTableSeeder extends Seeder {
                  "group"   => "xmctb",
             ],
             [
-                 "symbol" => "imeil",
-                 "group"   => "emei",
+                 "symbol" => "imei",
+                 "group"   => "imei",
             ],
             [
                  "symbol" => "giám sát",

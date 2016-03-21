@@ -113,14 +113,14 @@
                         <th class="text-center">Số Cv đơn vị</th>
                         <th class="text-center">Số Cv PA71</th>
                         <th class="text-center" width="15%">Tên đối tượng</th>
-                        <th clsas="text-center" width="10%">Số điện thoại</th>
-                        <th clsas="text-center">Loại ĐT</th>
-                        <th clsas="text-center">Tính chất</th>
-                        <th clsas="text-center" width="13%">Thời gian yêu cầu</th>
-                        <th clsas="text-center">Mục đích y/c</th>
-                        <th clsas="text-center" width="12%">TS y/c (Số ĐT)</th>
+                        <th class="text-center" width="10%">Số điện thoại</th>
+                        <th class="text-center">Loại ĐT</th>
+                        <th class="text-center">Tính chất</th>
+                        <th class="text-center" width="13%">Thời gian yêu cầu</th>
+                        <th class="text-center">Mục đích y/c</th>
+                        <th class="text-center" width="12%">TS y/c (Số ĐT)</th>
                         <th class="text-center"width="4%">Tình trạng</th>
-                        <th clsas="text-center" width="8%">Ghi chú</th>
+                        <th class="text-center" width="8%">Ghi chú</th>
                         <th class="text-center" width="6%">Thao tác</th>
                     </tr>
                 </thead>
