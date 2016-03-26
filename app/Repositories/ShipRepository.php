@@ -52,9 +52,10 @@ class ShipRepository extends AbstractRepository
     	$this->ship->user_id = $input['user_name'];
         $this->ship->file_name = $fileName;
     	$this->ship->save();
+        // dd($this->ship);
         // syn network table
         if (isset($input['network']) && $input['network'] != null) {
-            $this->ship->networks->syn($input['network']);
+            $this->ship->networks()->sync($input['network']);
         }
         // update phone number status
         if($input['news'] == null) {

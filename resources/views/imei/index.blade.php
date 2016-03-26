@@ -42,7 +42,7 @@
         </div>
         <div class="col-sm-4">
             {!! Former::text('page_imei', 'Số trang Imei')->required()->addClass('input-sm'); !!}
-            {!! Former::checkboxes('network[]', 'Nhà mạng')->checkboxes($networks)->inline()->required() !!}
+            {!! Former::checkboxes('network[]', 'Nhà mạng')->checkboxes($networks)->inline() !!}
             <div class="form-group required <?php if($errors->has('file')) echo 'has-error'?>">
                 <label for="file" class="control-label col-lg-4 col-sm-4">File đính kèm<sup>*</sup></label>
                 <div class="col-lg-8 col-sm-8" id="uploadFile">
