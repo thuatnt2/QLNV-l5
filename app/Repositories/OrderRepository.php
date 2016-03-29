@@ -110,6 +110,7 @@ class OrderRepository extends AbstractRepository
     }
     public function create(array $input, $fileName = '')
     {
+
     	$this->order->user_id = $input['user'];
     	$this->order->kind_id = $input['kind'];
     	$this->order->category_id = $input['category'];
@@ -127,7 +128,13 @@ class OrderRepository extends AbstractRepository
     	$this->order->date_begin = Carbon::createFromFormat('d/m/Y', trim(array_pop($date_request)));
     	$this->order->comment = $input['comment'];
     	$this->order->slug = str_slug($this->vn_str_filter($input['order_name']), '-');
-
+        // check if purpose is xmctb
+        if ($input['purpose'] == 2) {
+            $this->order->category_id = null;
+            $this->order->kind_id = null;
+            $this->order->date_begin = null;
+            $this->order->date_end = null;
+        }
         $this->order->save();
         foreach ($input['order_phone'] as $phone) {
             $newPhone = new Phone();

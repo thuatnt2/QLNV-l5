@@ -138,9 +138,24 @@
                             @endforeach
                             
                         </td>
-                        <td class="text-center">{{ $order->category->symbol }}</td>
-                        <td class="text-center">{{ $order->kind->symbol }}</td>
-                        <td class="text-center">{{ $order->date_begin->format('d/m/Y') . ' &rarr; ' . $order->date_end->format('d/m/Y')  }}</td>
+                        <td class="text-center">
+                        @if (isset($order->category_id))
+                            {{ $order->category->symbol }}
+                        @endif
+                        
+                        </td>
+                        <td class="text-center">
+                        @if (isset($order->kind_id))
+                            {{ $order->kind->symbol }}
+                        @endif
+                        
+                        </td>
+                        <td class="text-center">
+                        @if (isset($order->date_begin) && isset($order->date_end))
+                            {{ $order->date_begin->format('d/m/Y') . ' &rarr; ' . $order->date_end->format('d/m/Y')  }}
+                        @endif
+                        
+                        </td>
                         <td class="text-center">
                             {{ $order->purpose->symbol }}                        
                         </td>

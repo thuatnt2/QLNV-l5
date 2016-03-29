@@ -31,7 +31,7 @@ class Ship extends Model
 
     public function networks()
     {
-        $this->belongsToMany(Network::class);
+        return $this->belongsToMany(Network::class);
     }
 
 }

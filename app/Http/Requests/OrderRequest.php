@@ -38,7 +38,8 @@ class OrderRequest extends Request
         $messages = [
             'number_cv.required' => ':attribute bắt buộc',
             'number_cv.numeric' => ':attribute chỉ chứa các ký tự số',
-            'number_cv_pa71.required' => 'attribute bắt buộc',
+            'number_cv_pa71.required' => ':attribute bắt buộc',
+            'number_cv_pa71.numeric' => ':attribute chỉ chứa các ký tự số',
             'order_phone.required' => ':attribute bắt buộc',
             'order_phone.numeric' => ':attribute chỉ chứa các ký tự số',
             'purpose.required' => ':attribute phải có ít nhất một lựa chọn',

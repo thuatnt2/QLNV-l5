@@ -105,6 +105,7 @@
                         <th class="text-center" width="13%">Thời gian yêu cầu</th>
                         <th class="text-center">Mục đích y/c</th>
                         <th class="text-center">Số trang</th>
+                        <th class="text-center">Nhà cung cấp</th>
                         <th class="text-center" width="8%">Ghi chú</th>
                         <th class="text-center" width="6%">Thao tác</th>
                     </tr>
@@ -124,7 +125,15 @@
                         <td>
                             {{ $ship->phone->order->purpose->symbol }}
                         </td>
-                        <td class="text-center">{{ $ship->page_list}}</td>
+                        <td class="text-center">{{ $ship->page_imei}}</td>
+                        <td class="text-center">
+                        @foreach ($ship->networks as $index=>$element)
+                            @if ($index > 0)
+                                <span>;</span>
+                            @endif
+                            {{ $element->name}}
+                        @endforeach
+                        </td>
                         <td class="text-center">{{ $ship->phone->order->comment}}</td>
                         <td class="text-center"width="6%">
                             <button class="btn btn-warning btn-xs fa fa-edit" data-url="{{ action('ShipController@edit', $ship->id) }}" type="button" title="Sửa"></button>

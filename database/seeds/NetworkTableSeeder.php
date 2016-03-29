@@ -21,7 +21,7 @@ class NetworkTableSeeder extends Seeder
 	        ],
 		    [
 	        	'name' => 'mobifone'
-	        ],
+	        ]
 
         ];
 

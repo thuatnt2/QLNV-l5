@@ -13,4 +13,14 @@ class NetworkRepository extends AbstractRepository
         $this->network = $network;
         parent::__construct($this->network);
     }
+
+    public function formatNetwork($items)
+    {
+        $output = [];
+        foreach ($items as $item) {
+            $output[$item->symbol] = ['name' => 'network['.$item->id.']', 'value' => $item->id];
+        }
+        return $output;
+    }
+    
 }

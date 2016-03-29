@@ -54,7 +54,7 @@ class ShipRepository extends AbstractRepository
     	$this->ship->save();
         // dd($this->ship);
         // syn network table
-        if (isset($input['network']) && $input['network'] != null) {
+        if (isset($input['network'])) {
             $this->ship->networks()->sync($input['network']);
         }
         // update phone number status
