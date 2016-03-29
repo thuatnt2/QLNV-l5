@@ -17,10 +17,10 @@ class CreateOrdersTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
 
-            $table->integer('kind_id')->unsigned();
+            $table->integer('kind_id')->nullable()->unsigned();
             $table->foreign('kind_id')->references('id')->on('kinds');
 
-            $table->integer('category_id')->unsigned();
+            $table->integer('category_id')->nullable()->unsigned();
             $table->foreign('category_id')->references('id')->on('categories');
 
             $table->integer('unit_id')->unsigned();
@@ -39,8 +39,8 @@ class CreateOrdersTable extends Migration
             $table->string('slug');
             $table->text('comment')->nullable();
             $table->timestamp('date_order');
-            $table->timestamp('date_begin');
-            $table->timestamp('date_end');
+            $table->timestamp('date_begin')->nullable();
+            $table->timestamp('date_end')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
