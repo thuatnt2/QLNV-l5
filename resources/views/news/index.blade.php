@@ -44,7 +44,6 @@
         <div class="col-sm-4">
             {!! Former::text('number_cv_pa71', 'Số công văn PA71')->required()->addClass('input-sm'); !!}
             {!! Former::text('page_news', 'Số trang tin')->required()->addClass('input-sm'); !!}
-            <input type="hidden" name="page_list" value="0">
             <div class="form-group required <?php if($errors->has('file')) echo 'has-error'?>">
                 <label for="file" class="control-label col-lg-4 col-sm-4">File đính kèm<sup>*</sup></label>
                 <div class="col-lg-8 col-sm-8" id="uploadFile">

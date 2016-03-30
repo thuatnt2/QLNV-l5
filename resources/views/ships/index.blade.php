@@ -12,7 +12,7 @@
 <div class="row">
 	<div class="box row-form">
 		{!! Former::setOption('TwitterBootstrap3.labelWidths', ['large' => 4, 'small' => 4]) !!}
-        {!! Former::open_for_files(url('ship/list-xmctb'))->id('form-create') !!}
+        {!! Former::open_for_files(url('ship/list'))->id('form-create') !!}
         <fieldset>
         {!! Former::legend('Giao List-XMCTB') !!}
         <div class="col-sm-4">

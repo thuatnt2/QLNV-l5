@@ -33,7 +33,11 @@
     		</tr>
     		<tr>
     			<th class="text-left" width="30%">Họ tên ĐT</th>
-    			<td>{{  $order->order_name  }}</td>
+    			<td>
+                    @if (isset($order->order_name))
+                        {{  $order->order_name  }}
+                    @endif
+                </td>
     		</tr>
     		<tr>
     			<th class="text-left" width="30%">Số điện thoại yêu cầu</th>
@@ -55,11 +59,19 @@
     		</tr>
     		<tr>
     			<th class="text-left" width="30%">Loại đối tượng</th>
-    			<td>{{  $order->category->symbol  }}</td>
+    			<td>
+                    @if (isset($order->category_id))
+                        {{  $order->category->symbol  }}
+                    @endif
+                </td>
     		</tr>
     		<tr>
     			<th class="text-left" width="30%">Tính chất </th>
-    			<td>{{  $order->kind->symbol  }}</td>
+    			<td>
+                    @if (isset($order->kind_id))
+                        {{  $order->kind->symbol  }}
+                    @endif
+                </td>
     		</tr>
     		<tr>
     			<th class="text-left" width="30%">Mục đích yêu cầu </th>
@@ -69,11 +81,19 @@
     		</tr>
     		<tr>
     			<th class="text-left" width="30%">Ngày bắt đầu</th>
-    			<td>{{  $order->date_begin->format('d/m/Y')  }}</td>
+    			<td>
+                    @if (isset($order->date_begin))
+                        {{  $order->date_begin->format('d/m/Y')  }}
+                    @endif
+                </td>
     		</tr>
     		<tr>
     			<th class="text-left" width="30%">Ngày kết thúc</th>
-    			<td>{{  $order->date_end->format('d/m/Y')  }}</td>
+    			<td>
+                    @if (isset($order->date_end))
+                        {{  $order->date_end->format('d/m/Y')  }}
+                    @endif
+                </td>
     		</tr>
     		<tr>
     			<th class="text-left" width="30%">File đính kèm</th>
@@ -131,8 +151,24 @@
         				<td>Số công văn PA71: {{ $order->number_cv_pa71 }}</td>
         			</tr>
         			<tr>
-        				<td>Số trang list: {{ $ship->page_list }}</td>
+                        @if (isset($ship->page_news))
+                            <td>Số trang tin: {{ $ship->page_news }}</td>
+                        @elseif(isset($ship->page_list))
+                            <td>Số trang list: {{ $ship->page_list }}</td>
+                        @elseif(isset($ship->page_xmctb))
+                            <td>Số trang xmctb: {{ $ship->page_xmctb }}</td>
+                        @elseif(isset($ship->page_imei))
+                            <td>
+                                Số trang imei: {{ $ship->page_imei }}
+                                @foreach ($ship->networks as $index=>$network)
+                                    <span style="float: right; margin-right: 20px">
+                                      {{ $network->name }}
+                                    </span>
+                                @endforeach
+                            </td>
+                        @endif
         			</tr>
+
         			<tr>
         				<td>File đính kèm: <a href="{{ isset($ship->file->name) ? url('file', ['ships', $ship->file->name]):'#' }}" target="true">{{ $ship->file_name }}</a></td>
         			</tr>

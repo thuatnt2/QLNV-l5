@@ -129,9 +129,9 @@
                     <tr>
                         <td class="text-center">{{ ++$index }}</td>
                         <td class="text-center">{{ $order->date_order->format('d/m/Y') }}</td>
-                        <td class="text-center">{{ $order->number_cv . '/' . $order->unit->symbol }}</td>
+                        <td class="text-center"><a href="{{ action('OrderController@show', $order->id) }}">{{ $order->number_cv . '/' . $order->unit->symbol }}</a></td>
                         <td class="text-center">{{ $order->number_cv_pa71 }}</td>
-                        <td class="text-center"><a href="{{ action('OrderController@show', $order->id) }}">{{ $order->order_name }}</a></td>
+                        <td class="text-center">{{ $order->order_name }}</td>
                         <td class="text-left">
                             @foreach($order->phones as $index => $phone)
                                 {{ $phone->number }} <br>    
