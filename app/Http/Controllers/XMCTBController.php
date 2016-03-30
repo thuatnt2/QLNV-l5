@@ -3,18 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Repository;
-use App\File;
-use App\Http\Controllers\Controller;
 use App\Http\Requests;
-use App\Http\Requests\ShipRequest;
 use App\Order;
-use App\Repositories\FileRepository;
 use App\Repositories\OrderRepository;
 use App\Repositories\UserRepository;
 use App\User;
 use Illuminate\Http\Request;
 
-class ShipController extends Controller
+class XMCTBController extends Controller
 {
     protected $ship;
 
@@ -30,16 +26,15 @@ class ShipController extends Controller
         'receive_name',
         'user_name'
     ];
-
     public function __construct(Repository $ship)
     {
         $this->ship = $ship;
         $this->user = new UserRepository(new User);
         $this->order = new OrderRepository(new Order);
 
-        view()->composer(['ships.index', 'ships.edit'], function($view) {
+        view()->composer(['xmctb.index', 'xmctb.edit'], function($view) {
             $users = $this->user->formatData($this->user->all(['id as id', 'name as symbol' ]));
-            $orders = $this->order->findAllBy('warning', 'list');
+            $orders = $this->order->findAllBy('warning', 'xmctb');
             $view->with(array(
                 'orders' => $orders,
                 'users' => $users
@@ -54,9 +49,9 @@ class ShipController extends Controller
     public function index()
     {
         $perPage = request()->input('perPage', 10);
-        $ships = $this->ship->paginate( 'list',$perPage, ['phone', 'file']);
+        $ships = $this->ship->paginate('xmctb',$perPage, ['phone', 'file']);
         $ships->appends(['perPage' => $perPage]);
-        return view('ships.index', compact('ships'));
+        return view('xmctb.index', compact('ships'));
     }
 
     /**
@@ -75,12 +70,12 @@ class ShipController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ShipRequest $request)
+    public function store(Request $request)
     {
         try {
             // Co the chua bat dc exeption khi upload file
             if ($request->hasFile('file')) {
-                $fileInfo = $this->uploadFile($request->file('file'), 'ships');
+                $fileInfo = $this->uploadFile($request->file('file'), 'xmctb');
                 if ($fileInfo) {
                     $ship = $this->ship->create($request->only($this->dataGet), $fileInfo['original-name']);
                     //save info file
@@ -108,6 +103,7 @@ class ShipController extends Controller
      */
     public function show($id)
     {
+        //
     }
 
     /**
@@ -118,9 +114,7 @@ class ShipController extends Controller
      */
     public function edit($id)
     {
-        $ship = $this->ship->findById($id);
-        
-        return view('ships.edit', compact('ship'));
+        //
     }
 
     /**
@@ -130,39 +124,9 @@ class ShipController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ShipRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        try {
-            if ($request->hasFile('file')) {
-                $fileInfo = $this->uploadFile($request->file('file'), 'ships');
-                // if upload success
-                if ($fileInfo) {
-                
-                    $ship = $this->ship->update($id, $request->only($this->dataGet), $fileInfo['name']);
-
-                    // update file table if isset
-                    if (isset($ship->file)) {
-                        $file = $ship->file;
-                        $file->update($id, $fileInfo);
-                    }
-                    else {
-                        //save info file
-                        $file = new FileRepository(new File);
-                        $fileInfo['ship_id'] = $ship->id;
-                        $file->create($fileInfo);
-                    }
-                    
-                }
-            }
-            else {
-
-                $this->ship->update($id, $request->only($this->dataGet));    
-            }
-
-            return redirect()->back();
-        } catch (Exception $e) {
-            return redirect()->back()->withInput()->with('error', 'Không thể truy vấn dữ liệu');
-        }
+        //
     }
 
     /**
@@ -173,7 +137,6 @@ class ShipController extends Controller
      */
     public function destroy($id)
     {
-        $this->ship->delete($id, true);
-        return redirect()->back();
+        //
     }
 }

@@ -31,7 +31,7 @@ class CreateOrdersTable extends Migration
 
             $table->integer('number_cv');
             $table->integer('number_cv_pa71');
-            $table->string('order_name');
+            $table->string('order_name')->nullable();
             $table->string('order_phone');
             $table->string('customer_name')->nullable();
             $table->string('customer_phone')->nullable();

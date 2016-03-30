@@ -27,6 +27,7 @@ class NewsController extends Controller
         'page_news',
         'page_list',
         'page_imei',
+        'page_xmctb',
         'receive_name',
         'user_name'
     ];

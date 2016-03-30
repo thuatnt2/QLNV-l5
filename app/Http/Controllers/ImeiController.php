@@ -26,6 +26,7 @@ class ImeiController extends Controller
         'page_news',
         'page_list',
         'page_imei',
+        'page_xmctb',
         'network',
         'receive_name',
         'user_name'

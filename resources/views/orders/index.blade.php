@@ -15,7 +15,7 @@
         {!! Former::setOption('TwitterBootstrap3.labelWidths', ['large' => 4, 'small' => 4]) !!}
         {!! Former::open_for_files(url('orders'))->id('form-create') !!}
         <fieldset>
-        {!! Former::legend('Thêm yêu cầu giám sát') !!}
+        {!! Former::legend('Đăng ký yêu cầu') !!}
         <div class="col-sm-4">
             {!! Former::text('created_at', 'Ngày yêu cầu')
                 ->required()
@@ -25,7 +25,7 @@
             {!! Former::text('number_cv', 'Số công văn yêu cầu')->required()->addClass('input-sm'); !!}
             {!! Former::select('unit')->label('Đơn vị yêu cầu')->options($units)->addClass('input-sm') !!}
             {!! Former::text('number_cv_pa71', 'Số công văn PA71')->required()->addClass('input-sm'); !!}
-            {!! Former::text('order_name', 'Tên đối tượng')->required()->addClass('input-sm'); !!}
+            {!! Former::text('order_name', 'Tên đối tượng')->addClass('input-sm'); !!}
           
         </div> 
         <div class="col-sm-4">

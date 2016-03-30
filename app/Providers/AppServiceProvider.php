@@ -12,6 +12,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ShipController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\UnitController;
+use App\Http\Controllers\XMCTBController;
 use App\Kind;
 use App\News;
 use App\Order;
@@ -91,6 +92,10 @@ class AppServiceProvider extends ServiceProvider
             return new ShipRepository(new Ship);
         });
         $this->app->when(ImeiController::class)->needs(Repository::class)->give(function($app) {
+
+            return new ShipRepository(new Ship);
+        });
+        $this->app->when(XMCTBController::class)->needs(Repository::class)->give(function($app) {
 
             return new ShipRepository(new Ship);
         });
