@@ -58,16 +58,16 @@ class OrderRepository extends AbstractRepository
         $query =  DB::table('orders')
                     ->join('phones', 'orders.id', '=', 'phones.order_id')
                     ->where('status', '=', 'success')
-                    ->where('date_begin', '>=', $startDate)
+                    // ->where('date_begin', '>=', $startDate)
                     ->where('date_end', '>=', $endDate)
+                    ->orWhere('date_order', '>=', $startDate)
                     ->whereNull('orders.deleted_at');
         // init element copy
         $query1 = clone $query;
         $query2 = clone $query;
         $order = $query->count();
 
-        $query = $query->join('order_purpose', 'order_purpose.order_id', '=', 'orders.id')
-                       ->join('purposes', 'order_purpose.purpose_id', '=', 'purposes.id')
+        $query = $query->join('purposes', 'orders.purpose_id', '=', 'purposes.id')
                        ->select(DB::raw('count(orders.id) as purposeOrder'));
         $query3 = clone $query;
         // count purposes order                  
@@ -77,10 +77,13 @@ class OrderRepository extends AbstractRepository
         $total = $query1->join('ships', 'phones.id', '=', 'ships.phone_id')
                         ->select(DB::raw('sum(news) as news'),
                             DB::raw('sum(page_news) as pageNews'), 
-                            DB::raw('sum(page_list) as pageList')
+                            DB::raw('sum(page_list) as pageList'),
+                            DB::raw('sum(page_xmctb) as pageXmctb'),
+                            DB::raw('sum(page_imei) as pageImei')
                         )
                         ->whereNull('ships.deleted_at')    
                         ->get();
+                        // dd($total);
         // count purpose order on unit                
         $purposeUnit = $query3->join('units', 'units.id', '=', 'orders.unit_id') 
                               ->select('units.symbol', DB::raw('count(orders.id) as purposeOrder'))
@@ -92,7 +95,9 @@ class OrderRepository extends AbstractRepository
                         ->select('units.symbol',
                             DB::raw('sum(ships.news) as numberNews'),
                             DB::raw('sum(ships.page_news) as pageNews'),
-                            DB::raw('sum(ships.page_list) as pageList')
+                            DB::raw('sum(ships.page_list) as pageList'),
+                            DB::raw('sum(ships.page_xmctb) as pageXmctb'),
+                            DB::raw('sum(ships.page_imei) as pageImei')
                         )
                         ->whereNull('ships.deleted_at')  
                         ->groupBy('units.symbol')

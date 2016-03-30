@@ -50,11 +50,15 @@
                       <tr class="success">
                         <th class="text-center">Nội dung</th>
                         <td class="text-center">Tổng số yêu cầu</td>
-                        <td class="text-center">Yêu cầu giám sát</td>
-                        <td class="text-center">Yêu cầu list</td>
+                        <td class="text-center">Giám sát</td>
+                        <td class="text-center">List</td>
+                        <td class="text-center">XMCTB</td>
+                        <td class="text-center">IMEI</td>
                         <td class="text-center">Tổng số bản tin </td>
                         <td class="text-center">Tổng số trang tin </td>
                         <td class="text-center">Tổng số trang list</td>
+                        <td class="text-center">Tổng số trang xmctb</td>
+                        <td class="text-center">Tổng số trang imei</td>
                       </tr>
                       <tr>
                         <th class="text-center">Kết quả</th>
@@ -66,6 +70,8 @@
                           <td class="text-center"> {{ $total->news }} </td>
                           <td class="text-center"> {{ $total->pageNews }} </td>
                           <td class="text-center"> {{ $total->pageList }} </td>
+                          <td class="text-center"> {{ $total->pageXmctb }} </td>
+                          <td class="text-center"> {{ $total->pageImei }} </td>
                         @endforeach
                       </tr>
                     </table>
@@ -87,6 +93,8 @@
                         <th class="text-center">Số bản tin</th>
                         <th class="text-center">Số trang tin</th>
                         <th class="text-center">Số trang list</th>
+                        <th class="text-center">Số trang xmctb</th>
+                        <th class="text-center">Số trang imei</th>
                       </tr>
                       
                       @foreach ($result['units'] as $index => $unit)
@@ -97,6 +105,8 @@
                           <td class="text-center"> {{ $unit->numberNews }} </td>
                           <td class="text-center"> {{ $unit->pageNews }} </td>
                           <td class="text-center"> {{ $unit->pageList }} </td>
+                          <td class="text-center"> {{ $unit->pageXmctb }} </td>
+                          <td class="text-center"> {{ $unit->pageImei }} </td>
                         </tr>
                       @endforeach
                       
