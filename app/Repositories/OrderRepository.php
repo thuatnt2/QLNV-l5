@@ -68,7 +68,10 @@ class OrderRepository extends AbstractRepository
         $order = $query->count();
 
         $query = $query->join('purposes', 'orders.purpose_id', '=', 'purposes.id')
-                       ->select(DB::raw('count(orders.id) as purposeOrder'));
+                       ->select(
+                            'purposes.symbol',
+                            DB::raw('count(orders.id) as purposeOrder')
+                        );
         $query3 = clone $query;
         // count purposes order                  
         $purposes = $query->groupBy('purposes.group')
@@ -76,28 +79,31 @@ class OrderRepository extends AbstractRepository
         // sum new, sum page_new, sum page_list                  
         $total = $query1->join('ships', 'phones.id', '=', 'ships.phone_id')
                         ->select(DB::raw('sum(news) as news'),
-                            DB::raw('sum(page_news) as pageNews'), 
-                            DB::raw('sum(page_list) as pageList'),
-                            DB::raw('sum(page_xmctb) as pageXmctb'),
-                            DB::raw('sum(page_imei) as pageImei')
+                            DB::raw('coalesce(sum(page_news),0) as pageNews'), 
+                            DB::raw('coalesce(sum(page_list),0) as pageList'),
+                            DB::raw('coalesce(sum(page_xmctb),0) as pageXmctb'),
+                            DB::raw('coalesce(sum(page_imei),0) as pageImei')
                         )
                         ->whereNull('ships.deleted_at')    
                         ->get();
                         // dd($total);
-        // count purpose order on unit                
+        // count purpose order of unit                
         $purposeUnit = $query3->join('units', 'units.id', '=', 'orders.unit_id') 
-                              ->select('units.symbol', DB::raw('count(orders.id) as purposeOrder'))
+                              ->select(
+                                    'units.symbol', 
+                                    DB::raw('count(orders.id) as purposeOrder')
+                                )
                               ->groupBy('units.symbol')
                               ->get();
         $units = $query2->join('units', 'units.id', '=', 'orders.unit_id')
                         ->join('ships', 'phones.id', '=', 'ships.phone_id')
                         ->distinct('orders.symbol')
                         ->select('units.symbol',
-                            DB::raw('sum(ships.news) as numberNews'),
-                            DB::raw('sum(ships.page_news) as pageNews'),
-                            DB::raw('sum(ships.page_list) as pageList'),
-                            DB::raw('sum(ships.page_xmctb) as pageXmctb'),
-                            DB::raw('sum(ships.page_imei) as pageImei')
+                            DB::raw('coalesce(sum(ships.news),0) as numberNews'),
+                            DB::raw('coalesce(sum(ships.page_news),0) as pageNews'),
+                            DB::raw('coalesce(sum(ships.page_list),0) as pageList'),
+                            DB::raw('coalesce(sum(ships.page_xmctb),0) as pageXmctb'),
+                            DB::raw('coalesce(sum(ships.page_imei),0) as pageImei')
                         )
                         ->whereNull('ships.deleted_at')  
                         ->groupBy('units.symbol')

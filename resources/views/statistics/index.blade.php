@@ -50,10 +50,9 @@
                       <tr class="success">
                         <th class="text-center">Nội dung</th>
                         <td class="text-center">Tổng số yêu cầu</td>
-                        <td class="text-center">Giám sát</td>
-                        <td class="text-center">List</td>
-                        <td class="text-center">XMCTB</td>
-                        <td class="text-center">IMEI</td>
+                         @foreach ($result['purposes'] as $element)
+                          <td class="text-center"> {{ ucwords($element->symbol) }} </td>
+                        @endforeach
                         <td class="text-center">Tổng số bản tin </td>
                         <td class="text-center">Tổng số trang tin </td>
                         <td class="text-center">Tổng số trang list</td>
