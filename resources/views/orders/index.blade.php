@@ -92,7 +92,7 @@
                             <select class="form-control input-sm">
                                 <option value="">Tất cả</option>
                                 @foreach ($purposes as $index=>$purpose)
-                                    <option value="{{ $index }}" {{ $condition == $index ? "selected":""}}>{{ studly_case($purpose) }}</option>
+                                    <option value="{{ $index }}" {{ $condition == $index ? "selected":""}}>{{ ucwords($purpose) }}</option>
                                 @endforeach
                             </select>
                         </div>
