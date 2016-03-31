@@ -118,10 +118,10 @@
                         <td class="text-center">{{ $ship->page_xmctb}}</td>
                         <td class="text-center">{{ $ship->phone->order->comment}}</td>
                         <td class="text-center"width="6%">
-                            <button class="btn btn-warning btn-xs fa fa-edit" data-url="{{ action('ShipController@edit', $ship->id) }}" type="button" title="Sửa"></button>
+                            <button class="btn btn-warning btn-xs fa fa-edit" data-url="{{ action('XMCTBController@edit', $ship->id) }}" type="button" title="Sửa"></button>
                             <!-- TODO: Delete Button -->
                             &nbsp
-                            <button class="btn btn-danger btn-xs fa fa-trash" data-toggle="modal" data-target="#confirmModal" data-url="{{ action('ShipController@destroy', $ship->id) }}" title="Xóa"></button>
+                            <button class="btn btn-danger btn-xs fa fa-trash" data-toggle="modal" data-target="#confirmModal" data-url="{{ action('XMCTBController@destroy', $ship->id) }}" title="Xóa"></button>
                         </td>
                     </tr>
                     @endforeach

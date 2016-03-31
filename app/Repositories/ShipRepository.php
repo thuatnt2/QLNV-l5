@@ -56,7 +56,6 @@ class ShipRepository extends AbstractRepository
     	$this->ship->user_id = $input['user_name'];
         $this->ship->file_name = $fileName;
     	$this->ship->save();
-        // dd($this->ship);
         // syn network table
         if (isset($input['network'])) {
             $this->ship->networks()->sync($input['network']);
@@ -91,7 +90,8 @@ class ShipRepository extends AbstractRepository
         $ship->news = $input['news'];
         $ship->page_news = $input['page_news'];
         $ship->page_list = $input['page_list'];
-        $ship->page_imei = $input['page_xmctb'];
+        $ship->page_xmctb = $input['page_xmctb'];
+        $ship->page_imei = $input['page_imei'];
         $ship->receive_name = $input['receive_name'];
         $ship->user_id = $input['user_name'];
         if ($fileName != '') {
@@ -99,6 +99,10 @@ class ShipRepository extends AbstractRepository
         }
         $ship->save();
 
+        // syn network table
+        if (isset($input['network'])) {
+            $ship->networks()->sync($input['network']);
+        }
         return $ship;
     }
     public function delete($id, $update = false)

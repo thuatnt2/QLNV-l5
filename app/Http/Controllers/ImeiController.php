@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\Repository;
 use App\Http\Requests;
+use App\Http\Requests\ImeiRequest;
 use App\Network;
 use App\Order;
 use App\Repositories\NetworkRepository;
@@ -59,7 +60,6 @@ class ImeiController extends Controller
         $perPage = request()->input('perPage', 10);
         $ships = $this->ship->paginate('imei', $perPage, ['phone', 'file']);
         $ships->appends(['perPage' => $perPage]);
-
         return view('imei.index', compact('ships'));
     }
 
@@ -79,7 +79,7 @@ class ImeiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ImeiRequest $request)
     {
         try {
             // Co the chua bat dc exeption khi upload file
@@ -123,7 +123,12 @@ class ImeiController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ship = $this->ship->findById($id);
+        $checked = [];
+        foreach ($ship->networks as $network) {
+            $checked['network['.$network->id.']'] = true;
+        }
+        return view('imei.edit', compact('ship', 'checked'));
     }
 
     /**
@@ -133,9 +138,39 @@ class ImeiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ImeiRequest $request, $id)
     {
-        //
+        try {
+            if ($request->hasFile('file')) {
+                $fileInfo = $this->uploadFile($request->file('file'), 'imei');
+                // if upload success
+                if ($fileInfo) {
+                
+                    $ship = $this->ship->update($id, $request->only($this->dataGet), $fileInfo['name']);
+
+                    // update file table if isset
+                    if (isset($ship->file)) {
+                        $file = $ship->file;
+                        $file->update($id, $fileInfo);
+                    }
+                    else {
+                        //save info file
+                        $file = new FileRepository(new File);
+                        $fileInfo['ship_id'] = $ship->id;
+                        $file->create($fileInfo);
+                    }
+                    
+                }
+            }
+            else {
+
+                $this->ship->update($id, $request->only($this->dataGet));    
+            }
+
+            return redirect()->back();
+        } catch (Exception $e) {
+            return redirect()->back()->withInput()->with('error', 'Không thể truy vấn dữ liệu');
+        }
     }
 
     /**

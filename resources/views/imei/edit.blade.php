@@ -1,8 +1,8 @@
 	{!! Former::setOption('TwitterBootstrap3.labelWidths', ['large' => 4, 'small' => 4]) !!}
-        {!! Former::open_for_files(action('ShipController@update', $ship->id))->id('form-edit') !!}
+        {!! Former::open_for_files(action('ImeiController@update', $ship->id))->id('form-edit') !!}
         {{ method_field('PUT') }}
         <fieldset>
-        {!! Former::legend('Giao List-XMCTB') !!}
+        {!! Former::legend('Giao IMEI') !!}
         <div class="col-sm-4">
             {!! Former::text('created_at', 'Ngày giao')
                 ->required()
@@ -36,7 +36,8 @@
             </div>
         </div>
         <div class="col-sm-4">
-            {!! Former::text('page_list', 'Số trang list')->required()->value($ship->page_list)->addClass('input-sm'); !!}
+            {!! Former::text('page_imei', 'Số trang imei')->required()->value($ship->page_imei)->addClass('input-sm'); !!}
+            {!! Former::checkboxes('network[]', 'Nhà mạng')->checkboxes($networks)->check($checked)->inline() !!}
             <div class="form-group required <?php if($errors->has('file')) echo 'has-error'?>">
                 <label for="file" class="control-label col-lg-4 col-sm-4">File đính kèm<sup>*</sup></label>
                 <div class="col-lg-8 col-sm-8" id="uploadFile">

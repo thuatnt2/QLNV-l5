@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contracts\Repository;
 use App\Http\Requests;
+use App\Http\Requests\XMCTBRequest;
 use App\Order;
 use App\Repositories\OrderRepository;
 use App\Repositories\UserRepository;
@@ -70,7 +71,7 @@ class XMCTBController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(XMCTBRequest $request)
     {
         try {
             // Co the chua bat dc exeption khi upload file
@@ -114,7 +115,9 @@ class XMCTBController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ship = $this->ship->findById($id);
+        
+        return view('xmctb.edit', compact('ship'));
     }
 
     /**
@@ -124,9 +127,39 @@ class XMCTBController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(XMCTBRequest $request, $id)
     {
-        //
+        try {
+            if ($request->hasFile('file')) {
+                $fileInfo = $this->uploadFile($request->file('file'), 'xmctb');
+                // if upload success
+                if ($fileInfo) {
+                
+                    $ship = $this->ship->update($id, $request->only($this->dataGet), $fileInfo['name']);
+
+                    // update file table if isset
+                    if (isset($ship->file)) {
+                        $file = $ship->file;
+                        $file->update($id, $fileInfo);
+                    }
+                    else {
+                        //save info file
+                        $file = new FileRepository(new File);
+                        $fileInfo['ship_id'] = $ship->id;
+                        $file->create($fileInfo);
+                    }
+                    
+                }
+            }
+            else {
+
+                $this->ship->update($id, $request->only($this->dataGet));    
+            }
+
+            return redirect()->back();
+        } catch (Exception $e) {
+            return redirect()->back()->withInput()->with('error', 'Không thể truy vấn dữ liệu');
+        }
     }
 
     /**
@@ -137,6 +170,7 @@ class XMCTBController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->ship->delete($id, true);
+        return redirect()->back();
     }
 }

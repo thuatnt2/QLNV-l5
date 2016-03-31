@@ -1,8 +1,8 @@
 	{!! Former::setOption('TwitterBootstrap3.labelWidths', ['large' => 4, 'small' => 4]) !!}
-        {!! Former::open_for_files(action('ShipController@update', $ship->id))->id('form-edit') !!}
+        {!! Former::open_for_files(action('XMCTBController@update', $ship->id))->id('form-edit') !!}
         {{ method_field('PUT') }}
         <fieldset>
-        {!! Former::legend('Giao List-XMCTB') !!}
+        {!! Former::legend('Giao XMCTB') !!}
         <div class="col-sm-4">
             {!! Former::text('created_at', 'Ngày giao')
                 ->required()
@@ -55,8 +55,8 @@
         <div class="form-group">
             <div class="col-lg-offset-5 col-sm-offset-5 col-lg-8 col-sm-8">
                 <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-edit">&nbsp</i>Sửa</button>
-                 <button type="reset" class="btn btn-default btn-sm"><i class="fa fa-refresh">&nbsp</i>Làm mới</button>
-                 <button type="button" class="btn btn-danger btn-sm" onclick="hideForm()" ><i class="fa fa-reply">&nbsp</i>Hủy</button>
+                <button type="reset" class="btn btn-default btn-sm"><i class="fa fa-refresh">&nbsp</i>Làm mới</button>
+                <button type="button" class="btn btn-danger btn-sm" onclick="hideForm()" ><i class="fa fa-reply">&nbsp</i>Hủy</button>
            </div>
         </div>     
         </fieldset>
