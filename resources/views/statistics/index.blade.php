@@ -77,6 +77,67 @@
                   </div><!-- /.box-body -->
               <!-- </div>/.box -->
             </div><!-- /.col-md-6 -->
+            
+            <div class="col-md-12">
+                <div class="box-header">
+                    <h3 class="box-title label label-info">Khối An ninh: {{ $result['security'] }} yêu cầu</h3>
+                  </div><!-- /.box-header -->
+                  <div class="box-body">
+                    <table class="table table-bordered">
+                      <tr class="success">
+                          <th class="text-center">STT</th>
+                          <th class="text-center">Tính chất</th>
+                          <th class="text-center">Tổng số</th>
+                          @foreach ($result['ss'] as $index => $ss)
+                            @foreach ($ss->symbol as $element)
+                                <th class="text-center">{{ $element->symbol }}</th>
+                            @endforeach
+                            @break;
+                          @endforeach
+                      </tr>
+                      @foreach ($result['ss'] as $index => $ss)
+                        <tr>
+                          <td class="text-center">{{ ++$index }}</td>
+                          <td class="text-center">{{ $ss->description }}</td>
+                          <td class="text-center">{{ $ss->total }}</td>
+                          @foreach ($ss->symbol as $element)
+                                <td class="text-center">{{ $element->total }}</td>
+                          @endforeach
+                        </tr>
+                      @endforeach
+                    </table>
+                  </div><!-- /.box-body -->
+            </div>
+            <div class="col-md-12">
+                <div class="box-header">
+                    <h3 class="box-title label label-info">Khối cảnh sát: {{ $result['police'] }} yêu cầu</h3>
+                  </div><!-- /.box-header -->
+                  <div class="box-body">
+                    <table class="table table-bordered">
+                      <tr class="success">
+                          <th class="text-center">STT</th>
+                          <th class="text-center">Tính chất</th>
+                          <th class="text-center">Tổng số</th>
+                          @foreach ($result['sp'] as $index => $sp)
+                            @foreach ($sp->symbol as $element)
+                                <th class="text-center">{{ $element->symbol }}</th>
+                            @endforeach
+                            @break;
+                          @endforeach
+                      </tr>
+                      @foreach ($result['sp'] as $index => $sp)
+                        <tr>
+                          <td class="text-center">{{ ++$index }}</td>
+                          <td class="text-center">{{ $sp->description }}</td>
+                          <td class="text-center">{{ $sp->total }}</td>
+                          @foreach ($sp->symbol as $element)
+                                <td class="text-center">{{ $element->total }}</td>
+                          @endforeach
+                        </tr>
+                      @endforeach
+                    </table>
+                  </div><!-- /.box-body -->
+            </div>
             <div class="col-md-12">
                 <div class="box-header">
                     <h3 class="box-title label label-info">Cụ thể từng đơn vị</h3>

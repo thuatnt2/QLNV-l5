@@ -1,7 +1,9 @@
 <?php
 namespace App\Repositories;
 
+use App\Category;
 use App\Contracts\Repository;
+use App\Kind;
 use App\Order;
 use App\Phone;
 use Carbon\Carbon;
@@ -65,6 +67,8 @@ class OrderRepository extends AbstractRepository
         // init element copy
         $query1 = clone $query;
         $query2 = clone $query;
+        $query3 = clone $query;
+        $query4 = clone $query;
         $order = $query->count();
 
         $query = $query->join('purposes', 'orders.purpose_id', '=', 'purposes.id')
@@ -72,14 +76,15 @@ class OrderRepository extends AbstractRepository
                             'purposes.symbol',
                             DB::raw('count(orders.id) as purposeOrder')
                         );
-        $query3 = clone $query;
         // count purposes order                  
         $purposes = $query->groupBy('purposes.group')
                           ->get();
+        $purposes = $this->formatPurposeOrder($purposes);
         // sum new, sum page_new, sum page_list                  
         $total = $query1->join('phones', 'orders.id', '=', 'phones.order_id')
                         ->join('ships', 'phones.id', '=', 'ships.phone_id')
-                        ->select(DB::raw('sum(news) as news'),
+                        ->select(
+                            DB::raw('coalesce(sum(news),0) as news'),
                             DB::raw('coalesce(sum(page_news),0) as pageNews'), 
                             DB::raw('coalesce(sum(page_list),0) as pageList'),
                             DB::raw('coalesce(sum(page_xmctb),0) as pageXmctb'),
@@ -87,20 +92,42 @@ class OrderRepository extends AbstractRepository
                         )
                         ->whereNull('ships.deleted_at')    
                         ->get();
-                        // dd($total);
-        // count purpose order of unit                
-        $purposeUnit = $query3->join('units', 'units.id', '=', 'orders.unit_id') 
-                              ->select(
-                                    'units.symbol', 
-                                    DB::raw('count(orders.id) as purposeOrder')
-                                )
-                              ->groupBy('units.symbol')
-                              ->get();
+        // folow block
+        $security = $query3->join('units', 'units.id', '=', 'orders.unit_id')
+                           ->where('units.block','AN')
+                           ->count();
+        $ss = $query3->join('kinds', 'kinds.id', '=', 'orders.kind_id')
+                     ->join('categories', 'categories.id', '=', 'orders.category_id')
+                     ->select(
+                            'kinds.description',
+                            'categories.symbol',
+                            DB::raw('count(orders.kind_id) as total')
+                        )   
+                     ->groupBy('kinds.symbol')
+                     ->groupBy('categories.symbol')
+                     ->get();
+        $ss =  $this->formatBlockOrder($ss);              
+        $police = $query4->join('units', 'units.id', '=', 'orders.unit_id')
+                         ->where('units.block','CS')
+                         ->count();        
+        $sp = $query4->join('kinds', 'kinds.id', '=', 'orders.kind_id')
+                     ->join('categories', 'categories.id', '=', 'orders.category_id')
+                     ->select(
+                            'kinds.description',
+                            'categories.symbol',
+                            DB::raw('count(orders.kind_id) as total')
+                        )   
+                     ->groupBy('kinds.symbol')
+                     ->groupBy('categories.symbol')
+                     ->get();   
+        $sp = $this->formatBlockOrder($sp);               
         $units = $query2->join('units', 'units.id', '=', 'orders.unit_id')
                         ->join('phones', 'orders.id', '=', 'phones.order_id')
                         ->join('ships', 'phones.id', '=', 'ships.phone_id')
                         ->distinct('orders.symbol')
-                        ->select('units.symbol',
+                        ->select(
+                            'units.symbol',
+                            DB::raw('count(orders.purpose_id) as total'),
                             DB::raw('coalesce(sum(ships.news),0) as numberNews'),
                             DB::raw('coalesce(sum(ships.page_news),0) as pageNews'),
                             DB::raw('coalesce(sum(ships.page_list),0) as pageList'),
@@ -110,16 +137,10 @@ class OrderRepository extends AbstractRepository
                         ->whereNull('ships.deleted_at')  
                         ->groupBy('units.symbol')
                         ->get();
-        foreach ($units as $index1 => $unit) {
-            foreach ($purposeUnit as $key => $value) {
-                if($value->symbol == $unit->symbol) {
-                    $unit->total = $value->purposeOrder;
-                }
-            }
-        }
+
         $startDate = Carbon::parse($startDate)->format('d/m/Y');
         $endDate = Carbon::parse($endDate)->format('d/m/Y');
-        return compact('order', 'purposes', 'total', 'units', 'startDate', 'endDate');
+        return compact('order', 'purposes', 'total', 'units', 'security', 'ss','police', 'sp', 'startDate', 'endDate');
     }
     public function create(array $input, $fileName = '')
     {
@@ -180,5 +201,69 @@ class OrderRepository extends AbstractRepository
         // update Order
         $order->save();
         // update Phones
+    }
+
+    public function formatPurposeOrder($purposes)
+    {
+        $arr = ['giám sát', 'list', 'xmctb', 'imei'];
+        foreach ($arr as  $value) {
+            $check = false;
+            foreach ($purposes as  $purpose) {
+                if($value == $purpose->symbol) {
+                    $check = true;
+                }
+            }
+            if(!$check) {
+                $obj = new \stdClass;
+                $obj->symbol = $value;
+                $obj->purposeOrder = 0;
+                array_push($purposes, $obj);
+            }
+        }
+        return $purposes;
+    }
+    // return array
+    public function createStdObject()
+    {
+        $kinds = Kind::all();
+        $categories = Category::all();
+        
+        $result = [];
+        foreach ($kinds as $key => $kind) {
+            $obj = new \stdClass;
+            
+            $symbol = [];
+            foreach ($categories as $key => $category) {
+                $j = new \stdClass;
+                $j->symbol = $category->symbol;
+                $j->total = 0;
+                array_push($symbol, $j);
+            }
+            $obj->description = $kind->description;
+            $obj->symbol = $symbol;
+            $obj->total = 0;
+            array_push($result, $obj);
+        } 
+
+        return $result;
+        
+    }
+
+    public function formatBlockOrder($param)
+    {
+        $result = $this->createStdObject();
+        foreach ($param as $p) {
+            foreach ($result as $r) {
+                if ($r->description == $p->description) {
+                    foreach ($r->symbol as $key => $value) {
+                        if ($value->symbol == $p->symbol) {
+                            $value->total = $p->total;
+                            $r->total += $p->total;
+                        }
+                    }
+                }
+            }
+        }
+        return $result;
     }
 }
