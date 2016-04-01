@@ -56,11 +56,11 @@ class OrderRepository extends AbstractRepository
     {
         // init query
         $query =  DB::table('orders')
-                    ->join('phones', 'orders.id', '=', 'phones.order_id')
-                    ->where('status', '=', 'success')
-                    // ->where('date_begin', '>=', $startDate)
-                    ->where('date_end', '>=', $endDate)
-                    ->orWhere('date_order', '>=', $startDate)
+                    ->where(function ($q) use ($endDate, $startDate)
+                    {
+                        $q->where('date_end', '>=', $endDate)
+                          ->orWhere('date_order', '>=', $startDate); 
+                    })
                     ->whereNull('orders.deleted_at');
         // init element copy
         $query1 = clone $query;
@@ -77,7 +77,8 @@ class OrderRepository extends AbstractRepository
         $purposes = $query->groupBy('purposes.group')
                           ->get();
         // sum new, sum page_new, sum page_list                  
-        $total = $query1->join('ships', 'phones.id', '=', 'ships.phone_id')
+        $total = $query1->join('phones', 'orders.id', '=', 'phones.order_id')
+                        ->join('ships', 'phones.id', '=', 'ships.phone_id')
                         ->select(DB::raw('sum(news) as news'),
                             DB::raw('coalesce(sum(page_news),0) as pageNews'), 
                             DB::raw('coalesce(sum(page_list),0) as pageList'),
@@ -96,6 +97,7 @@ class OrderRepository extends AbstractRepository
                               ->groupBy('units.symbol')
                               ->get();
         $units = $query2->join('units', 'units.id', '=', 'orders.unit_id')
+                        ->join('phones', 'orders.id', '=', 'phones.order_id')
                         ->join('ships', 'phones.id', '=', 'ships.phone_id')
                         ->distinct('orders.symbol')
                         ->select('units.symbol',
