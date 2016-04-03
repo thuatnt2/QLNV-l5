@@ -36,9 +36,14 @@ class OrderRepository extends AbstractRepository
 
     public function search($query)
     {
+        $field = 'order_name';
+        $isNumeric = preg_match("/\S*\d+\S*/", $query) ? true : false;
+        if($isNumeric) {
+            $field = 'number_cv';
+        }
         return $this->order
                     ->with('unit','phones')
-                    ->where('order_name', 'like', '%'.$query.'%')
+                    ->where($field, 'like', '%'.$query.'%')
                     ->orderBy('created_at', 'desc')
                     ->get();
     }
