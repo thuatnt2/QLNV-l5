@@ -49,15 +49,15 @@
                     <table class="table table-bordered">
                       <tr class="success">
                         <th class="text-center">Nội dung</th>
-                        <td class="text-center">Tổng số yêu cầu</td>
-                         @foreach ($result['purposes'] as $element)
+                        <td class="text-center">Tổng số y/c</td>
+                        @foreach ($result['purposes'] as $element)
                           <td class="text-center"> {{ ucwords($element->symbol) }} </td>
                         @endforeach
-                        <td class="text-center">Tổng số bản tin </td>
-                        <td class="text-center">Tổng số trang tin </td>
-                        <td class="text-center">Tổng số trang list</td>
-                        <td class="text-center">Tổng số trang xmctb</td>
-                        <td class="text-center">Tổng số trang imei</td>
+                        <td class="text-center">Số bản tin </td>
+                        <td class="text-center">Số trang tin </td>
+                        <td class="text-center">Số trang list</td>
+                        <td class="text-center">Số trang xmctb</td>
+                        <td class="text-center">Số trang imei</td>
                       </tr>
                       <tr>
                         <th class="text-center">Kết quả</th>
@@ -147,9 +147,7 @@
                       <tr class="success">
                         <th class="text-center">STT</th>
                         <th class="text-center">Tên đơn vị</th>
-                        <th class="text-center">Số yêu cầu</th>
-<!--                         <th class="text-center">Yêu cầu giám sát</th>
-                        <th class="text-center">Yêu cầu list</th> -->
+                        <th class="text-center">Tổng Số y/c</th>
                         <th class="text-center">Số bản tin</th>
                         <th class="text-center">Số trang tin</th>
                         <th class="text-center">Số trang list</th>
