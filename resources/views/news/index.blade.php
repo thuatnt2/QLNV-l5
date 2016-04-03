@@ -111,7 +111,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                <?php $stt = $orders->perPage()*$orders->currentPage() - $orders->perPage();?>
+                <?php $stt = $news->perPage()*$news->currentPage() - $news->perPage();?>
                     @foreach ($news as $index => $new)
                     <tr>
                         <td class="text-center">{{ ++$stt }}</td>
