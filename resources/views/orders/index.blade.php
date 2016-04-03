@@ -26,7 +26,6 @@
             {!! Former::select('unit')->label('Đơn vị yêu cầu')->options($units)->addClass('input-sm') !!}
             {!! Former::text('number_cv_pa71', 'Số công văn PA71')->required()->addClass('input-sm'); !!}
             {!! Former::text('order_name', 'Tên đối tượng')->addClass('input-sm'); !!}
-          
         </div> 
         <div class="col-sm-4">
             {!! Former::text('order_phone[]', 'Số điện thoại ĐT')
@@ -125,9 +124,10 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php $stt = $orders->perPage()*$orders->currentPage() - $orders->perPage();?>
                     @foreach ($orders as $index => $order)
                     <tr>
-                        <td class="text-center">{{ ++$index }}</td>
+                        <td class="text-center">{{ ++$stt }}</td>
                         <td class="text-center">{{ $order->date_order->format('d/m/Y') }}</td>
                         <td class="text-center"><a href="{{ action('OrderController@show', $order->id) }}">{{ $order->number_cv . '/' . $order->unit->symbol }}</a></td>
                         <td class="text-center">{{ $order->number_cv_pa71 }}</td>

@@ -111,9 +111,10 @@
                     </tr>
                 </thead>
                 <tbody>
+                <?php $stt = $orders->perPage()*$orders->currentPage() - $orders->perPage();?>
                     @foreach ($news as $index => $new)
                     <tr>
-                        <td class="text-center">{{ ++$index }}</td>
+                        <td class="text-center">{{ ++$stt }}</td>
                         <td class="text-center">{{ $new->date_submit->format('d/m/Y') }}</td>
                         <td class="text-center">{{ $new->phone->order->number_cv . '/' . $new->phone->order->unit->symbol }}</td>
                         <td class="text-center">{{ $new->number_cv_pa71 }}</td>
