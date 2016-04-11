@@ -66,7 +66,7 @@
                                 <li><a href="#">Người dùng</a></li>
                                 <li><a href="{{ url('units') }}">Đơn vị yêu cầu</a></li>
                                 <li><a href="{{ url('categories') }}">Loại đối tượng</a></li>
-                                <li><a href="{{ url('kinds') }}">Tính chất vụ án</a></li>
+                                <li><a href="{{ url('kinds') }}">Tính chất đối tượng</a></li>
                             </ul>
                         </li>
                     </ul>

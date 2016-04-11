@@ -51,13 +51,9 @@ class OrderController extends Controller
         $orders->appends(['perPage' => $perPage, 'condition' => $condition]);
         return view('orders.index', compact('orders', 'condition'));
     }
-    public function orderList()
+    public function importFile()
     {
-        $perPage = request()->input('perPage', 10);
-
-        $orders = $this->order->paginate($perPage);
-        $orders->appends(['perPage' => $perPage]);
-        return view('orders.list', compact('orders'));
+        //
     }
     /**
      * Store a newly created resource in storage.
