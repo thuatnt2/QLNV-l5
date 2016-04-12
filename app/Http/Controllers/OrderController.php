@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Contracts\Repository;
 use App\Contracts\findById;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
-use App\Phone;
-use App\Repositories\UnitRepository;
-use Illuminate\Http\Request;
-use File;
-use Response;
 use App\Jobs\OfficeConversion;
+use App\Kind;
+use App\Phone;
+use App\Repositories\CategoryRepository;
+use App\Repositories\KindRepository;
+use App\Repositories\UnitRepository;
+use App\Unit;
+use Carbon\Carbon;
+use Excel;
+use File;
+use Illuminate\Http\Request;
+use Response;
 class OrderController extends Controller
 {
     protected $order;
@@ -37,6 +44,8 @@ class OrderController extends Controller
     public function __construct(Repository $order)
     {
         $this->order = $order;
+        $this->importFile();
+
     }
     /**
      * Display a listing of the resource.
@@ -54,6 +63,30 @@ class OrderController extends Controller
     public function importFile()
     {
         //
+        
+        $pathToFile = base_path(). '/data' . '/import/test.xls';
+        Excel::selectSheets('Sheet1')->load($pathToFile, function ($reader)
+        {
+            $rows = $reader->get();
+            foreach ($rows as $key => $value) {
+                // $value is array
+                $order['created_at'] = Carbon::now();
+                $unit = new UnitRepository(new Unit);
+                $order['unit_id'] = $unit->findBy('symbol', $value['unit_id'],['id'])->id;
+                $category = new CategoryRepository(new Category);
+                $order['category_id'] = $category->findBy('symbol', $value['category_id'],['id'])->id;
+                $kind = new KindRepository(new Kind);
+                $order['kind_id'] = $kind->findBy('symbol', $value['kind_id'],['id'])->id;
+                $order['number_cv'] = (int) $value['number_cv'];
+                $order['customer_name'] = "";
+                $order['customer_phone'] = "";
+                $order['comment'] = "";
+                dd($order);
+                // insert into order table
+                $this->order->create($order);
+            }
+        });
+        
     }
     /**
      * Store a newly created resource in storage.

@@ -149,7 +149,6 @@ class OrderRepository extends AbstractRepository
     }
     public function create(array $input, $fileName = '')
     {
-
     	$this->order->user_id = $input['user'];
     	$this->order->kind_id = $input['kind'];
     	$this->order->category_id = $input['category'];
