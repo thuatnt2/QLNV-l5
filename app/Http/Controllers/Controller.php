@@ -73,7 +73,16 @@ class Controller extends BaseController
 
     public function excelForShip($rows)
     {
-        
+        $input['created_at'];
+        $input['phone'];
+        $input['number_cv_pa71'];
+        $input['news'];
+        $input['page_news'];
+        $input['page_list'];
+        $input['page_xmctb'];
+        $input['page_imei'];
+        $input['receive_name'];
+        $input['user_name'];
         return $ship;
     }
 }
