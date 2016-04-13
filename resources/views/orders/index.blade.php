@@ -14,7 +14,7 @@
     <div class="box row-form">
         <div class="row">
             <div class="col-sm-11">
-                <legend>Đăng ký yêu cầu</legend>
+                <span style="padding-left: 8px;font-size: 18px;">Đăng ký yêu cầu</span>
            </div>
             <div class="col-sm-1">
                 <form class="import-file" method="post" enctype="multipart/form-data" action="{{ action('OrderController@importFile') }}">
@@ -24,6 +24,7 @@
                 </form>
            </div>
         </div>
+        <hr>
         {!! Former::setOption('TwitterBootstrap3.labelWidths', ['large' => 4, 'small' => 4]) !!}
         {!! Former::open_for_files(url('orders'))->id('form-create') !!}
         <div class="col-sm-4">
@@ -68,7 +69,6 @@
                <button type="reset" class="btn btn-default btn-sm"><i class="fa fa-refresh">&nbsp</i>Làm mới</button>
            </div>
             </div>
-        <!-- </fieldset> -->
         {!! Former::close() !!}
     </div>
 </div>

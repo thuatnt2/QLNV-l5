@@ -11,10 +11,21 @@
 @include('partials.confirm')
 <div class="row">
 	<div class="box row-form">
+        <div class="row">
+            <div class="col-sm-11">
+                <span style="padding-left: 8px;font-size: 18px;">Đăng ký yêu cầu</span>
+           </div>
+            <div class="col-sm-1">
+                <form class="import-file" method="post" enctype="multipart/form-data" action="{{ action('OrderController@importFile') }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="file" id="import-order" name="file"  style="width: 0;height: 0;display: none;">
+                    <button class="btn btn-info btn-xs" type="button">Nhập từ excel</button>
+                </form>
+           </div>
+        </div>
+        <hr>
 		{!! Former::setOption('TwitterBootstrap3.labelWidths', ['large' => 4, 'small' => 4]) !!}
         {!! Former::open_for_files(url('ship/xmctb'))->id('form-create') !!}
-        <fieldset>
-        {!! Former::legend('Giao List-XMCTB') !!}
         <div class="col-sm-4">
             {!! Former::text('created_at', 'Ngày giao')
                 ->required()
@@ -63,7 +74,6 @@
                <button type="reset" class="btn btn-default btn-sm"><i class="fa fa-refresh">&nbsp</i>Làm mới</button>
             </div>
         </div>     
-        </fieldset>
         {!! Former::close() !!}
 	</div>
 </div>

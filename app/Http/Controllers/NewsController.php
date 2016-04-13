@@ -60,7 +60,44 @@ class NewsController extends Controller
         
         return view('news.index', compact('news'));
     }
+    public function importFile()
+    {
+        $fileInfo = $this->uploadFile(request()->file('file'), 'import');
+        $pathToFile = $fileInfo['path']. '/'. $fileInfo['name'];
+        Excel::selectSheets('Sheet1')->load($pathToFile, function ($reader)
+        {
+            $rows = $reader->get();
 
+            foreach ($rows as $key => $value) {
+                // $value is array
+                $news['user'] = Auth::user()->id;
+                $today = Carbon::now();
+                $news['created_at'] = $today->day. '/'. $today->month. '/'. $today->year;
+                $kind = new KindRepository(new Kind);
+                $news['kind'] = $kind->findBy('symbol', $value['tinh_chat'],['id'])->id;
+                $category = new CategoryRepository(new Category);
+                $news['category'] = $category->findBy('symbol', $value['loai_dt'],['id'])->id;
+                $unit = new UnitRepository(new Unit);
+                $news['unit'] = $unit->findBy('symbol', $value['donviyc'], ['id'])->id;
+                $purpose = new PurposeRepository(new Purpose);
+                $news['purpose'] = $purpose->findBy('group', 'monitor', ['id'])->id;
+                
+                $news['number_cv'] = (int) $value['cvde'];
+                $news['number_cv_pa71'] = (int) $value['cvdi'];
+                $news['news_name'] = $value['ho_ten_dt'];
+                $news['news_phone'] = [$value['so_dt']];
+                $news['date_request'] = $value['ngay_bd']->day . '/'. $value['ngay_bd']->month. '/'.$value['ngay_bd']->year .'-'. $value['ngaykt']->day . '/'. $value['ngaykt']->month. '/'.$value['ngaykt']->year;
+                $news['customer_name'] = $value['tents'];
+                $news['customer_phone'] = (int) $value['dtts'];
+                $news['comment'] = "";
+
+                // insert into order table
+                $newOrder = new OrderRepository(new Order);
+                $newOrder->create($order);
+            }
+        });
+        return redirect()->back();
+    }
     /**
      * Store a newly created resource in storage.
      *
