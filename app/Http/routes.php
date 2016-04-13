@@ -25,8 +25,8 @@ Route::group(['middleware' => ['web']], function () {
 		Route::post('register', 'Auth\AuthController@postRegister');
 		// Orders
 	    Route::resource('orders', 'OrderController');
-	    Route::get('order-list', ['as' => 'order.list', 'uses' => 'OrderController@orderList']);
-	    Route::get('edit-list/{id}', ['as' => 'order.edit-list', 'uses' => 'OrderController@editList']);
+	    Route::post('order/import', ['as' => 'order.import', 'uses' => 'OrderController@importFile']);
+	    // Route::get('edit-list/{id}', ['as' => 'order.edit-list', 'uses' => 'OrderController@editList']);
 	    Route::post('update-status/{id}', ['as' => 'update.status', 'uses' => 'OrderController@updateStatus']);
 	    Route::get('search', ['as' => 'search', 'uses' => 'OrderController@search']);
 	    Route::get('file/{folder}/{filename}', ['as' => 'file', 'uses' => 'OrderController@readFile']);

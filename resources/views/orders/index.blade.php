@@ -12,10 +12,20 @@
 @include('partials.confirm')
 <div class="row">
     <div class="box row-form">
+        <div class="row">
+            <div class="col-sm-11">
+                <legend>Đăng ký yêu cầu</legend>
+           </div>
+            <div class="col-sm-1">
+                <form class="import-file" method="post" enctype="multipart/form-data" action="{{ action('OrderController@importFile') }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="file" id="import-order" name="file"  style="width: 0;height: 0;display: none;">
+                    <button class="btn btn-info btn-xs" type="button">Nhập từ excel</button>
+                </form>
+           </div>
+        </div>
         {!! Former::setOption('TwitterBootstrap3.labelWidths', ['large' => 4, 'small' => 4]) !!}
         {!! Former::open_for_files(url('orders'))->id('form-create') !!}
-        <fieldset>
-        {!! Former::legend('Đăng ký yêu cầu') !!}
         <div class="col-sm-4">
             {!! Former::text('created_at', 'Ngày yêu cầu')
                 ->required()
@@ -58,7 +68,7 @@
                <button type="reset" class="btn btn-default btn-sm"><i class="fa fa-refresh">&nbsp</i>Làm mới</button>
            </div>
             </div>
-        </fieldset>
+        <!-- </fieldset> -->
         {!! Former::close() !!}
     </div>
 </div>
@@ -112,7 +122,7 @@
                         <th class="text-center">Số Cv đơn vị</th>
                         <th class="text-center">Số Cv PA71</th>
                         <th class="text-center" width="15%">Tên đối tượng</th>
-                        <th class="text-center" width="10%">Số điện thoại</th>
+                        <th class="text-center" width="10%">Số điện thoại/IMEI</th>
                         <th class="text-center">Loại ĐT</th>
                         <th class="text-center">Tính chất</th>
                         <th class="text-center" width="13%">Thời gian yêu cầu</th>

@@ -1,4 +1,21 @@
 (function ($) {
+  // import ajax
+  $('.import-file').on('click', 'button:button', function () {
+     $('#import-order').click();
+     $('#import-order').change(function () {
+        var filename = $(this).val().replace(/.*(\/|\\)/, '');
+        var extension = filename.split('.').pop();
+        // if true submit
+        if(extension == 'xls' || extension == 'xlsx') {
+          $('.import-file').submit();
+        }
+        else {
+          // view message error
+          console.log(filename);
+          alert('Chỉ nhập dữ liệu từ file excel');
+        }
+     });
+  })
 	// Select 2 input
 	$(".select2").each(function() {
         options = {
