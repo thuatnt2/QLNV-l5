@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Repository;
+use App\Repositories\OrderRepository;
 use App\Contracts\findById;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
 use App\Jobs\OfficeConversion;
 use App\Phone;
-
-use App\Unit;
 use Carbon\Carbon;
+use App\Order;
 use Excel;
 use File;
 use Illuminate\Http\Request;
@@ -54,7 +54,7 @@ class OrderController extends Controller
         $orders->appends(['perPage' => $perPage, 'condition' => $condition]);
         return view('orders.index', compact('orders', 'condition'));
     }
-    public function importFile()
+    public function importExcel()
     {
         $fileInfo = $this->uploadFile(request()->file('file'), 'import');
         $pathToFile = $fileInfo['path']. '/'. $fileInfo['name'];
@@ -62,7 +62,7 @@ class OrderController extends Controller
         {
             $rows = $reader->get();
             foreach ($rows as $key => $value) {
-                $order = $this->excelForOrder($rows);
+                $order = $this->excelForOrder($value, 'monitor');
                 // insert into order table
                 $newOrder = new OrderRepository(new Order);
                 $newOrder->create($order);
@@ -70,6 +70,10 @@ class OrderController extends Controller
            
         });
         return redirect()->back();
+    }
+    public function exportExcel($value='')
+    {
+        # code...
     }
     /**
      * Store a newly created resource in storage.

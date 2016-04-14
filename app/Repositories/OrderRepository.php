@@ -161,9 +161,15 @@ class OrderRepository extends AbstractRepository
     	$this->order->customer_phone = $input['customer_phone'];
     	$this->order->date_order = Carbon::createFromFormat('d/m/Y', $input['created_at']);
         $this->order->file_name = $fileName;
-    	$date_request = explode('-', $input['date_request']);
-    	$this->order->date_end = Carbon::createFromFormat('d/m/Y', trim(array_pop($date_request)));
-    	$this->order->date_begin = Carbon::createFromFormat('d/m/Y', trim(array_pop($date_request)));
+        if (isset($input['date_request'])) {
+            $date_request = explode('-', $input['date_request']);
+            $this->order->date_end = Carbon::createFromFormat('d/m/Y', trim(array_pop($date_request)));
+            $this->order->date_begin = Carbon::createFromFormat('d/m/Y', trim(array_pop($date_request)));
+        }else {
+            $this->order->date_begin = null;
+            $this->order->date_end = null;
+        }
+    	
     	$this->order->comment = $input['comment'];
     	$this->order->slug = str_slug($this->vn_str_filter($input['order_name']), '-');
         // check if purpose is xmctb
@@ -180,6 +186,8 @@ class OrderRepository extends AbstractRepository
             $newPhone->status = 'warning';
             $this->order->phones()->save($newPhone);
         }
+
+        return $this->order;
     }
 
     public function update($id, array $input, $fileName = '')

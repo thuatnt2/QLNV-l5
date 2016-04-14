@@ -16,7 +16,7 @@
                 <span style="padding-left: 8px;font-size: 18px;">Giao list</span>
            </div>
             <div class="col-sm-1">
-                <form class="import-file" method="post" enctype="multipart/form-data" action="{{ action('ShipController@importFile') }}">
+                <form class="import-file" method="post" enctype="multipart/form-data" action="{{ action('ShipController@importExcel') }}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="file" id="import-order" name="file"  style="width: 0;height: 0;display: none;">
                     <button class="btn btn-info btn-xs" type="button">Nhập từ excel</button>

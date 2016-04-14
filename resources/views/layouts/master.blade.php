@@ -53,7 +53,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Giao yêu cầu&nbsp;&nbsp;<span class="fa fa-caret-down"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('ship/news') }}">Giám sát</a></li>
+                                <li><a href="{{ url('ship/news') }}">Giao tin</a></li>
                                 <li><a href="{{ url('ship/list') }}">List</a></li>
                                 <li><a href="{{ url('ship/xmctb') }}">XMCTB</a></li>
                                 <li><a href="{{ url('ship/imei') }}">Quét Imei</a></li>

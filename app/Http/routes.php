@@ -25,11 +25,11 @@ Route::group(['middleware' => ['web']], function () {
 		Route::post('register', 'Auth\AuthController@postRegister');
 		// Orders
 	    Route::resource('orders', 'OrderController');
-	    Route::post('import/order', ['as' => 'import.order', 'uses' => 'OrderController@importFile']);
-	    Route::post('import/news', ['as' => 'import.news', 'uses' => 'NewsController@importFile']);
-	    Route::post('import/ship', ['as' => 'import.ship', 'uses' => 'ShipController@importFile']);
-	    Route::post('import/xmctb', ['as' => 'import.xmctb', 'uses' => 'XMCTBController@importFile']);
-	    Route::post('import/imei', ['as' => 'import.imei', 'uses' => 'ImeiController@importFile']);
+	    Route::post('import/order', ['as' => 'import.order', 'uses' => 'OrderController@importExcel']);
+	    Route::post('import/news', ['as' => 'import.news', 'uses' => 'NewsController@importExcel']);
+	    Route::post('import/ship', ['as' => 'import.ship', 'uses' => 'ShipController@importExcel']);
+	    Route::post('import/xmctb', ['as' => 'import.xmctb', 'uses' => 'XMCTBController@importExcel']);
+	    Route::post('import/imei', ['as' => 'import.imei', 'uses' => 'ImeiController@importExcel']);
 	    // Route::get('edit-list/{id}', ['as' => 'order.edit-list', 'uses' => 'OrderController@editList']);
 	    Route::post('update-status/{id}', ['as' => 'update.status', 'uses' => 'OrderController@updateStatus']);
 	    Route::get('search', ['as' => 'search', 'uses' => 'OrderController@search']);
