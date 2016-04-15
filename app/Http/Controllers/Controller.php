@@ -51,10 +51,23 @@ class Controller extends BaseController
         $order['user'] = Auth::user()->id;
         $today = Carbon::now();
         $order['created_at'] = $today->day. '/'. $today->month. '/'. $today->year;
-        $kind = new KindRepository(new Kind);
-        $order['kind'] = $kind->findBy('symbol', $value['tinh_chat'],['id'])->id;
-        $category = new CategoryRepository(new Category);
-        $order['category'] = $category->findBy('symbol', $value['loai_dt'],['id'])->id;
+        if (isset($value['tinh_chat'])) {
+            $kind = new KindRepository(new Kind);
+            $k = $kind->findBy('symbol', $value['tinh_chat'],['id']);
+            // dd($k);
+            $order['kind'] = $this->checkObject($k);
+        } else {
+            $order['kind'] = null;
+        }
+        
+        if (isset($value['loai_dt'])) {
+            $category = new CategoryRepository(new Category);
+            $c = $category->findBy('symbol', $value['loai_dt'],['id']);
+            $order['category'] = $this->checkObject($c);
+        } else {
+             $order['category'] = null;
+        }
+
         $unit = new UnitRepository(new Unit);
         $u = $unit->findBy('symbol', $value['don_vi_yc'], ['id']);
         if (isset($u)) {
@@ -63,7 +76,8 @@ class Controller extends BaseController
             // create
             $order['unit'] = $unit->create(['description' =>'System auto create',
                                             'symbol' => $value['don_vi_yc'], 
-                                            'block' => 'AN'])->id;
+                                            'block' => 'AN'
+                                            ])->id;
         }
         $purpose = new PurposeRepository(new Purpose);
         $order['purpose'] = $purpose->findBy('group', $intention, ['id'])->id;
@@ -102,6 +116,14 @@ class Controller extends BaseController
     {
         if (isset($data[$keyGet])) {
             return $data[$keyGet];
+        }
+        return null;
+    }
+
+    private function checkObject($obj)
+    {
+        if(isset($obj->id)) {
+            return $obj->id;
         }
         return null;
     }
