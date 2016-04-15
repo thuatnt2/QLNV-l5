@@ -24,8 +24,8 @@ class CreateShipsTable extends Migration
             $table->integer('page_list')->nullable();
             $table->integer('page_xmctb')->nullable();
             $table->integer('page_imei')->nullable();
-            $table->string('file_name');
-            $table->string('receive_name');
+            $table->string('file_name')->nullable();
+            $table->string('receive_name')->nullable();
             $table->timestamp('date_submit');
             $table->timestamps();
             $table->softDeletes();

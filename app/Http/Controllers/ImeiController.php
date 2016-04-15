@@ -72,7 +72,29 @@ class ImeiController extends Controller
     {
         //
     }
-
+    public function importExcel()
+    {
+        $fileInfo = $this->uploadFile(request()->file('file'), 'import');
+        $pathToFile = $fileInfo['path']. '/'. $fileInfo['name'];
+        Excel::selectSheets('Sheet1')->load($pathToFile, function ($reader)
+        {
+            $rows = $reader->get();
+            foreach ($rows as $key => $value) {
+                // b1: insert Order
+                $order = $this->excelForOrder($value, 'imei');
+                $newOrder = new OrderRepository(new Order);
+                $t = $newOrder->create($order);
+                // b2: insert ship from order
+                foreach($t->phones as $index => $phone){
+                    $input = $this->excelForShip($value, $phone->id);
+                    $newShip = new ShipRepository(new Ship);
+                    $newShip->create($input); 
+                }
+                
+            }
+        });
+        return redirect()->back();
+    }
     /**
      * Store a newly created resource in storage.
      *

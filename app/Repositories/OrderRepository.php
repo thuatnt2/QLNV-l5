@@ -182,7 +182,7 @@ class OrderRepository extends AbstractRepository
         $this->order->save();
         foreach ($input['order_phone'] as $phone) {
             $newPhone = new Phone();
-            $newPhone->number = $phone;
+            $newPhone->number = trim($phone);
             $newPhone->status = 'warning';
             $this->order->phones()->save($newPhone);
         }

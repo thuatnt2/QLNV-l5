@@ -55,7 +55,7 @@ class Controller extends BaseController
             $kind = new KindRepository(new Kind);
             $k = $kind->findBy('symbol', $value['tinh_chat'],['id']);
             // dd($k);
-            $order['kind'] = $this->checkObject($k);
+            $order['kind'] = $this->checkObject($k, $kind, ['symbol' => $value['tinh_chat'], 'description' => 'System auto create']);
         } else {
             $order['kind'] = null;
         }
@@ -63,7 +63,7 @@ class Controller extends BaseController
         if (isset($value['loai_dt'])) {
             $category = new CategoryRepository(new Category);
             $c = $category->findBy('symbol', $value['loai_dt'],['id']);
-            $order['category'] = $this->checkObject($c);
+            $order['category'] = $this->checkObject($c, $category, ['symbol' => $value['loai_dt'],'description' => 'System auto create']);
         } else {
              $order['category'] = null;
         }
@@ -97,18 +97,23 @@ class Controller extends BaseController
         return $order;
     }
 
-    public function excelForShip($rows)
+    public function excelForShip($value, $phone)
     {
-        $input['created_at'];
-        $input['phone'];
-        $input['number_cv_pa71'];
-        $input['news'];
-        $input['page_news'];
-        $input['page_list'];
-        $input['page_xmctb'];
-        $input['page_imei'];
-        $input['receive_name'];
-        $input['user_name'];
+        $ship['user_name'] = Auth::user()->id;
+        if (isset($value['ngay_giao'])) {
+            $ship['created_at'] = $value['ngay_giao']->day. '/'. $value['ngay_giao']->month. '/'. $value['ngay_giao']->year;
+        } else {
+            $today = Carbon::now();
+            $ship['created_at'] = $today->day. '/'. $today->month. '/'. $today->year;
+        }
+        $ship['phone'] = $phone;
+        $ship['number_cv_pa71'] = $this->checkData('cv_pa71', $value);
+        $ship['news'] = $this->checkData('so_ban_tin', $value);
+        $ship['page_news'] = $this->checkData('so_trang_tin', $value);
+        $ship['page_list'] = $this->checkData('so_trang_list', $value);
+        $ship['page_xmctb'] = $this->checkData('so_trang_xmctb', $value);
+        $ship['page_imei'] = $this->checkData('so_trang_imei', $value);
+        $ship['receive_name'] = $this->checkData('nguoi_nhan', $value);
         return $ship;
     }
 
@@ -120,11 +125,11 @@ class Controller extends BaseController
         return null;
     }
 
-    private function checkObject($obj)
+    private function checkObject($obj, $newObj, array $data)
     {
         if(isset($obj->id)) {
             return $obj->id;
         }
-        return null;
+        return $newObj->create($data)->id;
     }
 }

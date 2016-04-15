@@ -10,7 +10,9 @@ use App\Http\Requests\ShipRequest;
 use App\Order;
 use App\Repositories\FileRepository;
 use App\Repositories\OrderRepository;
+use App\Repositories\ShipRepository;
 use App\Repositories\UserRepository;
+use App\Ship;
 use App\User;
 use Excel;
 use Illuminate\Http\Request;
@@ -81,10 +83,13 @@ class ShipController extends Controller
                 $order = $this->excelForOrder($value, 'list');
                 $newOrder = new OrderRepository(new Order);
                 $t = $newOrder->create($order);
-                // foreach($t->phones as $index => $phone){
-                //         dd($phone->id);  
-                // }
                 // b2: insert ship from order
+                foreach($t->phones as $index => $phone){
+                    $input = $this->excelForShip($value, $phone->id);
+                    $newShip = new ShipRepository(new Ship);
+                    $newShip->create($input); 
+                }
+                
             }
         });
         return redirect()->back();
