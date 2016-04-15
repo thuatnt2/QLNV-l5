@@ -56,28 +56,28 @@ class Controller extends BaseController
         $category = new CategoryRepository(new Category);
         $order['category'] = $category->findBy('symbol', $value['loai_dt'],['id'])->id;
         $unit = new UnitRepository(new Unit);
-        $order['unit'] = $unit->findBy('symbol', $value['don_vi_yc'], ['id'])->id;
+        $u = $unit->findBy('symbol', $value['don_vi_yc'], ['id']);
+        if (isset($u)) {
+            $order['unit'] = $u->id;
+        } else {
+            // create
+            $order['unit'] = $unit->create(['description' =>'System auto create',
+                                            'symbol' => $value['don_vi_yc'], 
+                                            'block' => 'AN'])->id;
+        }
         $purpose = new PurposeRepository(new Purpose);
         $order['purpose'] = $purpose->findBy('group', $intention, ['id'])->id;
-        $order['number_cv'] = (int) $value['cv_den'];
-        $order['number_cv_pa71'] = (int) $value['cv_di'];
-        $order['order_name'] = $value['ho_ten_doi_tuong'];
-        $order['order_phone'] = explode("\n", $value['so_dien_thoai']);
         if (isset($value['ngay_bat_dau']) && isset($value['ngay_ket_thuc'])) {
             $order['date_request'] = $value['ngay_bat_dau']->day . '/'. $value['ngay_bat_dau']->month. '/'.$value['ngay_bat_dau']->year .'-'. $value['ngay_ket_thuc']->day . '/'. $value['ngay_ket_thuc']->month. '/'.$value['ngay_ket_thuc']->year;
         } else {
             $order['date_request'] = null;
         };
-        if(isset($value['ten_ts'])) {
-            $order['customer_name'] = $value['ten_ts'];
-        } else {
-            $order['customer_name'] = null;
-        };
-        if (isset($order['customer_phone'])) {
-            $order['customer_phone'] = (int) $value['dien_thoai_ts'];
-        } else {
-            $order['customer_phone'] = null;
-        };
+        $order['order_phone'] = explode("\n", $value['so_dien_thoai']);
+        $order['number_cv'] = $this->checkData('cv_den', $value);
+        $order['number_cv_pa71'] = $this->checkData('cv_di', $value);
+        $order['order_name'] = $this->checkData('ho_ten_doi_tuong', $value);
+        $order['customer_name'] = $this->checkData('ten_ts', $value);
+        $order['customer_phone'] = $this->checkData('dien_thoai_ts', $value);
         $order['comment'] = "";
  
         return $order;
@@ -96,5 +96,13 @@ class Controller extends BaseController
         $input['receive_name'];
         $input['user_name'];
         return $ship;
+    }
+
+    private function checkData($keyGet, $data)
+    {
+        if (isset($data[$keyGet])) {
+            return $data[$keyGet];
+        }
+        return null;
     }
 }

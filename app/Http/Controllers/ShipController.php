@@ -81,7 +81,9 @@ class ShipController extends Controller
                 $order = $this->excelForOrder($value, 'list');
                 $newOrder = new OrderRepository(new Order);
                 $t = $newOrder->create($order);
-                dd($t->id);
+                foreach($t->phones as $index => $phone){
+                        dd($phone->id);  
+                }
                 // b2: insert ship from order
             }
         });

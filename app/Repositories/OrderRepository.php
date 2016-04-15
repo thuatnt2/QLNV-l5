@@ -154,11 +154,11 @@ class OrderRepository extends AbstractRepository
     	$this->order->category_id = $input['category'];
     	$this->order->unit_id = $input['unit'];
         $this->order->purpose_id = $input['purpose'];
-    	$this->order->number_cv = $input['number_cv'];
-    	$this->order->number_cv_pa71 = $input['number_cv_pa71'];
+    	$this->order->number_cv = (int)$input['number_cv'];
+    	$this->order->number_cv_pa71 = (int)$input['number_cv_pa71'];
     	$this->order->order_name = $input['order_name'];
     	$this->order->customer_name = $input['customer_name'];
-    	$this->order->customer_phone = $input['customer_phone'];
+    	$this->order->customer_phone = (int)$input['customer_phone'];
     	$this->order->date_order = Carbon::createFromFormat('d/m/Y', $input['created_at']);
         $this->order->file_name = $fileName;
         if (isset($input['date_request'])) {

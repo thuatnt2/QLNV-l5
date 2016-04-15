@@ -78,8 +78,8 @@ abstract class AbstractRepository implements Repository
         $this->model->unguard();
         $model = $this->model->fill($data);
         $this->model->reguard();
-
-        return $model->save();
+        $model->save();
+        return $model;
         
     }
 
