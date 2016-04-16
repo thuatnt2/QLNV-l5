@@ -15,14 +15,18 @@
 Route::group(['middleware' => ['web']], function () {
 	
 	//Authentication Routes...
-    Route::auth();
+    // Route::auth();
+    // // Authentication Routes...
+	Route::get('login', 'Auth\AuthController@showLoginForm');
+	Route::post('login', 'Auth\AuthController@login');
+	Route::get('logout', 'Auth\AuthController@logout');
 
 	Route::group(['middleware' => ['auth']], function() {
 	    //
 	    Route::get('/', 'DashBoardController@index');
 	    // Registration Routes...
 		Route::get('register', 'Auth\AuthController@getRegister');
-		Route::post('register', 'Auth\AuthController@postRegister');
+		// Route::post('register', 'Auth\AuthController@postRegister');
 		// Orders
 	    Route::resource('orders', 'OrderController');
 	    Route::post('import/order', ['as' => 'import.order', 'uses' => 'OrderController@importExcel']);
@@ -56,8 +60,3 @@ Route::group(['middleware' => ['web']], function () {
 
 });
 
-Route::group(['middleware' => 'web'], function () {
-   
-
-    Route::get('/home', 'HomeController@index');
-});

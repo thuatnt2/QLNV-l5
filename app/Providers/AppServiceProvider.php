@@ -100,6 +100,10 @@ class AppServiceProvider extends ServiceProvider
             return new ShipRepository(new Ship);
         });
 
+        $this->app->when('App\Http\Controllers\Auth\AuthController')->needs(Repository::class)->give(function($app) {
+            return new UserRepository(new User);
+        });
+
 
     }
 }

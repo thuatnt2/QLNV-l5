@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use Validator;
+use App\Contracts\Repository;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Validator;
 
 class AuthController extends Controller
 {
@@ -28,16 +29,17 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
-
+    protected $redirectTo = '/';
+    protected $user;
     /**
      * Create a new authentication controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Repository $user)
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        $this->user = $user;
+        // $this->middleware('guest', ['except' => 'logout']);
     }
 
     /**
@@ -46,6 +48,12 @@ class AuthController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+    public function getRegister()
+    {
+        $users = $this->user->all();
+        
+        return view('auth.register', compact('user'));
+    }
     protected function validator(array $data)
     {
         return Validator::make($data, [

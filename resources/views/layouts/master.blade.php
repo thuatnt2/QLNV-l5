@@ -63,7 +63,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Cấu hình&nbsp;&nbsp;<span class="fa fa-caret-down"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Người dùng</a></li>
+                                <li><a href="{{ url('register') }}">Người dùng</a></li>
                                 <li><a href="{{ url('units') }}">Đơn vị yêu cầu</a></li>
                                 <li><a href="{{ url('categories') }}">Loại đối tượng</a></li>
                                 <li><a href="{{ url('kinds') }}">Tính chất đối tượng</a></li>
