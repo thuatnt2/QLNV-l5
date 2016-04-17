@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Contracts\Repository;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Validator;
+use Hash;
 
 class AuthController extends Controller
 {
@@ -29,7 +31,8 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/register';
+    protected $username = 'username';
     protected $user;
     /**
      * Create a new authentication controller instance.
@@ -38,8 +41,14 @@ class AuthController extends Controller
      */
     public function __construct(Repository $user)
     {
-        $this->user = $user;
         // $this->middleware('guest', ['except' => 'logout']);
+        $this->user = $user;
+        view()->composer(['auth.register', 'auth.edit_register'], function($view) {
+            $roles = ['admin' => 'admin', 'employee' => 'employee'];
+            $view->with(array(
+                'roles' => $roles
+            ));
+        });
     }
 
     /**
@@ -52,17 +61,46 @@ class AuthController extends Controller
     {
         $users = $this->user->all();
         
-        return view('auth.register', compact('user'));
+        return view('auth.register', compact('users'));
+    }
+
+    // public function postRegister(UserRequest $request)
+    // {
+        
+    // }
+    public function edit($id)
+    {
+        $user = $this->user->findById($id);
+
+        return view('auth.edit_register', compact('user'));
+    }
+
+    public function update(UserRequest $request, $id)
+    {
+        // ajax
+        try {
+            $this->user->update($id, $request->only('username', 'fullname', 'role'));
+
+            return redirect()->action('Auth\AuthController@getRegister');
+            
+        } catch (Exception $e) {
+
+            return redirect()->back()->withInput()->with('error', 'Không thể truy vấn dữ liệu');
+        }
+    }
+    public function destroy($id)
+    {
+        $this->user->delete($id);
+
+        return redirect()->back();
     }
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
+            'username' => 'required|unique:users|max:255',
+            'fullname' => 'required|max:255',
         ]);
     }
-
     /**
      * Create a new user instance after a valid registration.
      *
@@ -72,9 +110,10 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'username' => $data['username'],
+            'fullname' => $data['fullname'],
+            'role' => $data['role'],
+            'password' => Hash::make("123456"),
         ]);
     }
 }

@@ -22,7 +22,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function uploadFile($file, $folder)
+    protected function uploadFile($file, $folder)
     {
         $alowedExtension = ['doc', 'docx', 'pdf', 'xls', 'xlsx'];
         $extention = $file->getClientOriginalExtension();
@@ -45,7 +45,7 @@ class Controller extends BaseController
         return false;
     }
 
-    public function excelForOrder($value, $intention)
+    protected function excelForOrder($value, $intention)
     {
         // $value is array
         $order['user'] = Auth::user()->id;
@@ -97,7 +97,7 @@ class Controller extends BaseController
         return $order;
     }
 
-    public function excelForShip($value, $phone)
+    protected function excelForShip($value, $phone)
     {
         $ship['user_name'] = Auth::user()->id;
         if (isset($value['ngay_giao'])) {

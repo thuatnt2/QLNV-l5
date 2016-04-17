@@ -60,6 +60,7 @@
 			url: $(this).attr('data-url'),
 			type: 'GET',
             success: function (data, textStatus, jqXHR) {
+              $('#title-form').text('Form sửa')
             	$('#form-create').hide();
             	$('#form-edit').remove();
             	$('.row-form').append(data);

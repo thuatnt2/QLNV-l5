@@ -17,15 +17,11 @@ class UserSeeder  extends Seeder{
     public function run() {
         $users = [
             [
-                "name" => "admin",
-                "email" => "thuatnt2@gmail.com",
-                "password" => Hash::make("123456"),
+                "username" => "admin",
+                "fullname" => "admin",
+                "password" => Hash::make("admin"),
+                "role" => "admin",
             ],
-            [
-                "name" => "thuatnt",
-                "email" => "ntthuat08t2@itf.dut.edu",
-                "password" => Hash::make("123456"),
-            ]
         ];
         foreach ($users as $user) {
             

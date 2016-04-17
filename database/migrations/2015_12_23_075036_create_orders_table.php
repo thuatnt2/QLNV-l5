@@ -38,6 +38,7 @@ class CreateOrdersTable extends Migration
             $table->text('file_name')->nullable();
             $table->string('slug');
             $table->text('comment')->nullable();
+             $table->string('manager')->nullable();
             $table->timestamp('date_order');
             $table->timestamp('date_begin')->nullable();
             $table->timestamp('date_end')->nullable();

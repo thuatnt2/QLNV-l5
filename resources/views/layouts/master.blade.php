@@ -64,6 +64,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Cấu hình&nbsp;&nbsp;<span class="fa fa-caret-down"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('register') }}">Người dùng</a></li>
+                                <li><a href="{{ url('register') }}">Phân công giám sát</a></li>
                                 <li><a href="{{ url('units') }}">Đơn vị yêu cầu</a></li>
                                 <li><a href="{{ url('categories') }}">Loại đối tượng</a></li>
                                 <li><a href="{{ url('kinds') }}">Tính chất đối tượng</a></li>
@@ -88,7 +89,7 @@
                                 <!-- The user image in the navbar-->
                                 <img src="#" class="user-image" alt="User Image">
                                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                <span class="hidden-xs">{{ Auth::user()->name }}</span>
+                                <span class="hidden-xs">{{ Auth::user()->username }}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->

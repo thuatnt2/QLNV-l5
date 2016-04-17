@@ -26,7 +26,11 @@ Route::group(['middleware' => ['web']], function () {
 	    Route::get('/', 'DashBoardController@index');
 	    // Registration Routes...
 		Route::get('register', 'Auth\AuthController@getRegister');
-		// Route::post('register', 'Auth\AuthController@postRegister');
+		Route::post('register', 'Auth\AuthController@postRegister');
+		Route::get('user/{id}/edit','Auth\AuthController@edit');
+		Route::put('user/{id}','Auth\AuthController@update');
+		Route::delete('user/{id}','Auth\AuthController@destroy');
+		
 		// Orders
 	    Route::resource('orders', 'OrderController');
 	    Route::post('import/order', ['as' => 'import.order', 'uses' => 'OrderController@importExcel']);
