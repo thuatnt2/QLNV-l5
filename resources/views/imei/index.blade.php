@@ -13,7 +13,7 @@
 	<div class="box row-form">
         <div class="row">
             <div class="col-sm-11">
-                <span style="padding-left: 8px;font-size: 18px;">Đăng ký yêu cầu</span>
+                <span style="padding-left: 8px;font-size: 18px;">Giao IMEI</span>
            </div>
             <div class="col-sm-1">
                 <form class="import-file" method="post" enctype="multipart/form-data" action="{{ action('ImeiController@importExcel') }}">
@@ -113,8 +113,8 @@
                         <th class="text-center">Loại ĐT</th>
                         <th class="text-center">Tính chất</th>
                         <th class="text-center" width="13%">Thời gian yêu cầu</th>
-                        <th class="text-center">Mục đích y/c</th>
-                        <th class="text-center">Số trang</th>
+                        <th class="text-center">Số trang imei</th>
+                        <th class="text-center">Người nhận</th>
                         <th class="text-center">Nhà cung cấp</th>
                         <th class="text-center" width="8%">Ghi chú</th>
                         <th class="text-center" width="6%">Thao tác</th>
@@ -126,17 +126,18 @@
                     <tr>
                         <td class="text-center">{{ ++$stt }}</td>
                         <td class="text-center">{{ $ship->date_submit->format('d/m/Y') }}</td>
-                        <td class="text-center">{{ $ship->phone->order->number_cv . '/' . $ship->phone->order->unit->symbol }}</td>
+                        <td class="text-center"><a href="{{ action('OrderController@show', $ship->phone->order->id) }}">{{ $ship->phone->order->number_cv . '/' . $ship->phone->order->unit->symbol }}</a></td>
                         <td class="text-center">{{ $ship->phone->order->number_cv_pa71 }}</td>
-                        <td class="text-center"><a href="{{ action('OrderController@show', $ship->phone->order->id) }}">{{ $ship->phone->order->order_name }}</a></td>
+                        <td class="text-center">{{ $ship->phone->order->order_name }}</td>
                         <td class="text-center">{{ $ship->phone->number }}</td>
                         <td class="text-center">{{ $ship->phone->order->category->symbol }}</td>
                         <td class="text-center">{{ $ship->phone->order->kind->symbol }}</td>
                         <td class="text-center">{{ $ship->phone->order->date_begin->format('d/m/Y') . ' &rarr; ' . $ship->phone->order->date_end->format('d/m/Y')  }}</td>
-                        <td>
-                            {{ $ship->phone->order->purpose->symbol }}
-                        </td>
+                        
                         <td class="text-center">{{ $ship->page_imei}}</td>
+                        <td>
+                            {{ $ship->receive_name }}
+                        </td>
                         <td class="text-center">
                         @foreach ($ship->networks as $index=>$element)
                             @if ($index > 0)

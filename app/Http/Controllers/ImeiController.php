@@ -40,7 +40,7 @@ class ImeiController extends Controller
         $this->network = new NetworkRepository(new Network);
 
         view()->composer(['imei.index', 'imei.edit'], function($view) {
-            $users = $this->user->formatData($this->user->all(['id as id', 'name as symbol' ]));
+            $users = $this->user->formatData($this->user->all(['id as id', 'fullname as symbol' ]));
             $orders = $this->order->findAllBy('warning', 'imei');
             $networks = $this->network->formatNetwork($this->network->all(['id as id', 'name as symbol']));
             $view->with(array(

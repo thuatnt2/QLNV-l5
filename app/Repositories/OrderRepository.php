@@ -51,7 +51,7 @@ class OrderRepository extends AbstractRepository
     {
         $query = $this->order
                       ->with('unit', 'kind', 'category', 'user', 'phones', 'purpose')
-                      ->orderBy('created_at', 'desc');
+                      ->orderBy('date_order', 'desc');
         if ($condition != '') {
             $query->where('purpose_id', $condition);
         }
@@ -158,7 +158,7 @@ class OrderRepository extends AbstractRepository
     	$this->order->number_cv_pa71 = (int)$input['number_cv_pa71'];
     	$this->order->order_name = $input['order_name'];
     	$this->order->customer_name = $input['customer_name'];
-    	$this->order->customer_phone = (int)$input['customer_phone'];
+    	$this->order->customer_phone = $input['customer_phone'];
     	$this->order->date_order = Carbon::createFromFormat('d/m/Y', $input['created_at']);
         $this->order->file_name = $fileName;
         if (isset($input['date_request'])) {

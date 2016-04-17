@@ -112,8 +112,8 @@
                         <th class="text-center">Loại ĐT</th>
                         <th class="text-center">Tính chất</th>
                         <th class="text-center" width="13%">Thời gian yêu cầu</th>
-                        <th class="text-center">Mục đích y/c</th>
-                        <th class="text-center">Số trang</th>
+                        <th class="text-center">Số trang list</th>
+                        <th class="text-center">Người nhận</th>
                         <th class="text-center" width="8%">Ghi chú</th>
                         <th class="text-center" width="6%">Thao tác</th>
                     </tr>
@@ -124,9 +124,9 @@
                     <tr>
                         <td class="text-center">{{ ++$stt }}</td>
                         <td class="text-center">{{ $ship->date_submit->format('d/m/Y') }}</td>
-                        <td class="text-center">{{ $ship->phone->order->number_cv . '/' . $ship->phone->order->unit->symbol }}</td>
+                        <td class="text-center"><a href="{{ action('OrderController@show', $ship->phone->order->id) }}">{{ $ship->phone->order->number_cv . '/' . $ship->phone->order->unit->symbol }}</a></td>
                         <td class="text-center">{{ $ship->phone->order->number_cv_pa71 }}</td>
-                        <td class="text-center"><a href="{{ action('OrderController@show', $ship->phone->order->id) }}">{{ $ship->phone->order->order_name }}</a></td>
+                        <td class="text-center">{{ $ship->phone->order->order_name }}</td>
                         <td class="text-center">{{ $ship->phone->number }}</td>
                         <td class="text-center">{{ $ship->phone->order->category->symbol }}</td>
                         <td class="text-center">{{ $ship->phone->order->kind->symbol }}</td>
@@ -135,10 +135,10 @@
                             {{ $ship->phone->order->date_begin->format('d/m/Y') . ' &rarr; ' . $ship->phone->order->date_end->format('d/m/Y')  }}
                         @endif
                         </td>
-                        <td>
-                            {{ $ship->phone->order->purpose->symbol }}
-                        </td>
                         <td class="text-center">{{ $ship->page_list}}</td>
+                        <td>
+                            {{ $ship->receive_name }}
+                        </td>
                         <td class="text-center">{{ $ship->phone->order->comment}}</td>
                         <td class="text-center"width="6%">
                             <button class="btn btn-warning btn-xs fa fa-edit" data-url="{{ action('ShipController@edit', $ship->id) }}" type="button" title="Sửa"></button>

@@ -4,7 +4,7 @@
     <div class="col-sm-offset-3 col-sm-4">
         {!! Former::text('username', 'Tên đăng nhập')->required()->value($user->username)->addClass('input-sm'); !!}
         {!! Former::text('fullname', 'Họ và tên')->required()->value($user->fullname)->addClass('input-sm'); !!}
-        {!! Former::select('role')->label('Quyền')->options($roles)->addClass('input-sm') !!}
+        {!! Former::select('role')->label('Quyền')->options($roles, $user->role)->addClass('input-sm') !!}
     </div>   
     <div class="form-group">
         <div class="col-lg-offset-4 col-sm-offset-4 col-lg-8 col-sm-8">
@@ -17,6 +17,7 @@
     <script>
         function hideForm() {
             $('#form-create').show();
+             $('#title-form').text('Form đăng ký');
             $('#form-edit').remove();
         }
     </script>

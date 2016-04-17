@@ -1,8 +1,7 @@
   {!! Former::setOption('TwitterBootstrap3.labelWidths', ['large' => 4, 'small' => 4]) !!}
         {!! Former::open_for_files(action('OrderController@update', $order->id))->id('form-edit') !!}
         {{ method_field('PUT') }}
-        <fieldset>
-        {!! Former::legend('Sửa yêu cầu giám sát') !!}
+        <!-- <fieldset> -->
         <div class="col-sm-4">
             {!! Former::text('created_at', 'Ngày yêu cầu')
                 ->required()
@@ -55,15 +54,15 @@
             @endforeach
             
             {!! Former::select('category', 'Loại đối tượng')
-                ->options($categories, $order->category_id)
+                ->options($categories, isset($order->category_id) ? $order->category_id:"")
                 ->addClass('input-sm')
             !!}
-            {!! Former::select('kind')->label('Tính chất')->options($kinds, $order->kind_id)->addClass('input-sm') !!}
+            {!! Former::select('kind')->label('Tính chất')->options($kinds, isset($order->kind_id) ? $order->kind_id:"")->addClass('input-sm') !!}
             {!! Former::select('purpose')->label('Mục đích yêu cầu')->options($purposes, $order->purpose_id)->addClass('input-sm') !!}
             {!! Former::text('date_request', 'Thời gian yêu cầu')
                 ->required()
                 ->addClass('input-sm daterange')
-                ->value($order->date_begin->format('d/m/Y') .'-'. $order->date_end->format('d/m/Y'))
+                ->value(isset($order->date_begin) && isset($order->date_end) ? $order->date_begin->format('d/m/Y') .'-'. $order->date_end->format('d/m/Y'):"" )
             !!}
             {!! Former::file('file','File đính kèm')->accept('doc', 'docx', 'xls', 'xlsx', 'pdf') !!}
         </div>
@@ -89,12 +88,13 @@
                  <button type="reset" class="btn btn-default btn-sm"><i class="fa fa-refresh">&nbsp</i>Làm mới</button>
                  <button type="button" class="btn btn-danger btn-sm" onclick="hideForm()" ><i class="fa fa-reply">&nbsp</i>Hủy</button>
            </div>
-            </div>
-        </fieldset>
+        </div>
+        <!-- </fieldset> -->
         {!! Former::close() !!}
         <script>
         function hideForm() {
             $('#form-create').show();
+            $('#title-form').text('Form đăng ký');
             $('#form-edit').remove();
         }
       </script>

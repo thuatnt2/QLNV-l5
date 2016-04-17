@@ -20,7 +20,7 @@ class ShipRepository extends AbstractRepository
     {
         $result = $this->model
                        ->with($with)
-                       ->orderBy('created_at', 'desc');
+                       ->orderBy('date_submit', 'desc');
         switch ($purpose) {
             case 'monitor':
                 $result->whereNotNull('page_news');

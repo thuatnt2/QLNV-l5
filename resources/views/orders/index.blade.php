@@ -14,7 +14,7 @@
     <div class="box row-form">
         <div class="row">
             <div class="col-sm-11">
-                <span style="padding-left: 8px;font-size: 18px;">Đăng ký yêu cầu</span>
+                <span style="padding-left: 8px;font-size: 18px;" id="title-form">Form Đăng ký</span>
            </div>
             <div class="col-sm-1">
                 <form class="import-file" method="post" enctype="multipart/form-data" action="{{ action('OrderController@importExcel') }}">
@@ -119,8 +119,8 @@
                     <tr>
                         <th class="text-center">STT</th>
                         <th class="text-center">Ngày tháng</th>
-                        <th class="text-center">Số Cv đơn vị</th>
-                        <th class="text-center">Số Cv PA71</th>
+                        <th class="text-center">Số Cv đến</th>
+                        <th class="text-center">Số Cv đi</th>
                         <th class="text-center" width="15%">Tên đối tượng</th>
                         <th class="text-center" width="10%">Số điện thoại/IMEI</th>
                         <th class="text-center">Loại ĐT</th>

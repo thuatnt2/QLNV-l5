@@ -44,7 +44,7 @@ class NewsController extends Controller
         $this->order = new OrderRepository(new Order);
 
         view()->composer(['news.index', 'news.edit'], function($view) {
-            $users = $this->user->formatData($this->user->all(['id as id', 'name as symbol' ]));
+            $users = $this->user->formatData($this->user->all(['id as id', 'fullname as symbol' ]));
             $orders = $this->order->findAllBy('success', 'monitor');
             $view->with(array(
                 'orders' => $orders,

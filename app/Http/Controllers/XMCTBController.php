@@ -37,7 +37,7 @@ class XMCTBController extends Controller
         $this->order = new OrderRepository(new Order);
 
         view()->composer(['xmctb.index', 'xmctb.edit'], function($view) {
-            $users = $this->user->formatData($this->user->all(['id as id', 'name as symbol' ]));
+            $users = $this->user->formatData($this->user->all(['id as id', 'fullname as symbol' ]));
             $orders = $this->order->findAllBy('warning', 'xmctb');
             $view->with(array(
                 'orders' => $orders,

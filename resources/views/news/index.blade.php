@@ -13,7 +13,7 @@
 	<div class="box row-form">
         <div class="row">
             <div class="col-sm-11">
-                <span style="padding-left: 8px;font-size: 18px;">Đăng ký yêu cầu</span>
+                <span style="padding-left: 8px;font-size: 18px;">Giao tin</span>
            </div>
             <div class="col-sm-1">
                 <form class="import-file" method="post" enctype="multipart/form-data" action="{{ action('NewsController@importExcel') }}">
@@ -127,9 +127,9 @@
                     <tr>
                         <td class="text-center">{{ ++$stt }}</td>
                         <td class="text-center">{{ $new->date_submit->format('d/m/Y') }}</td>
-                        <td class="text-center">{{ $new->phone->order->number_cv . '/' . $new->phone->order->unit->symbol }}</td>
+                        <td class="text-center"><a href="{{ action('OrderController@show', $new->phone->order->id) }}">{{ $new->phone->order->number_cv . '/' . $new->phone->order->unit->symbol }}</a></td>
                         <td class="text-center">{{ $new->number_cv_pa71 }}</td>
-                        <td class="text-center"><a href="{{ action('OrderController@show', $new->phone->order->id) }}">{{ $new->phone->order->order_name }}</a></td>
+                        <td class="text-center">{{ $new->phone->order->order_name }}</td>
                         <td class="text-center">{{ $new->phone->number }}</td>
                         <td class="text-center">{{ $new->phone->order->category->symbol }}</td>
                         <td class="text-center">{{ $new->phone->order->kind->symbol }}</td>

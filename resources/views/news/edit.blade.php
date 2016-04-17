@@ -1,8 +1,7 @@
 {!! Former::setOption('TwitterBootstrap3.labelWidths', ['large' => 4, 'small' => 4]) !!}
         {!! Former::open_for_files(action('NewsController@update', $news->id))->id('form-edit') !!}
         {{ method_field('PUT') }}
-        <fieldset>
-        {!! Former::legend('Giao Tin') !!}
+        <!-- <fieldset> -->
         <div class="col-sm-4">
             {!! Former::text('created_at', 'Ngày giao')
                 ->required()
@@ -56,7 +55,7 @@
                  <button type="button" class="btn btn-danger btn-sm" onclick="hideForm()" ><i class="fa fa-reply">&nbsp</i>Hủy</button>
            </div>
         </div>    
-        </fieldset>
+        <!-- </fieldset> -->
         {!! Former::close() !!}
         <script>
         function hideForm() {

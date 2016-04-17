@@ -49,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
             $units = $units->formatData($units->all(['id', 'symbol']));
             $categories = $categories->formatData($categories->all(['id', 'symbol']));
             $kinds = $kinds->formatData($kinds->all(['id', 'symbol']));
-            $users = $users->formatData($users->all(['id as id', 'name as symbol' ]));
+            $users = $users->formatData($users->all(['id as id', 'fullname as symbol' ]));
             $purposes = $purposes->formatData($purposes->all(['id', 'symbol']));
             $view->with(compact('units', 'categories', 'kinds', 'purposes', 'users'));
         });

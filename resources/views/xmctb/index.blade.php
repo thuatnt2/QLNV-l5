@@ -13,7 +13,7 @@
 	<div class="box row-form">
         <div class="row">
             <div class="col-sm-11">
-                <span style="padding-left: 8px;font-size: 18px;">Đăng ký yêu cầu</span>
+                <span style="padding-left: 8px;font-size: 18px;">Giao XMCTB</span>
            </div>
             <div class="col-sm-1">
                 <form class="import-file" method="post" enctype="multipart/form-data" action="{{ action('XMCTBController@importExcel') }}">
@@ -108,8 +108,8 @@
                         <th class="text-center">Số Cv/Đơn vị</th> 
                         <th class="text-center">Số Cv/PA71</th>
                         <th class="text-center" width="10%">Số điện thoại</th>
-                        <th class="text-center">Mục đích y/c</th>
                         <th class="text-center">Số trang xmctb</th>
+                         <th class="text-center">Người nhận</th>
                         <th class="text-center" width="8%">Ghi chú</th>
                         <th class="text-center" width="6%">Thao tác</th>
                     </tr>
@@ -120,13 +120,13 @@
                     <tr>
                         <td class="text-center">{{ ++$stt }}</td>
                         <td class="text-center">{{ $ship->date_submit->format('d/m/Y') }}</td>
-                        <td class="text-center">{{ $ship->phone->order->number_cv . '/' . $ship->phone->order->unit->symbol }}</td>
+                        <td class="text-center"><a  href="{{ action('OrderController@show', $ship->phone->order->id) }}">{{ $ship->phone->order->number_cv . '/' . $ship->phone->order->unit->symbol }}</a></td>
                         <td class="text-center">{{ $ship->phone->order->number_cv_pa71 }}</td>
                         <td class="text-center">{{ $ship->phone->number }}</td>
-                        <td class="text-center">
-                            {{ $ship->phone->order->purpose->symbol }}
-                        </td>
                         <td class="text-center">{{ $ship->page_xmctb}}</td>
+                        <td class="text-center">
+                            {{ $ship->receive_name }}
+                        </td>
                         <td class="text-center">{{ $ship->phone->order->comment}}</td>
                         <td class="text-center"width="6%">
                             <button class="btn btn-warning btn-xs fa fa-edit" data-url="{{ action('XMCTBController@edit', $ship->id) }}" type="button" title="Sửa"></button>
