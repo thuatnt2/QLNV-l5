@@ -18,22 +18,45 @@ class OrderRepository extends AbstractRepository
         $this->order = $order;
         parent::__construct($this->order);
     }
-    public function findAllBy($status, $condition = '', $columns = ['*'])
+    protected function queryAll($status, $condition)
     {
-        return $this->order
-                    ->with(['unit', 'phones' => function($q) use ($status) {
-                        $q->where('status', '=', $status);
-                    }])
-                    ->whereHas('purpose', function($q) use ($condition) {
-                        $q->where( 'group', '=' , $condition);
-                    })
-                    ->whereHas('phones', function($q) use ($status) {
-                        $q->where( 'status', '=', $status);
-                    })
-                    ->orderBy('created_at', 'desc')
-                    ->get($columns);
+        return $query =  $this->order
+                       ->with(['unit', 'phones' => function($q) use ($status) {
+                            $q->where('status', $status);
+                       }])
+                       ->whereHas('purpose', function($q) use ($condition) {
+                            $q->where( 'group', $condition);
+                       })
+                       ->whereHas('phones', function($q) use ($status) {
+                            $q->where( 'status', $status);
+                       })
+                       ->orderBy('created_at', 'desc');
+    }
+    public function findAllBy($status, $condition = 'monitor', $columns = ['*'])
+    {
+        $query = $this->queryAll($status, $condition, $columns);
+        
+        return $query->get($columns);
+    }
+    public function findAllManager($status, $condition = '', $columns = ['*'], $manager = false)
+    {
+        $query = $this->queryAll($status, $condition, $columns);
+        if ($manager) {
+            $query->whereNotNull('manager');
+        } else {
+            $query->whereNull('manager');
+        }
+
+        return $query->get($columns);
     }
 
+    // public function findAllManagerGroup($status = 'success', $condition = 'monitor', $columns = ['*'])
+    // {
+    //      $query = $this->queryAll($status, $condition, $columns);
+    //      return $query->whereNotNull('manager')
+    //                     ->groupBy('manager')
+    //                     ->get($columns);
+    // }
     public function search($query)
     {
         $field = 'order_name';
@@ -213,6 +236,14 @@ class OrderRepository extends AbstractRepository
         // update Order
         $order->save();
         // update Phones
+    }
+    public function updateManager(array $data)
+    {
+        foreach ($data['order'] as $key => $value) {
+            $order = $this->findById($value);
+            $order->manager = $data['user'];
+            $order->save();
+        }
     }
 
     public function formatPurposeOrder($purposes)

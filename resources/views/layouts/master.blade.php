@@ -64,7 +64,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Cấu hình&nbsp;&nbsp;<span class="fa fa-caret-down"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('register') }}">Người dùng</a></li>
-                                <li><a href="{{ url('register') }}">Phân công giám sát</a></li>
+                                <li><a href="{{ url('manager') }}">Phân công giám sát</a></li>
                                 <li><a href="{{ url('units') }}">Đơn vị yêu cầu</a></li>
                                 <li><a href="{{ url('categories') }}">Loại đối tượng</a></li>
                                 <li><a href="{{ url('kinds') }}">Tính chất đối tượng</a></li>
@@ -96,17 +96,20 @@
                                 <li class="user-header">
                                     <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                                     <p>
-                                        TNT - Web Developer
-                                        <small>Member since Nov. 2012</small>
+                                        {{ Auth::user()->fullname }}
+                                        <small>Member {{ Auth::user()->created_at->format('d/m/Y') }}</small>
                                     </p>
                                 </li>
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                        <a href="{{ route('user.show', Auth::user()->id) }}" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
                                         <a href="{{ url('logout') }}" class="btn btn-default btn-flat">Sign out</a>
+                                    </div>
+                                    <div class="pull-right" style="margin-right: 10px">
+                                        <a href="{{ route('user.edit', Auth::user()->id) }}" class="btn btn-default btn-flat">Change pass</a>
                                     </div>
                                 </li>
                             </ul>

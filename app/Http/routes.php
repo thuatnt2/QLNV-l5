@@ -23,13 +23,17 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::group(['middleware' => ['auth']], function() {
 	    //
-	    Route::get('/', 'DashBoardController@index');
+	    Route::get('/', 'DashBoardController@show');
+	    Route::get('manager', 'DashBoardController@index');
+	    Route::post('manager', 'DashBoardController@store');
+	    Route::get('manager/{id}/edit', 'DashBoardController@edit');
+	    Route::put('manager/{id}', 'DashBoardController@update');
 	    // Registration Routes...
 		Route::get('register', 'Auth\AuthController@getRegister');
 		Route::post('register', 'Auth\AuthController@postRegister');
-		Route::get('user/{id}/edit','Auth\AuthController@edit');
-		Route::put('user/{id}','Auth\AuthController@update');
-		Route::delete('user/{id}','Auth\AuthController@destroy');
+		Route::get('register/{id}/edit','Auth\AuthController@edit');
+		Route::put('register/{id}','Auth\AuthController@update');
+		Route::delete('register/{id}','Auth\AuthController@destroy');
 		
 		// Orders
 	    Route::resource('orders', 'OrderController');
@@ -60,6 +64,8 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('ship/xmctb', 'XMCTBController');
         // ship_news
         Route::resource('ship/imei', 'ImeiController');
+        // 
+        Route::resource('user', 'UserController');
 	});
 
 });
