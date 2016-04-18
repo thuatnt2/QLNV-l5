@@ -18,15 +18,21 @@ class DashBoardController extends Controller
     {
     	$this->users = new UserRepository(new User);
     	$this->orders = new OrderRepository(new Order);
+    	view()->composer(['managers.index', 'managers.edit'], function($view) {
+            $users = $this->users->formatData($this->users->all(['id as id', 'fullname as symbol' ]));
+            $orders = $this->orders->formatData($this->orders->findAllManager('success', 'monitor',['id as id','order_name as symbol']));
+            $view->with(array(
+                'orders' => $orders,
+                'users' => $users
+            ));
+        });
     }
 
     public function index() 
     {
-    	$users = $this->users->formatData($this->users->all(['id as id', 'fullname as symbol']));
-    	$orders = $this->orders->formatData($this->orders->findAllManager('success', 'monitor',['id as id','order_name as symbol']));
     	$managers = $this->orders->findAllManager('success', 'monitor', [ '*'], true);
 
-    	return view('managers.index', compact('users', 'orders', 'managers'));
+    	return view('managers.index', compact('managers'));
     }
 
     public function store(Request $request)
@@ -39,13 +45,19 @@ class DashBoardController extends Controller
     public function edit($id)
     {
     	// find order manager by user_id
-    	
-    	return view('managers.edit', compact());
+    	$managers = $this->orders->formatData($this->orders->findManagerBy($id, ['id as id','order_name as symbol']));
+    	// dd(array_keys($managers));
+    	request()->session()->put('managers', $managers);
+    	return view('managers.edit', compact('managers','id'));
     }
 
-    public function update($id)
+    public function update(Request $request)
     {
-    	# code...
+		$managers = $request->session()->pull('managers');
+		$update = $request->only('user', 'order');
+    	$this->orders->updateManager();
+
+    	return redirect()->back();
     }
 
     public function show()

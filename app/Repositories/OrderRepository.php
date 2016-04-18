@@ -34,13 +34,13 @@ class OrderRepository extends AbstractRepository
     }
     public function findAllBy($status, $condition = 'monitor', $columns = ['*'])
     {
-        $query = $this->queryAll($status, $condition, $columns);
+        $query = $this->queryAll($status, $condition);
         
         return $query->get($columns);
     }
     public function findAllManager($status, $condition = '', $columns = ['*'], $manager = false)
     {
-        $query = $this->queryAll($status, $condition, $columns);
+        $query = $this->queryAll($status, $condition);
         if ($manager) {
             $query->whereNotNull('manager');
         } else {
@@ -50,13 +50,13 @@ class OrderRepository extends AbstractRepository
         return $query->get($columns);
     }
 
-    // public function findAllManagerGroup($status = 'success', $condition = 'monitor', $columns = ['*'])
-    // {
-    //      $query = $this->queryAll($status, $condition, $columns);
-    //      return $query->whereNotNull('manager')
-    //                     ->groupBy('manager')
-    //                     ->get($columns);
-    // }
+    public function findManagerBy($id, $columns = ['*'])
+    {
+         $query = $this->queryAll('success', 'monitor');
+
+         return $query->where('manager', $id)
+                      ->get($columns);
+    }
     public function search($query)
     {
         $field = 'order_name';
