@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\Repository;
 use App\Http\Requests;
 use App\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    protected $user;
+
+    public function __construct(Repository $user)
+    {
+        $this->user = $user;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -59,7 +66,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -83,5 +91,10 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    protected function validation() {
+
+        return Validate:make()
     }
 }
