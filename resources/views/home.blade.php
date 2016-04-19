@@ -1,17 +1,9 @@
-@extends('layouts.app')
-
+@extends('layouts.master')
+@section('css')
+<link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
+@stop
 @section('content')
-<div class="container spark-screen">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
-
-                <div class="panel-body">
-                    You are logged in!
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
+@stop
+@section('javascript')
+<script src="{{ URL::asset('js/app.js') }}"></script>
+@stop

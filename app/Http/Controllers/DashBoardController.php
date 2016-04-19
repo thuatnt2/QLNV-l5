@@ -46,7 +46,6 @@ class DashBoardController extends Controller
     {
     	// find order manager by user_id
     	$managers = $this->orders->formatData($this->orders->findManagerBy($id, ['id as id','order_name as symbol']));
-    	// dd(array_keys($managers));
     	request()->session()->put('managers', $managers);
     	return view('managers.edit', compact('managers','id'));
     }
@@ -54,8 +53,14 @@ class DashBoardController extends Controller
     public function update(Request $request)
     {
 		$managers = $request->session()->pull('managers');
-		$update = $request->only('user', 'order');
-    	$this->orders->updateManager();
+        $order = [];
+        foreach ($managers as $key => $value) {
+            array_push($order, $key);
+        }
+        $data['order'] = $order;
+        $data['user'] = null;
+        $this->orders->updateManager($data);
+    	$this->orders->updateManager($request->only('user', 'order'));
 
     	return redirect()->back();
     }
@@ -65,4 +70,17 @@ class DashBoardController extends Controller
 
     	return view('dashboard');
     }
+
+    public function destroy($id)
+    {
+        // return order
+        $orders = $this->orders->findManagerBy($id);
+        foreach ($orders as $key => $order) {
+            $order->manager = null;
+            $order->save();
+        }
+        
+        return redirect()->back();
+    }
+
 }

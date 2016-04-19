@@ -23,11 +23,12 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::group(['middleware' => ['auth']], function() {
 	    //
-	    Route::get('/', 'DashBoardController@show');
-	    Route::get('manager', 'DashBoardController@index');
-	    Route::post('manager', 'DashBoardController@store');
-	    Route::get('manager/{id}/edit', 'DashBoardController@edit');
-	    Route::put('manager/{id}', 'DashBoardController@update');
+	    Route::get('/', 'HomeController@index');
+	    // Route::get('manager', 'DashBoardController@index');
+	    // Route::post('manager', 'DashBoardController@store');
+	    // Route::get('manager/{id}/edit', 'DashBoardController@edit');
+	    // Route::put('manager/{id}', 'DashBoardController@update');
+	    Route::resource('manager', 'DashBoardController');
 	    // Registration Routes...
 		Route::get('register', 'Auth\AuthController@getRegister');
 		Route::post('register', 'Auth\AuthController@postRegister');

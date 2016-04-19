@@ -70,8 +70,10 @@
                                     @endforeach
                                 </table>
                             </td>
-                            <td>
+                            <td class="text-center">
                                 <button class="btn btn-warning btn-xs fa fa-edit" data-url="{{ action('DashBoardController@edit', $index) }}" type="button" title="Sửa"></button>
+                                &nbsp
+                            <button class="btn btn-danger btn-xs fa fa-trash" data-toggle="modal" data-target="#confirmModal" data-url="{{ action('DashBoardController@destroy', $index) }}" title="Xóa"></button>
                             </td>
                         </tr>
                     @endforeach
