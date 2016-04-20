@@ -28,7 +28,7 @@ return [
         'array'   => ':attribute must have between :min and :max items.',
     ],
     'boolean'              => ':attribute field must be true or false.',
-    'confirmed'            => ':attribute confirmation does not match.',
+    'confirmed'            => ':attribute và xác nhận không giống nhau.',
     'date'                 => ':attribute is not a valid date.',
     'date_format'          => ':attribute does not match the format :format.',
     'different'            => ':attribute and :other must be different.',
@@ -108,6 +108,7 @@ return [
     'attributes' => [
         'username' => 'Tên đăng nhập',
         'fullname' => 'Họ và tên',
+        'newpassword' => 'Mật khẩu mới',
     ],
 
 ];

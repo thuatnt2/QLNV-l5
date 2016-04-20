@@ -8,10 +8,19 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">Lỗi</h4>
         </div>
-    @endif
         <div class="modal-body">
             <p>{{ Session::get('error') }}&hellip;</p>
         </div>
+    @elseif(Session::has('success'))
+        <div class="modal-header modal-success">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Thông tin</h4>
+        </div>
+        <div class="modal-body">
+            <p>{{ Session::get('success') }}&hellip;</p>
+        </div>
+    @endif
+        
     </div> <!-- .modal-content -->
   </div> <!-- .modal-dialog -->
 </div> <!-- .modal -->

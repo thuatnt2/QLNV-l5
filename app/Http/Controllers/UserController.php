@@ -6,15 +6,18 @@ use App\Contracts\Repository;
 use App\Http\Requests;
 use App\User;
 use Illuminate\Http\Request;
+use Validator;
+use Hash;
+use Auth;
 
 class UserController extends Controller
 {
     protected $user;
 
-    public function __construct(Repository $user)
-    {
-        $this->user = $user;
-    }
+    // public function __construct(Repository $user)
+    // {
+    //     $this->user = $user;
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -79,9 +82,23 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
+        $validate = $this->validator($request->only('now_password', 'password', 'password_confirmation'));
+        if($validate->fails()) {
 
+            return redirect()->back()->withErrors($validate)->withInput();
+
+        } else if (Hash::check($request->input('now_password'), Auth::user()->password)) {
+
+            $user = User::find($id);
+            $user->password = Hash::make($request->input('password'));
+            $user->save();
+
+            return redirect()->back()->with('success', 'update success');
+        } else {
+
+            return redirect()->back()->with('error', 'update error');
+        }
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -93,8 +110,13 @@ class UserController extends Controller
         //
     }
 
-    protected function validation() {
+    protected function validator(array $data) {
 
-        return Validate:make()
+        return Validator::make($data, [
+                'now_password' => 'required',
+                'password' => 'required|confirmed|different:now_password|min:3',
+                'password_confirmation' => 'required_with:password|min:3',
+
+            ]);
     }
 }
