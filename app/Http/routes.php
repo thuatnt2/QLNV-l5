@@ -47,8 +47,17 @@ Route::group(['middleware' => ['web']], function () {
 	    Route::post('update-status/{id}', ['as' => 'update.status', 'uses' => 'OrderController@updateStatus']);
 	    Route::get('search', ['as' => 'search', 'uses' => 'OrderController@search']);
 	    Route::get('file/{folder}/{filename}', ['as' => 'file', 'uses' => 'OrderController@readFile']);
-	    // Orders
-	    Route::resource('statistics', 'StatisticController');
+	    // Statistics
+	    Route::get('statistics-report', 'StatisticController@getReport');
+	    Route::post('statistics-report', 'StatisticController@postReport');
+
+	    Route::get('statistics-action', 'StatisticController@getAction');
+	    Route::post('statistics-action', 'StatisticController@postAction');
+
+	    Route::get('statistics-unit', 'StatisticController@getUnit');
+	    Route::post('statistics-unit', 'StatisticController@postUnit');
+	    Route::get('statistics-advance', 'StatisticController@getAdvance');
+	    Route::post('statistics-advance', 'StatisticController@postAdvance');
 	    Route::get('statistics/export/excel',['as' => 'excel', 'uses' => 'StatisticController@exportExcel']);
 	    // Route::get('statistics/export/pdf',['as' => 'pdf', 'uses' => 'StatisticController@exportPdf']);
         // Units

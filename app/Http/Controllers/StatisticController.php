@@ -21,38 +21,57 @@ class StatisticController extends Controller
         $this->order = $order;
     }
     /**
-     * Display a listing of the resource.
+     * Display a Form for input time report.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getReport()
     {
-        return view('statistics.index');
+        return view('statistics.report');
     }
-
     /**
-     * Show the form for creating a new resource.
+     * Display a Form for input time report.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getAction()
     {
-        //
+        $result = $this->order->statisticsAction();
+        return view('statistics.action', compact('result'));
     }
-
     /**
-     * Store a newly created resource in storage.
+     * Display a Form for input time report.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getUnit()
+    {
+        return view('statistics.unit');
+    }
+    /**
+     * process request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function postReport(Request $request)
     {
         $reportrange = array_reverse(explode('-', $request['reportrange']));
         $startDate = Carbon::createFromFormat('d/m/Y', trim($reportrange[1]))->toDateString();
         $endDate =  Carbon::createFromFormat('d/m/Y', trim($reportrange[0]))->toDateString();
         $result = $this->order->statistics($startDate, $endDate);
-        return view('statistics.index', compact('result', 'reportrange'));
+        return view('statistics.report', compact('result', 'reportrange'));
+    }
+
+    public function postUnit(Request $request)
+    {
+        $unitId = $request['unit'];
+        $reportrange = array_reverse(explode('-', $request['reportrange']));
+        $startDate = Carbon::createFromFormat('d/m/Y', trim($reportrange[1]))->toDateString();
+        $endDate =  Carbon::createFromFormat('d/m/Y', trim($reportrange[0]))->toDateString();
+        $result = $this->order->statisticsUnit($unitId, $startDate, $endDate)->groupBy('purpose.symbol');
+        
+        return view('statistics.unit', compact('result', 'reportrange'));
     }
     public function exportExcel()
     {

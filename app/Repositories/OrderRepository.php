@@ -85,13 +85,7 @@ class OrderRepository extends AbstractRepository
     public function statistics($startDate, $endDate)
     {
         // init query
-        $query =  DB::table('orders')
-                    ->where(function ($q) use ($endDate, $startDate)
-                    {
-                        $q->where('date_end', '>=', $endDate)
-                          ->orWhere('date_order', '>=', $startDate); 
-                    })
-                    ->whereNull('orders.deleted_at');
+        $query = $this->initQueryStatistics($startDate, $endDate);
         // init element copy
         $query1 = clone $query;
         $query2 = clone $query;
@@ -169,6 +163,41 @@ class OrderRepository extends AbstractRepository
         $startDate = Carbon::parse($startDate)->format('d/m/Y');
         $endDate = Carbon::parse($endDate)->format('d/m/Y');
         return compact('order', 'purposes', 'total', 'units', 'security', 'ss','police', 'sp', 'startDate', 'endDate');
+    }
+    public function statisticsAction()
+    {
+
+        return Phone::with('order')
+                    ->whereHas('order.purpose', function($q) {
+                        $q->where('group', 'monitor');
+                    })
+                    ->where('status','success')
+                    ->get();
+    }
+    public function statisticsUnit($unitId, $startDate, $endDate, $purpose='monitor')
+    {
+        return $this->order
+                    ->with('unit', 'purpose', 'phones.ships')
+                    ->whereHas('unit', function($q) use ($unitId) {
+                        $q->where('units.id', $unitId);
+                    })
+                    ->where(function($q) use ($startDate, $endDate){
+                        $q->where('date_end', '>=', $endDate)
+                          ->orWhere('date_order', '>=', $startDate); 
+                    })
+                    ->groupBy('orders.id')
+                    ->get();
+
+    }
+    public function initQueryStatistics($startDate, $endDate)
+    {
+        return DB::table('orders')
+                    ->where(function ($q) use ($endDate, $startDate)
+                    {
+                        $q->where('date_end', '>=', $endDate)
+                          ->orWhere('date_order', '>=', $startDate); 
+                    })
+                    ->whereNull('orders.deleted_at');
     }
     public function create(array $input, $fileName = '')
     {

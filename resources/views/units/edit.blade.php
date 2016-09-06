@@ -15,6 +15,10 @@
                     <label for="block2" class="radio-inline">
                     <input value="CS" {{ $unit->block == "CS" ? "checked":"" }} id="block2" type="radio" name="block">Cảnh sát
                 </label>
+                </label>
+                    <label for="block3" class="radio-inline">
+                    <input value="ĐP" {{ $unit->block == "ĐP" ? "checked":"" }} id="block2" type="radio" name="block">Địa Phương
+                </label>
             </div>
          </div>
         <div class="form-group">

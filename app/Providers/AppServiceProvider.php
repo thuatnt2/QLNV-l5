@@ -39,7 +39,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer(['orders.index', 'orders.edit'], function($view) {
+        view()->composer(['orders.index', 'orders.edit','statistics.unit'], function($view) {
             $units = new UnitRepository(new  Unit);
             $categories = new CategoryRepository(new Category);
             $kinds = new KindRepository(new Kind);

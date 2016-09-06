@@ -59,7 +59,16 @@
                                 <li><a href="{{ url('ship/imei') }}">Quét Imei</a></li>
                              </ul>
                         </li>
-                        <li ><a href="{{ url('statistics') }}">Thống kê</a></li>
+                        {{-- <li ><a href="{{ url('statistics') }}">Thống kê</a></li> --}}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Thống kê&nbsp;&nbsp;<span class="fa fa-caret-down"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url('statistics-report') }}">Báo cáo Tuần/Tháng</a></li>
+                                <li><a href="{{ url('statistics-action') }}">Số TB đang thực hiện</a></li>
+                                <li><a href="{{ url('statistics-unit') }}">Theo từng đơn vị</a></li>
+                                <li><a href="{{ url('statistics-advance') }}">Nâng cao</a></li>
+                            </ul>
+                        </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Cấu hình&nbsp;&nbsp;<span class="fa fa-caret-down"></span></a>
                             <ul class="dropdown-menu" role="menu">
