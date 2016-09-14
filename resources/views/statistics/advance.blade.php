@@ -10,16 +10,36 @@
     <div class="row">
         <div class="box">
             {!! Former::setOption('TwitterBootstrap3.labelWidths', ['large' => 4, 'small' => 4]) !!}
-            {!! Former::horizontal_open(url('statistics-report'))->id('form-create') !!}
+            {!! Former::horizontal_open(url('statistics-advance'))->id('form-create') !!}
             <fieldset>
+            <?php 
+                $purposes[0] = 'Tất cả';
+                $purposes = array_reverse($purposes);
+                $units[0] = 'Tất cả';
+                $units = array_reverse($units);
+                $kinds[0] = 'Tất cả';
+                $kinds = array_reverse($kinds);
+                $categories[0] = 'Tất cả';
+                $categories = array_reverse($categories);
+            ?>
                 {!! Former::legend('Thống kê nâng cao') !!}
-                <div class="col-sm-6 col-sm-offset-2">
+                <div class="col-sm-4">
                     {!! Former::text('reportrange', 'Thời gian')
                         ->append('<i class="fa fa-calendar" id="range"></i>')
                         ->addClass('input-sm')
                     !!}
+                    {!! Former::select('purpose')->label('Mục đích yêu cầu')->options($purposes)->addClass('input-sm') !!}
                 </div>
-                <button type="submit" class="btn btn-success btn-sm">Đồng ý</button>
+                <div class="col-sm-4">
+                    {!! Former::select('category')->label('Loại đối tượng')->options($categories)->addClass('input-sm') !!}
+                    {!! Former::select('unit')->label('Đơn vị yêu cầu')->options($units)->addClass('input-sm') !!}
+                </div>
+                <div class="col-sm-4">
+                    {!! Former::select('kind')->label('Tính chất')->options($kinds)->addClass('input-sm') !!}
+                </div>
+                <div class="col-sm-12 col-sm-offset-5">
+                    <button type="submit" class="btn btn-success btn-sm">Đồng ý</button>    
+                </div>
             </fieldset>
        {!! Former::close() !!}
         </div>
