@@ -85,73 +85,63 @@ class OrderRepository extends AbstractRepository
     public function statistics($startDate, $endDate)
     {
         // init query
-        $query = $this->initQueryStatistics($startDate, $endDate);
-        // init element copy
-        $query1 = clone $query;
-        $query2 = clone $query;
-        $query3 = clone $query;
-        $query4 = clone $query;
-        $order = $query->count();
-
-        $query = $query->join('purposes', 'orders.purpose_id', '=', 'purposes.id')
-                       ->select(
-                            'purposes.symbol',
-                            DB::raw('count(orders.id) as purposeOrder')
-                        );
-        // count purposes order                  
-        $purposes = $query->groupBy('purposes.group')
-                          ->get();
-        $purposes = $this->formatPurposeOrder($purposes);
+        $queryMonitor = $this->initQueryStatistics($startDate, $endDate, 'monitor');
+        $queryOrther = $this->initQueryStatistics($startDate, $endDate);
+        $query1 = clone $queryMonitor;
+        $query2 = clone $queryOrther;
+        $orderMonitor = $queryMonitor->count();
+        $order = $orderMonitor + $queryOrther->count();
+        // var_dump($order);
+        $purposes = $queryOrther->select(
+                                    'purposes.symbol',
+                                    DB::raw('count(orders.id) as purposeOrder')
+                                )
+                             ->groupBy('purposes.group')
+                             ->get();
+        $purposes = $this->formatPurposeOrder($purposes, 'giám sát', $orderMonitor);
         // sum new, sum page_new, sum page_list                  
-        $total = $query1->join('phones', 'orders.id', '=', 'phones.order_id')
-                        ->join('ships', 'phones.id', '=', 'ships.phone_id')
-                        ->select(
-                            DB::raw('coalesce(sum(news),0) as news'),
-                            DB::raw('coalesce(sum(page_news),0) as pageNews'), 
-                            DB::raw('coalesce(sum(page_list),0) as pageList'),
-                            DB::raw('coalesce(sum(page_xmctb),0) as pageXmctb'),
-                            DB::raw('coalesce(sum(page_imei),0) as pageImei')
-                        )
-                        ->whereNull('ships.deleted_at')    
-                        ->get();
+        $total = DB::table('ships')->select(
+                                        DB::raw('coalesce(sum(news),0) as news'),
+                                        DB::raw('coalesce(sum(page_news),0) as pageNews'), 
+                                        DB::raw('coalesce(sum(page_list),0) as pageList'),
+                                        DB::raw('coalesce(sum(page_xmctb),0) as pageXmctb'),
+                                        DB::raw('coalesce(sum(page_imei),0) as pageImei')
+                                    )
+                                   ->where('date_submit', '>=', $startDate)
+                                   ->where('date_submit', '<=', $endDate)
+                                   ->whereNull('ships.deleted_at')    
+                                   ->get();
+                                   
+        foreach ($total as $key => $value) {
+            $purposes = $this->formatPurposeOrder($purposes, 'Số bản tin', $value->news);
+            $purposes = $this->formatPurposeOrder($purposes, 'Số trang tin', $value->pageNews);
+            $purposes = $this->formatPurposeOrder($purposes, 'Số trang list', $value->pageList);
+            $purposes = $this->formatPurposeOrder($purposes, 'Số trang xmctb', $value->pageXmctb);
+            $purposes = $this->formatPurposeOrder($purposes, 'Số trang imei', $value->pageImei);
+       }
+        
+
         // folow block
-        $security = $query3->join('units', 'units.id', '=', 'orders.unit_id')
-                           ->where('units.block','AN')
-                           ->count();
-        $ss = $query3->join('kinds', 'kinds.id', '=', 'orders.kind_id')
-                     ->join('categories', 'categories.id', '=', 'orders.category_id')
-                     ->select(
-                            'kinds.description',
-                            'categories.symbol',
-                            DB::raw('count(orders.kind_id) as total')
-                        )   
-                     ->groupBy('kinds.symbol')
-                     ->groupBy('categories.symbol')
-                     ->get();
-        $ss =  $this->formatBlockOrder($ss);              
-        $police = $query4->join('units', 'units.id', '=', 'orders.unit_id')
-                         ->where('units.block','CS')
-                         ->count();        
-        $sp = $query4->join('kinds', 'kinds.id', '=', 'orders.kind_id')
-                     ->join('categories', 'categories.id', '=', 'orders.category_id')
-                     ->select(
-                            'kinds.description',
-                            'categories.symbol',
-                            DB::raw('count(orders.kind_id) as total')
-                        )   
-                     ->groupBy('kinds.symbol')
-                     ->groupBy('categories.symbol')
-                     ->get();   
-        $sp = $this->formatBlockOrder($sp);               
-        $units = $query2->join('units', 'units.id', '=', 'orders.unit_id')
-                        ->join('phones', 'orders.id', '=', 'phones.order_id')
-                        ->join('ships', 'phones.id', '=', 'ships.phone_id')
-                        ->distinct('orders.symbol')
+        $security = $this->statisticsFollowBlock($startDate, $endDate, "Khối An ninh", "AN");
+        $police = $this->statisticsFollowBlock($startDate, $endDate, "Khối Cảnh sát", "CS");
+        $local = $this->statisticsFollowBlock($startDate, $endDate, "Địa Phương", "ĐP");
+        $blocks = compact('security', 'police', 'local');
+        // stattistic follow units
+        $unit1 = $query1->join('units', 'units.id', '=', 'orders.unit_id')
+                        ->leftJoin('ships', 'phones.id', '=', 'ships.phone_id')
                         ->select(
                             'units.symbol',
-                            DB::raw('count(orders.purpose_id) as total'),
+                            DB::raw('count(distinct(orders.id)) as total'),
                             DB::raw('coalesce(sum(ships.news),0) as numberNews'),
-                            DB::raw('coalesce(sum(ships.page_news),0) as pageNews'),
+                            DB::raw('coalesce(sum(ships.page_news),0) as pageNews')
+                        )
+                        ->whereNull('ships.deleted_at')  
+                        ->groupBy('units.symbol')
+                        ->get();
+        $unit2 = $query2->join('units', 'units.id', '=', 'orders.unit_id')
+                        ->select(
+                            'units.symbol',
+                            DB::raw('count(distinct(orders.id)) as total'),
                             DB::raw('coalesce(sum(ships.page_list),0) as pageList'),
                             DB::raw('coalesce(sum(ships.page_xmctb),0) as pageXmctb'),
                             DB::raw('coalesce(sum(ships.page_imei),0) as pageImei')
@@ -159,10 +149,54 @@ class OrderRepository extends AbstractRepository
                         ->whereNull('ships.deleted_at')  
                         ->groupBy('units.symbol')
                         ->get();
-
+        $unit3 = $unit1;               
+        foreach ($unit2 as $key => $value) {
+            foreach ($unit1 as $index => $item) {
+                if ($value->symbol == $item->symbol) {
+                    $value->total += $item->total;
+                    $value->numberNews = $item->numberNews;
+                    $value->pageNews = $item->pageNews;
+                    array_splice($unit3, $index, 1);
+                }
+            }
+        }
+        $units = array_merge($unit2, $unit3);
         $startDate = Carbon::parse($startDate)->format('d/m/Y');
         $endDate = Carbon::parse($endDate)->format('d/m/Y');
-        return compact('order', 'purposes', 'total', 'units', 'security', 'ss','police', 'sp', 'startDate', 'endDate');
+        
+        return compact('order', 'purposes', 'total', 'blocks', 'units', 'startDate', 'endDate');
+    }
+    public function statisticsFollowBlock($startDate, $endDate, $nameBlock, $symbolBlock)
+    {
+        $query = $this->initQueryStatistics($startDate, $endDate, 'monitor');
+        $resultMonitor = $this->queryBlock($query, $symbolBlock);
+        $detail = $this->createStdObject();
+        $detail = $this->formatBlockOrder($resultMonitor['detail'], $detail);
+
+        $query = $this->initQueryStatistics($startDate, $endDate);
+        $resultOrther = $this->queryBlock($query, $symbolBlock); 
+        $detail = $this->formatBlockOrder($resultOrther['detail'], $detail);
+
+
+        $total = $resultMonitor['total'] + $resultOrther['total'];             
+        return compact('nameBlock', 'total', 'detail');
+    }
+    public function queryBlock($query, $symbolBlock) {
+
+        $total = $query->join('units', 'units.id', '=', 'orders.unit_id')
+                       ->where('units.block', $symbolBlock)
+                       ->count();
+        $detail = $query->join('kinds', 'kinds.id', '=', 'orders.kind_id')
+                        ->join('categories', 'categories.id', '=', 'orders.category_id')
+                        ->select(
+                                'kinds.description',
+                                'categories.symbol',
+                                DB::raw('count(orders.kind_id) as total')
+                            )   
+                        ->groupBy('kinds.description')
+                        ->groupBy('categories.symbol')
+                        ->get(); 
+        return compact('total', 'detail');
     }
     public function statisticsAction()
     {
@@ -174,30 +208,69 @@ class OrderRepository extends AbstractRepository
                     ->where('status','success')
                     ->get();
     }
-    public function statisticsUnit($unitId, $startDate, $endDate, $purpose='monitor')
+    public function statisticsUnit($startDate, $endDate, $unitId = '', $purpose = '')
     {
-        return $this->order
-                    ->with('unit', 'purpose', 'phones.ships')
-                    ->whereHas('unit', function($q) use ($unitId) {
-                        $q->where('units.id', $unitId);
-                    })
-                    ->where(function($q) use ($startDate, $endDate){
-                        $q->where('date_end', '>=', $endDate)
-                          ->orWhere('date_order', '>=', $startDate); 
-                    })
-                    ->groupBy('orders.id')
-                    ->get();
+        $query =  $this->order
+                       ->with('unit', 'purpose', 'phones.ships');
+        if($unitId != '') {
+            $query = $query->whereHas('unit', function($q) use ($unitId) {
+                                $q->where('units.id', $unitId);
+                            });
+        }
+                       
+        if ($purpose == "monitor") {
+            $query = $query->whereHas('purpose', function($q){
+                                $q->where('purposes.group', '=', 'monitor');
+                             })
+                           ->whereHas('phones', function($q) {
+                                $q->where('status', 'success');
+                           })
+                           ->where(function($q) use ($startDate, $endDate){
+                                $q->Where('date_begin', '>=', $startDate)
+                                  ->orwhere('date_end', '>=', $endDate); 
+                             });
+        }
+        else {
+            $query = $query->whereHas('purpose', function($q){
+                                $q->where('purposes.group', '<>', 'monitor');
+                             })
+                           ->whereHas('phones.ships', function($q) use ($startDate, $endDate) {
+                                $q->where('date_submit', '>=', $startDate)
+                                  ->where('date_submit', '<=', $endDate);
+                             });
+        }
+                    
+                    
+        return $query->groupBy('orders.id')
+                     ->get();       
 
     }
-    public function initQueryStatistics($startDate, $endDate)
+    public function statisticsAdvance($startDate, $endDate, $unitId, $purposes, $kindId) 
     {
-        return DB::table('orders')
-                    ->where(function ($q) use ($endDate, $startDate)
-                    {
-                        $q->where('date_end', '>=', $endDate)
-                          ->orWhere('date_order', '>=', $startDate); 
-                    })
-                    ->whereNull('orders.deleted_at');
+
+    }
+    public function initQueryStatistics($startDate, $endDate, $purpose = '')
+    {
+        $query = DB::table('orders')->join('purposes', 'orders.purpose_id', '=', 'purposes.id')
+                                    ->join('phones', 'orders.id', '=', 'phones.order_id');
+        if ($purpose == 'monitor') {
+            $query = $query->where('phones.status', 'success')
+                           ->where('purposes.group', $purpose)
+                           ->where(function ($q) use ($endDate, $startDate){
+                                $q->Where('date_begin', '>=', $startDate)
+                                  ->orwhere('date_end', '>=', $endDate); 
+                            });
+        }
+        else {
+            $query = $query->leftJoin('ships', 'phones.id', '=', 'ships.phone_id')
+                           ->where('purposes.group', '<>', 'monitor')
+                           ->where(function ($q) use ($endDate, $startDate){
+                                $q->where('ships.date_submit', '>=', $startDate)
+                                  ->Where('ships.date_submit', '<=', $endDate); 
+                            });
+        }
+                                    
+        return $query->whereNull('orders.deleted_at');
     }
     public function create(array $input, $fileName = '')
     {
@@ -275,22 +348,13 @@ class OrderRepository extends AbstractRepository
         }
     }
 
-    public function formatPurposeOrder($purposes)
+    public function formatPurposeOrder($purposes, $symbol, $value)
     {
-        $arr = ['giám sát', 'list', 'xmctb', 'imei'];
-        foreach ($arr as  $value) {
-            $check = false;
-            foreach ($purposes as  $purpose) {
-                if($value == $purpose->symbol) {
-                    $check = true;
-                }
-            }
-            if(!$check) {
-                $obj = new \stdClass;
-                $obj->symbol = $value;
-                $obj->purposeOrder = 0;
-                array_push($purposes, $obj);
-            }
+        if($value > 0) {
+            $obj = new \stdClass;
+            $obj->symbol = $symbol;
+            $obj->purposeOrder = $value;
+            array_push($purposes, $obj);
         }
         return $purposes;
     }
@@ -316,26 +380,25 @@ class OrderRepository extends AbstractRepository
             $obj->total = 0;
             array_push($result, $obj);
         } 
-
         return $result;
         
     }
 
-    public function formatBlockOrder($param)
+    public function formatBlockOrder($param, $obj)
     {
-        $result = $this->createStdObject();
+       
         foreach ($param as $p) {
-            foreach ($result as $r) {
-                if ($r->description == $p->description) {
+            foreach ($obj as $r) {
+                if ($p->description == $r->description) {
                     foreach ($r->symbol as $key => $value) {
                         if ($value->symbol == $p->symbol) {
-                            $value->total = $p->total;
+                            $value->total += $p->total;
                             $r->total += $p->total;
                         }
                     }
                 }
             }
         }
-        return $result;
+        return $obj;
     }
 }

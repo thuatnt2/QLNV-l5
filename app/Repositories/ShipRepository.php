@@ -18,28 +18,14 @@ class ShipRepository extends AbstractRepository
 
     public function paginate($purpose = '', $perPage = 5, $with = [''], $columns = ['*'])
     {
-        $result = $this->model
-                       ->with($with)
-                       ->orderBy('date_submit', 'desc');
-        switch ($purpose) {
-            case 'monitor':
-                $result->whereNotNull('page_news');
-                break;
-            case 'list':
-                $result->whereNotNull('page_list');
-                break;
-            case 'xmctb':
-                $result->whereNotNull('page_xmctb');
-                break;
-            case 'imei':
-                $result->whereNotNull('page_imei');
-                break;
-            default:
-                # code...
-                break;
-        }
-
-        return $result->paginate($perPage,$columns);
+      
+        return $this->model
+                    ->with($with)
+                    ->whereHas('phone.order.purpose', function($q) use ($purpose){
+                        $q->where('purposes.group', $purpose);
+                    })
+                    ->orderBy('date_submit', 'desc')
+                    ->paginate($perPage,$columns);
     }
 
     public function create(array $input, $fileName = '')

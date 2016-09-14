@@ -48,6 +48,10 @@ class StatisticController extends Controller
     {
         return view('statistics.unit');
     }
+    public function getAdvance() 
+    {
+        return view('statistics.advance');
+    }
     /**
      * process request.
      *
@@ -69,9 +73,16 @@ class StatisticController extends Controller
         $reportrange = array_reverse(explode('-', $request['reportrange']));
         $startDate = Carbon::createFromFormat('d/m/Y', trim($reportrange[1]))->toDateString();
         $endDate =  Carbon::createFromFormat('d/m/Y', trim($reportrange[0]))->toDateString();
-        $result = $this->order->statisticsUnit($unitId, $startDate, $endDate)->groupBy('purpose.symbol');
-        
+        $monitor = $this->order->statisticsUnit($startDate, $endDate, $unitId, 'monitor');
+        $orther =  $this->order->statisticsUnit($startDate, $endDate, $unitId);
+        $result = $monitor->merge($orther);
+        $result = $result->groupBy('purpose.symbol');
         return view('statistics.unit', compact('result', 'reportrange'));
+    }
+
+    public function postAdvance(Request $request) 
+    {
+        
     }
     public function exportExcel()
     {

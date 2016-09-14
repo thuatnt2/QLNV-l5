@@ -72,11 +72,6 @@
           @foreach ($result['purposes'] as $element)
             <td> {{ ucwords($element->symbol) }} </td>
           @endforeach
-          <td style="width: 10">Số bản tin </td>
-          <td style="width: 10">Số trang tin </td>
-          <td style="width: 10">Số trang list</td>
-          <td  style="width: 13">Số trang xmctb</td>
-          <td  style="width: 11">Số trang imei</td>
         </tr>
         <tr>
           <td>Kết quả</td>
@@ -84,67 +79,40 @@
           @foreach ($result['purposes'] as $element)
             <td> {{ $element->purposeOrder }} </td>
           @endforeach
-          @foreach ($result['total'] as $total)
-            <td> {{ $total->news }} </td>
-            <td> {{ $total->pageNews }} </td>
-            <td> {{ $total->pageList }} </td>
-            <td> {{ $total->pageXmctb }} </td>
-            <td> {{ $total->pageImei }} </td>
-          @endforeach
         </tr>
     </table> <!-- End Table1 -->
-    <tr>
-      <td colspan="2" style="text-align: left;">Khối An ninh: {{ $result['security'] }} yêu cầu</td>    
-    </tr>
-    <table>
-      <tr>
-          <th>STT</th>
-          <th>Tính chất</th>
-          <th>Tổng số</th>
-          @foreach ($result['ss'] as $index => $ss)
-            @foreach ($ss->symbol as $element)
-                <th>{{ $element->symbol }}</th>
-            @endforeach
-            @break;
-          @endforeach
-      </tr>
-      @foreach ($result['ss'] as $index => $ss)
+    @foreach ($result['blocks'] as $block)
+      @if ($block['total'] > 0)
         <tr>
-          <td>{{ ++$index }}</td>
-          <td>{{ $ss->description }}</td>
-          <td>{{ $ss->total }}</td>
-          @foreach ($ss->symbol as $element)
-                <td>{{ $element->total }}</td>
-          @endforeach
+          <td colspan="2" style="text-align: left;">{{ $block['nameBlock'] . ': '. $block['total'] }} yêu cầu</td>    
         </tr>
-      @endforeach
-    </table>{{-- end block AN --}}
-    <tr>
-      <td colspan="2" style="text-align: left;">Khối Cảnh sát: {{ $result['police'] }} yêu cầu</td>    
-    </tr>
-    <table>
-      <tr>
-          <th>STT</th>
-          <th>Tính chất</th>
-          <th>Tổng số</th>
-          @foreach ($result['sp'] as $index => $sp)
-            @foreach ($sp->symbol as $element)
-                <th>{{ $element->symbol }}</th>
-            @endforeach
-            @break;
+        <table>
+          <tr>
+              <th>STT</th>
+              <th>Tính chất</th>
+              <th>Tổng số</th>
+              @foreach ($block['detail'] as $index => $ss)
+                @foreach ($ss->symbol as $element)
+                    <th class="text-center">{{ $element->symbol }}</th>
+                @endforeach
+                @break;
+              @endforeach
+          </tr>
+          @foreach ($block['detail'] as $index => $ss)
+            @if ($ss->total > 0)
+              <tr>
+                <td class="text-center">{{ ++$index }}</td>
+                <td class="text-center">{{ $ss->description }}</td>
+                <td class="text-center">{{ $ss->total }}</td>
+                @foreach ($ss->symbol as $element)
+                      <td class="text-center">{{ $element->total }}</td>
+                @endforeach
+              </tr>
+            @endif
           @endforeach
-      </tr>
-      @foreach ($result['sp'] as $index => $sp)
-        <tr>
-          <td>{{ ++$index }}</td>
-          <td>{{ $sp->description }}</td>
-          <td>{{ $sp->total }}</td>
-          @foreach ($sp->symbol as $element)
-                <td>{{ $element->total }}</td>
-          @endforeach
-        </tr>
-      @endforeach
-    </table>{{-- end block CS --}}
+        </table>{{-- end block  --}}
+      @endif
+    @endforeach
     <tr>
       <td colspan="2" style="text-align: left;">Cụ thể từng đơn vị</td>    
     </tr>
@@ -164,11 +132,11 @@
           <td> {{ ++$index }} </td>
           <td> {{ $unit->symbol }} </td>
           <td> {{ $unit->total }} </td>
-          <td> {{ $unit->numberNews }} </td>
-          <td> {{ $unit->pageNews }} </td>
-          <td> {{ $unit->pageList }} </td>
-          <td> {{ $unit->pageXmctb }} </td>
-          <td> {{ $unit->pageImei }} </td>
+          <td> {{ isset($unit->numberNews) && $unit->numberNews > 0 ? $unit->numberNews:"" }} </td>
+          <td> {{ isset($unit->pageNews) && $unit->pageNews > 0 ?  $unit->pageNews:""}} </td>
+          <td> {{ isset($unit->pageList) && $unit->pageList > 0 ? $unit->pageList:"" }} </td>
+          <td> {{ isset($unit->pageXmctb) && $unit->pageXmctb > 0 ? $unit->pageXmctb:"" }} </td>
+          <td> {{ isset($unit->pageImei) && $unit->pageImei > 0 ? $unit->pageImei:"" }} </td>
         </tr>
       @endforeach
     </table> <!-- End Table2 -->

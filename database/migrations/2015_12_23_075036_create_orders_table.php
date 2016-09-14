@@ -39,9 +39,9 @@ class CreateOrdersTable extends Migration
             $table->string('slug');
             $table->text('comment')->nullable();
              $table->string('manager')->nullable();
-            $table->timestamp('date_order');
-            $table->timestamp('date_begin')->nullable();
-            $table->timestamp('date_end')->nullable();
+            $table->date('date_order');
+            $table->date('date_begin')->nullable();
+            $table->date('date_end')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

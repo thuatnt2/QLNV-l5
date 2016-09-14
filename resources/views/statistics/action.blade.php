@@ -35,7 +35,7 @@
                     	<tr>
                     		<td class="text-center">{{ ++$index }}</td>
                     		<td class="text-center">{{ $item->order->date_order->format('d/m/Y') }}</td>
-                    		<td class="text-center">{{ $item->order->number_cv }}</td>
+                    		<td class="text-center">{{ $item->order->number_cv . '/'.$item->order->unit->symbol }}</td>
                     		<td class="text-center">{{ $item->order->number_cv_pa71 }}</td>
                     		<td><a href="{{ action('OrderController@show', $item->order->id)  }}">{{ $item->order->order_name }}</a></td>
                     		<td class="text-center">{{ $item->number }}</td>

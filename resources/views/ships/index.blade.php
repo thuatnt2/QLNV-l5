@@ -131,7 +131,7 @@
                         <td class="text-center">{{ $ship->phone->order->category->symbol }}</td>
                         <td class="text-center">{{ $ship->phone->order->kind->symbol }}</td>
                         <td class="text-center">
-                        @if (isset($ship->phone->order->date_begin) && isset($ship->phone->order->date_end)))
+                        @if (isset($ship->phone->order->date_begin) && isset($ship->phone->order->date_end))
                             {{ $ship->phone->order->date_begin->format('d/m/Y') . ' &rarr; ' . $ship->phone->order->date_end->format('d/m/Y')  }}
                         @endif
                         </td>
