@@ -25,6 +25,8 @@
                         <th class="text-center" width="17%">Tên đối tượng</th>
                         <th class="text-center" width="17%">Số điện thoại/IMEI</th>
                         <th class="text-center" width="17%">Thời gian yêu cầu</th>
+                        <th class="text-center">Số bản tin</th>
+                        <th class="text-center">Số trang tin</th>
                         <th class="text-center" width="12%">TS y/c (Số ĐT)</th>
                         <th class="text-center" width="8%">Ghi chú</th>
 
@@ -44,6 +46,8 @@
 	                 		   		{{ $item->order->date_begin->format('d/m/Y') . ' &rarr; ' . $item->order->date_end->format('d/m/Y') }}
 	                    		@endif
                     		</td>
+                            <td class="text-center">{{ $item->ships->sum('news') }}</td>    
+                            <td class="text-center">{{ $item->ships->sum('page_news') }}</td>    
                     		<td>{{ $item->order->customer_name . '/' . $item->order->customer_phone }}</td>
                     		<td>{{ $item->order->comment }}</td>
                     	</tr>

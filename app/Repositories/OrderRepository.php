@@ -201,7 +201,7 @@ class OrderRepository extends AbstractRepository
     public function statisticsAction()
     {
 
-        return Phone::with('order')
+        return Phone::with('order', 'ships', 'order.unit')
                     ->whereHas('order.purpose', function($q) {
                         $q->where('group', 'monitor');
                     })
