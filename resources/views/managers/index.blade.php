@@ -52,8 +52,10 @@
                             <td>
                                 <table>
                                     <tr>
-                                        <th>Họ tên</th>
-                                        <th>Số đt</th>
+                                        <th width="10%">Họ tên</th>
+                                        <th width="10%">Số đt</th>
+                                        <th width="10%">Thời gian y/c</th>
+
                                     </tr>
                                     
                                     @foreach ($managers as $manager)
@@ -62,8 +64,11 @@
                                                 <td>{{ $manager->order_name}}</td>
                                                 <td>
                                                     @foreach ($manager->phones as $phone)
-                                                        {{ $phone->number .';' }}
+                                                        {{ $phone->number }} <br> 
                                                     @endforeach
+                                                </td>
+                                                <td>
+                                                    {{ $manager->date_begin->format('d/m/Y') . ' &rarr; ' . $manager->date_end->format('d/m/Y') }}
                                                 </td>
                                             </tr>
                                         @endif

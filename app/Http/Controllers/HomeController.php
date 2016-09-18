@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
+use App\Order;
+use App\Repositories\OrderRepository;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -26,7 +28,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = \DB::table('users')->join('orders', 'orders.manager', '=', 'users.id')
+                                    ->groupBy('orders.manager')
+                                    ->select(
+                                            'users.*',
+                                            \DB::raw('count(manager) as total')
+                                        )
+                                    ->get();
+        $orders = new OrderRepository(new Order);
+        $managers = $orders->findAllManager('success', 'monitor', [ '*'], true);
         return view('home', compact('users', 'managers'));
     }
 }

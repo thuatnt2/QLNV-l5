@@ -25,7 +25,7 @@
                         <th class="text-center" width="17%">Tên đối tượng</th>
                         <th class="text-center" width="17%">Số điện thoại/IMEI</th>
                         <th class="text-center" width="17%">Thời gian yêu cầu</th>
-                        <th class="text-center">Số bản tin</th>
+                        <th class="text-center" data-toggle="tooltip" data-placement="auto" title="hello fwerwrewrtnt">Số bản tin</th>
                         <th class="text-center">Số trang tin</th>
                         <th class="text-center" width="12%">TS y/c (Số ĐT)</th>
                         <th class="text-center" width="8%">Ghi chú</th>
@@ -62,5 +62,10 @@
 @section('javascript')
 {{-- app.js --}}
 <script src="{{ URL::asset('js/app.js') }}"></script>
+<script type="text/javascript">
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
+</script>
 </script>
 @stop
