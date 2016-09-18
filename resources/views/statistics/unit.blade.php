@@ -41,7 +41,7 @@
           <fieldset>
               <legend>
               <span>Kết quả thống kê</span>
-              <a href="{{ route('excel', 'date='.$output) }} " style="float: right; margin-right: 15px"><img src="{{ asset('icon/excel.png') }}"></a>
+              <a href="{{ route('excel', 'date='.$output.'&id='.$unitId) }} " style="float: right; margin-right: 15px"><img src="{{ asset('icon/excel.png') }}"></a>
             </legend>
               <p style="font-size: 16px; margin-left: 10px">Kết quả thực hiện từ ngày <strong>{{ trim(array_pop($reportrange)) }}</strong> đến ngày <strong>{{ trim(array_pop($reportrange)) }}</strong>  như sau</p>
               @foreach ($result as $key=> $orders)

@@ -77,7 +77,7 @@ class StatisticController extends Controller
         $orther =  $this->order->statisticsUnit($startDate, $endDate, $unitId);
         $result = $monitor->merge($orther);
         $result = $result->groupBy('purpose.symbol');
-        return view('statistics.unit', compact('result', 'reportrange'));
+        return view('statistics.unit', compact('result', 'reportrange', 'unitId'));
     }
 
     public function postAdvance(Request $request) 
@@ -92,14 +92,25 @@ class StatisticController extends Controller
         $startDate = $this->order->stringToDate($arrayDate[0]); 
         $endDate = $this->order->stringToDate($arrayDate[1]);
         $orderRepo = new OrderRepository(new Order);
-
-        $data = $orderRepo->statistics($startDate, $endDate);
-        Excel::create($date, function($excel) use ($data) {
-
+        if(request()->has('id')) {
+            $unitId = request()->input('id');
+            $monitor = $this->order->statisticsUnit($startDate, $endDate, $unitId, 'monitor');
+            $orther =  $this->order->statisticsUnit($startDate, $endDate, $unitId);
+            $data = $monitor->merge($orther);
+            $data = $data->groupBy('purpose.symbol');
+            $view = 'statistics.output_unit';
+        }
+        else {
+            $data = $orderRepo->statistics($startDate, $endDate);
+            $view = 'statistics.output';
+        }
+        
+        Excel::create($date, function($excel) use ($view, $data) {
+            // var_dump($data);
         // Call them separately
         $excel->setDescription('File created by TNT');
         // Set top, right, bottom, left
-        $excel->sheet('tnt', function($sheet) use ($data) {
+        $excel->sheet('tnt', function($sheet) use ($view, $data) {
             $sheet->setPageMargin(array(
                 0.25, 0, 0, 0.5
             ));
@@ -108,7 +119,7 @@ class StatisticController extends Controller
             $sheet->setFontFamily('Times New Roman');
             // Font size
             $sheet->setFontSize(14);
-            $sheet->loadView('statistics.output', ['result' => $data]);
+            $sheet->loadView($view, ['result' => $data]);
         });
         })->export('xlsx');
     }
