@@ -257,8 +257,8 @@ class OrderRepository extends AbstractRepository
             $query = $query->where('phones.status', 'success')
                            ->where('purposes.group', $purpose)
                            ->where(function ($q) use ($endDate, $startDate){
-                                $q->Where('date_begin', '>=', $startDate)
-                                  ->orwhere('date_end', '>=', $endDate); 
+                                $q->Where('date_begin', '<=', $endDate)
+                                  ->where('date_end', '>=', $startDate); 
                             });
         }
         else {

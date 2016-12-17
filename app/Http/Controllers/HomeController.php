@@ -8,7 +8,6 @@ use App\Order;
 use App\Repositories\OrderRepository;
 use App\User;
 use Illuminate\Http\Request;
-
 class HomeController extends Controller
 {
     /**

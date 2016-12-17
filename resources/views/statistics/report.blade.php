@@ -42,23 +42,25 @@
               <div class="col-md-12">
               <!-- <div class="box"> -->
                   <div class="box-header">
-                    <h3 class="box-title label label-info">Kết quả chung</h3>
+                    <h3 class="box-title label label-info">Yêu cầu giám sát</h3>
                   </div><!-- /.box-header -->
                   <div class="box-body">
                     <table class="table table-bordered">
-                      <tr class="success">
-                        <th class="text-center">Nội dung</th>
-                        <td class="text-center">Tổng số y/c</td>
-                        @foreach ($result['purposes'] as $element)
-                          <td class="text-center"> {{ ucwords($element->symbol) }} </td>
-                        @endforeach
+                      <tr class="success" >
+                        <th class="text-center" rowspan="2">STT</th>
+                        <th class="text-center" rowspan="2">Đơn vị</th>
+                        <th class="text-center" colspan="4">Yêu cầu của lực lượng An ninh, Tình báo</th>
+                        <th class="text-center" rowspan="2">Thuê bao</th>
+                        <th class="text-center" colspan="2">Số bản tin khai thác, xử lý</th>
+                        <th class="text-center" rowspan="2">Dung lượng thoại ghi đĩa (MB)</th>
                       </tr>
                       <tr>
-                        <th class="text-center">Kết quả</th>
-                        <td class="text-center">{{ $result['order'] }}</td>
-                        @foreach ($result['purposes'] as $element)
-                          <td class="text-center"> {{ $element->purposeOrder }} </td>
-                        @endforeach
+                        <th class="text-center">CA</th>
+                        <th class="text-center">LQANQG</th>
+                        <th class="text-center">QLNV</th>
+                        <th class="text-center">KTNV</th>
+                        <th>Bản tin</th>
+                        <th>Trang tin</th>
                       </tr>
                     </table>
                   </div><!-- /.box-body -->
