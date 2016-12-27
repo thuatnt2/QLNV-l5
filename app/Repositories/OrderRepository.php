@@ -90,7 +90,8 @@ class OrderRepository extends AbstractRepository
         $query1 = clone $queryMonitor;
         $query2 = clone $queryOrther;
         $orderMonitor = $queryMonitor->count();
-        $order = $orderMonitor + $queryOrther->count();
+        $orderOther = $queryOrther->count();
+        $order = $orderMonitor + $orderOther;
         // var_dump($order);
         $purposes = $queryOrther->select(
                                     'purposes.symbol',
@@ -164,7 +165,7 @@ class OrderRepository extends AbstractRepository
         $startDate = Carbon::parse($startDate)->format('d/m/Y');
         $endDate = Carbon::parse($endDate)->format('d/m/Y');
         
-        return compact('order', 'purposes', 'total', 'blocks', 'units', 'startDate', 'endDate');
+        return compact('order', 'orderMonitor', 'orderOther', 'purposes', 'total', 'blocks', 'units', 'startDate', 'endDate');
     }
     public function statisticsFollowBlock($startDate, $endDate, $nameBlock, $symbolBlock)
     {

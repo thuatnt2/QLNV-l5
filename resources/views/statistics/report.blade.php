@@ -38,14 +38,20 @@
               <span>Kết quả thống kê</span>
               <a href="{{ route('excel', 'date='.$output) }} " style="float: right; margin-right: 15px"><img src="{{ asset('icon/excel.png') }}"></a>
             </legend>
-              <p style="font-size: 16px; margin-left: 10px">Kết quả thực hiện từ ngày <strong>{{ trim(array_pop($reportrange)) }}</strong> đến ngày <strong>{{ trim(array_pop($reportrange)) }}</strong>  như sau</p>
+              <p style="font-size: 16px; margin-left: 10px">Kết quả thực hiện từ ngày <strong>{{ trim(array_pop($reportrange)) }}</strong> đến ngày <strong>{{ trim(array_pop($reportrange)) }}</strong>  như sau:</p>
+
               <div class="col-md-12">
               <!-- <div class="box"> -->
                   <div class="box-header">
-                    <h3 class="box-title label label-info">Yêu cầu giám sát</h3>
+                    <p style="font-size: 16px;">Thực hiện <strong>{{ $result['order'] }}</strong> yêu cầu, trong đó: <strong>{{ $result['orderMonitor']}}</strong> yêu cầu giám sát (<strong>...</strong> yêu cầu mới, <strong>...</strong> yêu cầu đã cắt) và <strong>{{ $result['orderOther']}}</strong> yêu cầu cung cấp dữ liệu viễn thông. Khai thác, xử lý <strong>...</strong> bản tin, gồm <strong>...</strong> trang (trong đó có <strong>...</strong> bản tin dịch từ ngoại ngữ, gồm ... trang) <strong>...</strong> MB(hoặc GB) và <strong>...</strong> trang tài liệu BP3. </p>
+                    <ul style="font-size: 16px;">
+                      <li>Báo cáo Ban giám đốc: <strong>...</strong> bản tin, <strong>...</strong> trang tin</li>
+                      <li>Trao đổi với các đơn vị nghiệp vụ: <strong>...</strong> bản tin, <strong>...</strong> trang tin. Cụ thể:</li>
+                    </ul>
+                    <h3 class="box-title"><strong>Yêu cầu giám sát</strong></h3>
                   </div><!-- /.box-header -->
                   <div class="box-body">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered ">
                       <tr class="success" >
                         <th class="text-center" rowspan="2">STT</th>
                         <th class="text-center" rowspan="2">Đơn vị</th>
@@ -54,87 +60,45 @@
                         <th class="text-center" colspan="2">Số bản tin khai thác, xử lý</th>
                         <th class="text-center" rowspan="2">Dung lượng thoại ghi đĩa (MB)</th>
                       </tr>
-                      <tr>
+                      <tr class="success">
                         <th class="text-center">CA</th>
                         <th class="text-center">LQANQG</th>
                         <th class="text-center">QLNV</th>
                         <th class="text-center">KTNV</th>
-                        <th>Bản tin</th>
-                        <th>Trang tin</th>
+                        <th class="text-center">Bản tin</th>
+                        <th class="text-center">Trang tin</th>
                       </tr>
                     </table>
                   </div><!-- /.box-body -->
               <!-- </div>/.box -->
             </div><!-- /.col-md-6 -->
-            @foreach ($result['blocks'] as $block)
-              @if ($block['total'] > 0)
-                <div class="col-md-12">
-                 <div class="box-header">
-                    <h3 class="box-title label label-info">{{ $block['nameBlock'] . ': '. $block['total'] }} yêu cầu</h3>
-                  </div><!-- /.box-header -->
-                  <div class="box-body">
-                    <table class="table table-bordered">
-                      <tr class="success">
-                          <th class="text-center">STT</th>
-                          <th class="text-center">Tính chất</th>
-                          <th class="text-center">Tổng số</th>
-                          @foreach ($block['detail'] as $index => $ss)
-                            @foreach ($ss->symbol as $element)
-                                <th class="text-center">{{ $element->symbol }}</th>
-                            @endforeach
-                            @break;
-                          @endforeach
-                      </tr>
-                      @foreach ($block['detail'] as $index => $ss)
-                        @if ($ss->total > 0)
-                          <tr>
-                            <td class="text-center">{{ ++$index }}</td>
-                            <td class="text-center">{{ $ss->description }}</td>
-                            <td class="text-center">{{ $ss->total }}</td>
-                            @foreach ($ss->symbol as $element)
-                                  <td class="text-center">{{ $element->total }}</td>
-                            @endforeach
-                          </tr>
-                        @endif
-                      @endforeach
-                    </table>
-                  </div><!-- /.box-body -->
-                </div>
-              @endif
-            @endforeach
             <div class="col-md-12">
-                <div class="box-header">
-                    <h3 class="box-title label label-info">Cụ thể từng đơn vị</h3>
+              <!-- <div class="box"> -->
+                  <div class="box-header">
+                    <h3 class="box-title"><strong>Yêu cầu cung cấp dữ liệu</strong></h3>
                   </div><!-- /.box-header -->
                   <div class="box-body">
-                    <table class="table table-bordered">
-                      <tr class="success">
-                        <th class="text-center">STT</th>
-                        <th class="text-center">Tên đơn vị</th>
-                        <th class="text-center">Tổng Số y/c</th>
-                        <th class="text-center">Số bản tin</th>
-                        <th class="text-center">Số trang tin</th>
-                        <th class="text-center">Số trang list</th>
-                        <th class="text-center">Số trang xmctb</th>
-                        <th class="text-center">Số trang imei</th>
+                    <table class="table table-bordered ">
+                      <tr class="success" >
+                        <th class="text-center" rowspan="2">STT</th>
+                        <th class="text-center" rowspan="2">Đơn vị</th>
+                        <th class="text-center" colspan="4">Yêu cầu của lực lượng An ninh, Tình báo</th>
+                        <th class="text-center" rowspan="2">Thuê bao</th>
+                        <th class="text-center" colspan="2">Số bản tin khai thác, xử lý</th>
+                        <th class="text-center" rowspan="2">Dung lượng thoại ghi đĩa (MB)</th>
                       </tr>
-                      
-                      @foreach ($result['units'] as $index => $unit)
-                        <tr>
-                          <td class="text-center"> {{ ++$index }} </td>
-                          <td class="text-center"> {{ $unit->symbol }} </td>
-                          <td class="text-center"> {{ $unit->total }} </td>
-                          <td class="text-center"> {{ isset($unit->numberNews) && $unit->numberNews > 0 ? $unit->numberNews:"" }} </td>
-                          <td class="text-center"> {{ isset($unit->pageNews) && $unit->pageNews > 0 ?  $unit->pageNews:""}} </td>
-                          <td class="text-center"> {{ isset($unit->pageList) && $unit->pageList > 0 ? $unit->pageList:"" }} </td>
-                          <td class="text-center"> {{ isset($unit->pageXmctb) && $unit->pageXmctb > 0 ? $unit->pageXmctb:"" }} </td>
-                          <td class="text-center"> {{ isset($unit->pageImei) && $unit->pageImei > 0 ? $unit->pageImei:"" }} </td>
-                        </tr>
-                      @endforeach
-                      
+                      <tr class="success">
+                        <th class="text-center">CA</th>
+                        <th class="text-center">LQANQG</th>
+                        <th class="text-center">QLNV</th>
+                        <th class="text-center">KTNV</th>
+                        <th class="text-center">Bản tin</th>
+                        <th class="text-center">Trang tin</th>
+                      </tr>
                     </table>
                   </div><!-- /.box-body -->
-            </div>
+              <!-- </div>/.box -->
+            </div><!-- /.col-md-6 -->
           </fieldset>
           </form>
         @else
