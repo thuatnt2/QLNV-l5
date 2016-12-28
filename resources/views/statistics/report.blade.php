@@ -45,7 +45,7 @@
                   <div class="box-header">
                     <p style="font-size: 16px;">Thực hiện <strong>{{ $result['order'] }}</strong> yêu cầu, trong đó: <strong>{{ $result['orderMonitor']}}</strong> yêu cầu giám sát (<strong>...</strong> yêu cầu mới, <strong>...</strong> yêu cầu đã cắt) và <strong>{{ $result['orderOther']}}</strong> yêu cầu cung cấp dữ liệu viễn thông. Khai thác, xử lý <strong>...</strong> bản tin, gồm <strong>...</strong> trang (trong đó có <strong>...</strong> bản tin dịch từ ngoại ngữ, gồm ... trang) <strong>...</strong> MB(hoặc GB) và <strong>...</strong> trang tài liệu BP3. </p>
                     <ul style="font-size: 16px;">
-                      <li>Báo cáo Ban giám đốc: <strong>...</strong> bản tin, <strong>...</strong> trang tin</li>
+                      <li>Báo cáo Ban Giám đốc: <strong>...</strong> bản tin, <strong>...</strong> trang tin</li>
                       <li>Trao đổi với các đơn vị nghiệp vụ: <strong>...</strong> bản tin, <strong>...</strong> trang tin. Cụ thể:</li>
                     </ul>
                     <h3 class="box-title"><strong>Yêu cầu giám sát</strong></h3>
