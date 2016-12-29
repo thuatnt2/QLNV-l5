@@ -97,8 +97,8 @@ class OrderRepository extends AbstractRepository
                                     'purposes.symbol',
                                     DB::raw('count(orders.id) as purposeOrder')
                                 )
-                             ->groupBy('purposes.group')
-                             ->get();
+                                ->groupBy('purposes.group')
+                                ->get();
         $purposes = $this->formatPurposeOrder($purposes, 'giám sát', $orderMonitor);
         // sum new, sum page_new, sum page_list                  
         $total = DB::table('ships')->select(

@@ -17,8 +17,7 @@
             {!! Former::radios('block', 'Thuộc khối')
             ->radios([
                 'An ninh' => ['value' => 'AN', 'checked' => true],
-                'Cảnh sát' => ['value' => 'CS'],
-                'Địa phương' => ['value' => 'ĐP']
+                'Cảnh sát' => ['value' => 'CS']
             ])
             ->inline()
              !!}

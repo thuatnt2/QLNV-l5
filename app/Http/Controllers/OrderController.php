@@ -171,6 +171,19 @@ class OrderController extends Controller
         
         $phone->status = $request->get('status');
         $phone->save();
+        // update status cut order when all number not connect
+        if($request->get('status') == 'danger') {
+            $flag = true;
+            foreach ($order->phones as $index => $phone) {
+                if($phone->status != 'danger') {
+                    $flag = false;
+                }
+            }
+            if($flag) {
+                $order->date_cut = Carbon::now();
+                $order->save();
+            }
+        }
 
         return redirect()->back();
     }

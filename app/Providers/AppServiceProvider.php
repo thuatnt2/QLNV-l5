@@ -46,12 +46,14 @@ class AppServiceProvider extends ServiceProvider
             $users = new UserRepository(new User);
             $purposes = new PurposeRepository(new Purpose); 
 
-            $units = $units->formatData($units->all(['id', 'symbol']));
+            // $units = $units->formatData($units->all(['id', 'symbol']));
+            $unitPolices = $units->findAllBy('block', 'CS', ['id', 'symbol']);
+            $unitSecurites = $units->findAllBy('block', 'AN', ['id', 'symbol']);
             $categories = $categories->formatData($categories->all(['id', 'symbol']));
             $kinds = $kinds->formatData($kinds->all(['id', 'symbol']));
             $users = $users->formatData($users->all(['id as id', 'fullname as symbol' ]));
             $purposes = $purposes->formatData($purposes->all(['id', 'symbol']));
-            $view->with(compact('units', 'categories', 'kinds', 'purposes', 'users'));
+            $view->with(compact('unitPolices', 'unitSecurites', 'categories', 'kinds', 'purposes', 'users'));
         });
     }
 
