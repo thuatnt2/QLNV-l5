@@ -40,12 +40,12 @@
                     <select class="form-control input-sm" id="unit" name="unit">
                         <optgroup label="Khối An ninh">
                             @foreach ($unitSecurites as $index=>$unit)
-                                <option value="{{ $unit->id }}" >{{ ucwords($unit->symbol) }}</option>
+                                <option value="{{ $unit->id }}" {{ $unit->id == $index ? "selected":""}}>{{ ucwords($unit->symbol) }}</option>
                             @endforeach
                         </optgroup>
                         <optgroup label="Khối Cảnh sát">
                             @foreach ($unitPolices as $index=>$unit)
-                                <option value="{{ $unit->id }}" >{{ ucwords($unit->symbol) }}</option>
+                                <option value="{{ $unit->id }}" {{ $unit->id == $index ? "selected":""}}>{{ ucwords($unit->symbol) }}</option>
                             @endforeach
                         </optgroup>
                     </select>

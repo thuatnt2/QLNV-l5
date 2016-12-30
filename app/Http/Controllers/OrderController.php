@@ -122,7 +122,6 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = $this->order->findById($id);
-        
         return view('orders.edit', compact('order'));
     }
 

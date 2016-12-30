@@ -14,10 +14,23 @@
                 ->addClass('input-sm')
                 ->value($order->number_cv)
             !!}
-            {!! Former::select('unit', 'Đơn vị yêu cầu')
-                ->options($units, $order->unit_id)
-                ->addClass('input-sm')
-            !!}
+            <div class="form-group">
+                <label for="unit" class="control-label col-lg-4 col-sm-4">Đơn vị yêu cầu</label>
+                <div class="col-lg-8 col-sm-8">
+                    <select class="form-control input-sm" id="unit" name="unit">
+                        <optgroup label="Khối An ninh">
+                            @foreach ($unitSecurites as $index=>$unit)
+                                <option value="{{ $unit->id }}" {{ $unit->id == $order->unit_id ? "selected":""}}>{{ ucwords($unit->symbol) }}</option>
+                            @endforeach
+                        </optgroup>
+                        <optgroup label="Khối Cảnh sát">
+                            @foreach ($unitPolices as $index=>$unit)
+                                <option value="{{ $unit->id }}" {{ $unit->id == $order->unit_id ? "selected":""}}>{{ ucwords($unit->symbol) }}</option>
+                            @endforeach
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
             {!! Former::text('number_cv_pa71', 'Số công văn PA71')
                 ->required()
                 ->addClass('input-sm')

@@ -85,13 +85,25 @@ class OrderRepository extends AbstractRepository
     public function statistics($startDate, $endDate)
     {
         // init query
-        $queryMonitor = $this->initQueryStatistics($startDate, $endDate, 'monitor');
-        $queryOrther = $this->initQueryStatistics($startDate, $endDate);
+        $queryMonitor = $this->initQueryStatistics($startDate, $endDate);
+        $queryOrther = $this->initQueryStatistics($startDate, $endDate, 'success', '');
         $query1 = clone $queryMonitor;
         $query2 = clone $queryOrther;
-        $orderMonitor = $queryMonitor->count();
-        $orderOther = $queryOrther->count();
+        $orderMonitor = $queryMonitor->count('orders.id');
+        $orderNew = $queryMonitor->where(function($q) use ($startDate, $endDate){
+                                        $q->Where('date_order', '>=', $startDate)
+                                          ->where('date_order', '<=', $endDate); 
+                                    })
+                                ->count('orders.id');
+        $orderClosed = $this->initQueryStatistics($startDate, $endDate, 'danger')
+                            ->where(function($q) use ($startDate, $endDate){
+                                        $q->Where('date_cut', '>=', $startDate)
+                                          ->where('date_cut', '<=', $endDate); 
+                                    })
+                                    ->count('orders.id');
+        $orderOther = $queryOrther->count('orders.id');
         $order = $orderMonitor + $orderOther;
+        
         // var_dump($order);
         $purposes = $queryOrther->select(
                                     'purposes.symbol',
@@ -165,7 +177,7 @@ class OrderRepository extends AbstractRepository
         $startDate = Carbon::parse($startDate)->format('d/m/Y');
         $endDate = Carbon::parse($endDate)->format('d/m/Y');
         
-        return compact('order', 'orderMonitor', 'orderOther', 'purposes', 'total', 'blocks', 'units', 'startDate', 'endDate');
+        return compact('order', 'orderMonitor', 'orderOther', 'orderNew', 'orderClosed', 'purposes', 'total', 'blocks', 'units', 'startDate', 'endDate');
     }
     public function statisticsFollowBlock($startDate, $endDate, $nameBlock, $symbolBlock)
     {
@@ -250,12 +262,14 @@ class OrderRepository extends AbstractRepository
     {
 
     }
-    public function initQueryStatistics($startDate, $endDate, $purpose = '')
+    public function initQueryStatistics($startDate, $endDate, $status = 'success', $purpose = 'monitor')
     {
         $query = DB::table('orders')->join('purposes', 'orders.purpose_id', '=', 'purposes.id')
-                                    ->join('phones', 'orders.id', '=', 'phones.order_id');
+                                    ->join('phones', 'orders.id', '=', 'phones.order_id')
+                                    ->distinct()
+                                    ->groupBy('orders.id');
         if ($purpose == 'monitor') {
-            $query = $query->where('phones.status', 'success')
+            $query = $query->where('phones.status', $status)
                            ->where('purposes.group', $purpose)
                            ->where(function ($q) use ($endDate, $startDate){
                                 $q->Where('date_begin', '<=', $endDate)
