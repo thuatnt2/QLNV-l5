@@ -124,20 +124,19 @@ class OrderRepository extends AbstractRepository
                                    ->where('date_submit', '<=', $endDate)
                                    ->whereNull('ships.deleted_at')    
                                    ->get();
-                                   
-        foreach ($total as $key => $value) {
-            $purposes = $this->formatPurposeOrder($purposes, 'Số bản tin', $value->news);
-            $purposes = $this->formatPurposeOrder($purposes, 'Số trang tin', $value->pageNews);
-            $purposes = $this->formatPurposeOrder($purposes, 'Số trang list', $value->pageList);
-            $purposes = $this->formatPurposeOrder($purposes, 'Số trang xmctb', $value->pageXmctb);
-            $purposes = $this->formatPurposeOrder($purposes, 'Số trang imei', $value->pageImei);
-       }
+                                   // var_dump($total[0]->news);
+       //  foreach ($total as $key => $value) {
+       //      $purposes = $this->formatPurposeOrder($purposes, 'Số bản tin', $value->news);
+       //      $purposes = $this->formatPurposeOrder($purposes, 'Số trang tin', $value->pageNews);
+       //      $purposes = $this->formatPurposeOrder($purposes, 'Số trang list', $value->pageList);
+       //      $purposes = $this->formatPurposeOrder($purposes, 'Số trang xmctb', $value->pageXmctb);
+       //      $purposes = $this->formatPurposeOrder($purposes, 'Số trang imei', $value->pageImei);
+       // }
         
 
         // folow block
         $security = $this->statisticsFollowBlock($startDate, $endDate, "Khối An ninh", "AN");
         $police = $this->statisticsFollowBlock($startDate, $endDate, "Khối Cảnh sát", "CS");
-        $local = $this->statisticsFollowBlock($startDate, $endDate, "Địa Phương", "ĐP");
         $blocks = compact('security', 'police', 'local');
         // stattistic follow units
         $unit1 = $query1->join('units', 'units.id', '=', 'orders.unit_id')
@@ -266,15 +265,14 @@ class OrderRepository extends AbstractRepository
     {
         $query = DB::table('orders')->join('purposes', 'orders.purpose_id', '=', 'purposes.id')
                                     ->join('phones', 'orders.id', '=', 'phones.order_id')
-                                    ->distinct()
-                                    ->groupBy('orders.id');
+                                    ->distinct();
         if ($purpose == 'monitor') {
-            $query = $query->where('phones.status', $status)
-                           ->where('purposes.group', $purpose)
+            $query = $query->where('purposes.group', $purpose)
                            ->where(function ($q) use ($endDate, $startDate){
                                 $q->Where('date_begin', '<=', $endDate)
                                   ->where('date_end', '>=', $startDate); 
                             });
+                           // ->where('phones.status', $status)
         }
         else {
             $query = $query->leftJoin('ships', 'phones.id', '=', 'ships.phone_id')
