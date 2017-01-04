@@ -124,6 +124,15 @@ class OrderRepository extends AbstractRepository
                                    ->where('date_submit', '<=', $endDate)
                                    ->whereNull('ships.deleted_at')    
                                    ->get();
+        $shipDirector = DB::table('ships')->select(
+                                        DB::raw('coalesce(sum(news),0) as news'),
+                                        DB::raw('coalesce(sum(page_news),0) as pageNews')
+                                    )
+                                   ->where('date_submit', '>=', $startDate)
+                                   ->where('date_submit', '<=', $endDate)
+                                   ->where('receive_name', 'like', '%PGĐ%')
+                                   ->whereNull('ships.deleted_at')    
+                                   ->get();
                                    // var_dump($total[0]->news);
        //  foreach ($total as $key => $value) {
        //      $purposes = $this->formatPurposeOrder($purposes, 'Số bản tin', $value->news);
@@ -137,7 +146,7 @@ class OrderRepository extends AbstractRepository
         // folow block
         $security = $this->statisticsFollowBlock($startDate, $endDate, "Khối An ninh", "AN");
         $police = $this->statisticsFollowBlock($startDate, $endDate, "Khối Cảnh sát", "CS");
-        $blocks = compact('security', 'police', 'local');
+        $blocks = compact('security', 'police');
         // stattistic follow units
         $unit1 = $query1->join('units', 'units.id', '=', 'orders.unit_id')
                         ->leftJoin('ships', 'phones.id', '=', 'ships.phone_id')
@@ -176,7 +185,7 @@ class OrderRepository extends AbstractRepository
         $startDate = Carbon::parse($startDate)->format('d/m/Y');
         $endDate = Carbon::parse($endDate)->format('d/m/Y');
         
-        return compact('order', 'orderMonitor', 'orderOther', 'orderNew', 'orderClosed', 'purposes', 'total', 'blocks', 'units', 'startDate', 'endDate');
+        return compact('order', 'orderMonitor', 'orderOther', 'orderNew', 'orderClosed', 'purposes', 'total', 'shipDirector', 'blocks', 'units', 'startDate', 'endDate');
     }
     public function statisticsFollowBlock($startDate, $endDate, $nameBlock, $symbolBlock)
     {

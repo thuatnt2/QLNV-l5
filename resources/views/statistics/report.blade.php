@@ -45,8 +45,8 @@
                   <div class="box-header">
                     <p style="font-size: 16px;">Thực hiện <strong>{{ $result['order'] }}</strong> yêu cầu, trong đó: <strong>{{ $result['orderMonitor']}}</strong> yêu cầu giám sát (<strong>{{$result['orderNew']}}</strong> yêu cầu mới, <strong>{{$result['orderClosed']}}</strong> yêu cầu đã cắt) và <strong>{{ $result['orderOther']}}</strong> yêu cầu cung cấp dữ liệu viễn thông. Khai thác, xử lý <strong>{{$result['total'][0]->news}}</strong> bản tin, gồm <strong>{{$result['total'][0]->pageNews}}</strong> trang (trong đó có <strong>...</strong> bản tin dịch từ ngoại ngữ, gồm ... trang) <strong>...</strong> MB(hoặc GB) và <strong>{{$result['total'][0]->pageList + $result['total'][0]->pageXmctb + $result['total'][0]->pageImei}}</strong> trang tài liệu BP3. </p>
                     <ul style="font-size: 16px;">
-                      <li>Báo cáo Ban Giám đốc: <strong>...</strong> bản tin, <strong>...</strong> trang tin</li>
-                      <li>Trao đổi với các đơn vị nghiệp vụ: <strong>...</strong> bản tin, <strong>...</strong> trang tin. Cụ thể:</li>
+                      <li>Báo cáo Ban Giám đốc: <strong>{{$result['shipDirector'][0]->news}}</strong> bản tin, <strong>{{$result['shipDirector'][0]->pageNews}}</strong> trang tin</li>
+                      <li>Trao đổi với các đơn vị nghiệp vụ: <strong>{{$result['total'][0]->news - $result['shipDirector'][0]->news}}</strong> bản tin, <strong>{{$result['total'][0]->pageNews - $result['shipDirector'][0]->pageNews}}</strong> trang tin. Cụ thể:</li>
                     </ul>
                     <h3 class="box-title"><strong>Yêu cầu giám sát</strong></h3>
                   </div><!-- /.box-header -->
@@ -68,6 +68,27 @@
                         <th class="text-center">Bản tin</th>
                         <th class="text-center">Trang tin</th>
                       </tr>
+                      <tr>
+                        <td></td>
+                        <td><strong>Cộng</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                        <tr>
+                        <td></td>
+                        <td><strong>Tổng cộng</strong></td>
+                        <td colspan="4"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
                     </table>
                   </div><!-- /.box-body -->
               <!-- </div>/.box -->
@@ -83,17 +104,22 @@
                         <th class="text-center" rowspan="2">STT</th>
                         <th class="text-center" rowspan="2">Đơn vị</th>
                         <th class="text-center" colspan="4">Yêu cầu của lực lượng An ninh, Tình báo</th>
-                        <th class="text-center" rowspan="2">Thuê bao</th>
-                        <th class="text-center" colspan="2">Số bản tin khai thác, xử lý</th>
-                        <th class="text-center" rowspan="2">Dung lượng thoại ghi đĩa (MB)</th>
+                        <th class="text-center" colspan="2">XMCTB</th>
+                        <th class="text-center" colspan="2">IMEI</th>
+                        <th class="text-center" colspan="2">Lấy list</th>
+                        {{-- <th class="text-center" rowspan="2">Số trang list</th> --}}
                       </tr>
                       <tr class="success">
                         <th class="text-center">CA</th>
                         <th class="text-center">LQANQG</th>
                         <th class="text-center">QLNV</th>
                         <th class="text-center">KTNV</th>
-                        <th class="text-center">Bản tin</th>
-                        <th class="text-center">Trang tin</th>
+                        <th class="text-center">Số y/c</th>
+                        <th class="text-center">Số trang</th>
+                        <th class="text-center">Số y/c</th>
+                        <th class="text-center">Số trang</th>
+                        <th class="text-center">Số y/c</th>
+                        <th class="text-center">Số trang</th>
                       </tr>
                     </table>
                   </div><!-- /.box-body -->
