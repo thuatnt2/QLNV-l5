@@ -68,6 +68,18 @@
                         <th class="text-center">Bản tin</th>
                         <th class="text-center">Trang tin</th>
                       </tr>
+                      @foreach($result['detailMonitor']['security'] as $index=>$unit)
+                        <tr>
+                          <td class="text-center">{{++$index}}</td>
+                          <td>{{$unit->unit}}</td>
+                          @foreach($unit->categories as $key=>$category)
+                            <td>{{$category}}</td>
+                          @endforeach
+                          <td>{{$unit->number}}</td>
+                          <td>{{isset($unit->numberNews) ? $unit->numberNews:"0"}}</td>
+                          <td>{{isset($unit->pageNews) ? $unit->pageNews:"0"}}</td>
+                        </tr>
+                      @endforeach
                       <tr>
                         <td></td>
                         <td><strong>Cộng</strong></td>
