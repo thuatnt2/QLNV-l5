@@ -187,7 +187,7 @@ class OrderRepository extends AbstractRepository
         }
         // var_dump($detailNews);
         $units = $this->formatDetail($detailPurpose, $detailNews);
-        
+        // var_dump($units);
         return $units;
 
     }
@@ -375,17 +375,17 @@ class OrderRepository extends AbstractRepository
             $unit->news[1] = $obj->pageNews;
         }
         // for xmctb
-        if (isset($obj->pageXmctb)) {
+        if (isset($obj->pageXmctb) && $obj->pageXmctb > 0) {
             $unit->xmctb[0] = $obj->number;
             $unit->xmctb[1] = $obj->pageXmctb;
         }
         // for imei
-        if (isset($obj->pageImei)) {
+        if (isset($obj->pageImei)  && $obj->pageImei > 0) {
             $unit->imei[0] = $obj->number;
             $unit->imei[1] = $obj->pageImei;
         }
         // for list
-        if (isset($obj->pageList)) {
+        if (isset($obj->pageList)  && $obj->pageList > 0) {
             $unit->list[0] = $obj->number;
             $unit->list[1] = $obj->pageList;
         }

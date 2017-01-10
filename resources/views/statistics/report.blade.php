@@ -90,7 +90,7 @@
                             $sumPurposeUnit[$key] += $category;
                           }
                           $sumNumber += $unit->number;
-                          echo  '<td class="text-center">'. $unit->number .'</td>' .
+                          echo  '<td class="text-center">'. $unit->number .'</td>';
                           foreach ($unit->news as $key => $value) {
                               $sumNews += $key;
                               $sumPageNews += $value;
@@ -227,23 +227,18 @@
                $sumtotal = 0;
 
                foreach($result['detailOther']['security'] as $index=>$unit) {
-                 echo '<tr>' .
-                   '<td class="text-center">' . ++$index . '</td>' .
-                   '<td class="text-center">' . $unit->unit .'</td>';
+                  echo '<tr>' .
+                    '<td class="text-center">' . ++$index . '</td>' .
+                    '<td class="text-center">' . $unit->unit .'</td>';
                   foreach($unit->categories as $key=>$category) {
-
-                   echo '<td class="text-center">' . $category. '</td>';
-                   $sumPurposeUnit[$key] += $category;
+                    echo '<td class="text-center">' . $category. '</td>';
+                    $sumPurposeUnit[$key] += $category;
                   }
-                  $sumNumber += $unit->number;
-                  echo  '<td class="text-center">'. $unit->number .'</td>' .
-                  foreach ($unit->news as $key => $value) {
-                     $sumNews += $key;
-                     $sumPageNews += $value;
-                     echo '<td class="text-center">'. $key .'</td>' .
-                          '<td class="text-center">'. $value  .'</td>';
-                   }
-                  echo ' </tr>';
+                  $sumNews += $unit->xmctb[0];
+                  $sumPageNews += $unit->xmctb[1];
+                  echo '<td class="text-center">'. $unit->xmctb[0] .'</td>';
+                  echo '<td class="text-center">'. $unit->xmctb[1]  .'</td>';
+                  echo '</tr>';
                }
              ?>  
            </table>
