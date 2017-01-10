@@ -52,91 +52,204 @@
                   </div><!-- /.box-header -->
                   <div class="box-body">
                     <table class="table table-bordered ">
+                      <?php 
+                        $categories = App\Category::all()->sortBy('symbol');
+                        $sumPurposeUnit = [];
+                        $sumNumber = 0;
+                        $sumNews = 0;
+                        $sumPageNews = 0;
+                        $sumtotal = 0;
+
+                      ?>
                       <tr class="success" >
                         <th class="text-center" rowspan="2">STT</th>
                         <th class="text-center" rowspan="2">Đơn vị</th>
-                        <th class="text-center" colspan="4">Yêu cầu của lực lượng An ninh, Tình báo</th>
+                        <th class="text-center" colspan="{{$categories->count()}}">Yêu cầu của lực lượng An ninh, Tình báo</th>
                         <th class="text-center" rowspan="2">Thuê bao</th>
                         <th class="text-center" colspan="2">Số bản tin khai thác, xử lý</th>
                         <th class="text-center" rowspan="2">Dung lượng thoại ghi đĩa (MB)</th>
                       </tr>
                       <tr class="success">
-                        <th class="text-center">CA</th>
-                        <th class="text-center">LQANQG</th>
-                        <th class="text-center">QLNV</th>
-                        <th class="text-center">KTNV</th>
+                        <?php
+                        foreach($categories  as $index => $category) {
+                          echo '<th class="text-center">' . $category->symbol . '</th>';  
+                          $sumPurposeUnit[$category->symbol] = 0;   
+                        }
+                        ?>
                         <th class="text-center">Bản tin</th>
                         <th class="text-center">Trang tin</th>
                       </tr>
-                      @foreach($result['detailMonitor']['security'] as $index=>$unit)
-                        <tr>
-                          <td class="text-center">{{++$index}}</td>
-                          <td>{{$unit->unit}}</td>
-                          @foreach($unit->categories as $key=>$category)
-                            <td>{{$category}}</td>
-                          @endforeach
-                          <td>{{$unit->number}}</td>
-                          <td>{{isset($unit->numberNews) ? $unit->numberNews:"0"}}</td>
-                          <td>{{isset($unit->pageNews) ? $unit->pageNews:"0"}}</td>
-                        </tr>
-                      @endforeach
+                      <?php 
+                        foreach($result['detailMonitor']['security'] as $index=>$unit) {
+                          echo '<tr>' .
+                            '<td class="text-center">' . ++$index . '</td>' .
+                            '<td class="text-center">' . $unit->unit .'</td>';
+                          foreach($unit->categories as $key=>$category) {
+
+                            echo '<td class="text-center">' . $category. '</td>';
+                            $sumPurposeUnit[$key] += $category;
+                          }
+                          $sumNumber += $unit->number;
+                          echo  '<td class="text-center">'. $unit->number .'</td>' .
+                          foreach ($unit->news as $key => $value) {
+                              $sumNews += $key;
+                              $sumPageNews += $value;
+                              echo '<td class="text-center">'. $key .'</td>' .
+                                   '<td class="text-center">'. $value  .'</td>';
+                            }
+                           echo ' </tr>';
+                        }
+                      ?>  
                       <tr>
                         <td></td>
-                        <td><strong>Cộng</strong></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td class="text-center"><strong>Cộng</strong></td>
+                        @foreach($sumPurposeUnit as $key=>$value)
+                          <td class="text-center">{{$value}}</td>
+                        @endforeach
+                        <td class="text-center">{{$sumNumber}}</td>
+                        <td class="text-center">{{$sumNews}}</td>
+                        <td class="text-center">{{$sumPageNews}}</td>
                         <td></td>
                       </tr>
+                      <tr>
+                        <td></td>
+                        <td class="text-center"><strong>Tổng cộng</strong></td>
+                        <td class="text-center" colspan="{{$categories->count()}}">{{array_sum($sumPurposeUnit)}}</td>
+                        <td class="text-center">{{$sumNumber}}</td>
+                        <td class="text-center">{{$sumNews}}</td>
+                        <td class="text-center">{{$sumPageNews}}</td>
+                        <td></td>
+                      </tr>
+                      {{-- Yêu cầu giám sát của lực lượng cảnh sát --}}
+                      @if(isset($result['detailMonitor']['police']) && !empty($result['detailMonitor']['police']))
+                        <tr class="success">
+                          <th rowspan="2"`></th>
+                          <th rowspan="2"></th>
+                          <th class="text-center" colspan="{{$categories->count()}}">Yêu cầu của lực lượng Cảnh sát</th>
+                          <th rowspan="2"></th>
+                          <th rowspan="2"></th>
+                          <th rowspan="2"></th>
+                          <td rowspan="2"></td>
+                        </tr>
+                        <tr class="success">
+                          <?php
+                            foreach($categories  as $index => $category) {
+                              echo '<th class="text-center">' . $category->symbol . '</th>';  
+                              $sumPurposeUnit[$category->symbol] = 0;   
+                              $sumNumber = 0;
+                              $sumNews = 0;
+                              $sumPageNews = 0;
+                              $sumtotal = 0;
+                            }
+                          ?>
+                        </tr>
+                        <?php 
+                          foreach($result['detailMonitor']['police'] as $index=>$unit) {
+                            echo '<tr>' .
+                              '<td class="text-center">' . ++$index . '</td>' .
+                              '<td class="text-center">' . $unit->unit .'</td>';
+                            foreach($unit->categories as $key=>$category) {
+
+                              echo '<td class="text-center">' . $category. '</td>';
+                              $sumPurposeUnit[$key] += $category;
+                            }
+                            $sumNumber += $unit->number;
+                            echo  '<td class="text-center">'. $unit->number .'</td>';
+                            foreach ($unit->news as $key => $value) {
+                              $sumNews += $key;
+                              $sumPageNews += $value;
+                              echo '<td class="text-center">'. $key .'</td>' .
+                                   '<td class="text-center">'. $value  .'</td>';
+                            }
+                           echo ' </tr>';
+                          }
+                        ?>  
                         <tr>
-                        <td></td>
-                        <td><strong>Tổng cộng</strong></td>
-                        <td colspan="4"></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
+                          <td></td>
+                          <td class="text-center"><strong>Cộng</strong></td>
+                          @foreach($sumPurposeUnit as $key=>$value)
+                            <td class="text-center">{{$value}}</td>
+                          @endforeach
+                          <td class="text-center">{{$sumNumber}}</td>
+                          <td class="text-center">{{$sumNews}}</td>
+                          <td class="text-center">{{$sumPageNews}}</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td class="text-center"><strong>Tổng cộng</strong></td>
+                          <td class="text-center" colspan="{{$categories->count()}}">{{array_sum($sumPurposeUnit)}}</td>
+                          <td class="text-center">{{$sumNumber}}</td>
+                          <td class="text-center">{{$sumNews}}</td>
+                          <td class="text-center">{{$sumPageNews}}</td>
+                          <td></td>
+                        </tr>
+                      @endif
                     </table>
                   </div><!-- /.box-body -->
               <!-- </div>/.box -->
             </div><!-- /.col-md-6 -->
-            <div class="col-md-12">
-              <!-- <div class="box"> -->
-                  <div class="box-header">
-                    <h3 class="box-title"><strong>Yêu cầu cung cấp dữ liệu</strong></h3>
-                  </div><!-- /.box-header -->
-                  <div class="box-body">
-                    <table class="table table-bordered ">
-                      <tr class="success" >
-                        <th class="text-center" rowspan="2">STT</th>
-                        <th class="text-center" rowspan="2">Đơn vị</th>
-                        <th class="text-center" colspan="4">Yêu cầu của lực lượng An ninh, Tình báo</th>
-                        <th class="text-center" colspan="2">XMCTB</th>
-                        <th class="text-center" colspan="2">IMEI</th>
-                        <th class="text-center" colspan="2">Lấy list</th>
-                        {{-- <th class="text-center" rowspan="2">Số trang list</th> --}}
-                      </tr>
-                      <tr class="success">
-                        <th class="text-center">CA</th>
-                        <th class="text-center">LQANQG</th>
-                        <th class="text-center">QLNV</th>
-                        <th class="text-center">KTNV</th>
-                        <th class="text-center">Số y/c</th>
-                        <th class="text-center">Số trang</th>
-                        <th class="text-center">Số y/c</th>
-                        <th class="text-center">Số trang</th>
-                        <th class="text-center">Số y/c</th>
-                        <th class="text-center">Số trang</th>
-                      </tr>
-                    </table>
-                  </div><!-- /.box-body -->
-              <!-- </div>/.box -->
-            </div><!-- /.col-md-6 -->
+               <div class="col-md-12">
+     <!-- <div class="box"> -->
+         <div class="box-header">
+           <h3 class="box-title"><strong>Yêu cầu cung cấp dữ liệu</strong></h3>
+         </div><!-- /.box-header -->
+         <div class="box-body">
+           <table class="table table-bordered ">
+             <tr class="success" >
+               <th class="text-center" rowspan="2">STT</th>
+               <th class="text-center" rowspan="2">Đơn vị</th>
+               <th class="text-center" colspan="{{$categories->count()}}">Yêu cầu của lực lượng An ninh, Tình báo</th>
+               <th class="text-center" colspan="2">XMCTB</th>
+               <th class="text-center" colspan="2">IMEI</th>
+               <th class="text-center" colspan="2">Lấy list</th>
+               {{-- <th class="text-center" rowspan="2">Số trang list</th> --}}
+             </tr>
+             <tr class="success">
+               <?php
+                 foreach($categories  as $index => $category) {
+                   echo '<th class="text-center">' . $category->symbol . '</th>';  
+                   $sumPurposeUnit[$category->symbol] = 0;   
+                 }
+               ?>
+               <th class="text-center">Thuê bao</th>
+               <th class="text-center">Kết quả</th>
+               <th class="text-center">Thuê bao</th>
+               <th class="text-center">Kết quả</th>
+               <th class="text-center">Thuê bao</th>
+               <th class="text-center">Trang list</th>
+             </tr>
+             <?php 
+               $sumPurposeUnit[$category->symbol] = 0;   
+               $sumNumber = 0;
+               $sumNews = 0;
+               $sumPageNews = 0;
+               $sumtotal = 0;
+
+               foreach($result['detailOther']['security'] as $index=>$unit) {
+                 echo '<tr>' .
+                   '<td class="text-center">' . ++$index . '</td>' .
+                   '<td class="text-center">' . $unit->unit .'</td>';
+                  foreach($unit->categories as $key=>$category) {
+
+                   echo '<td class="text-center">' . $category. '</td>';
+                   $sumPurposeUnit[$key] += $category;
+                  }
+                  $sumNumber += $unit->number;
+                  echo  '<td class="text-center">'. $unit->number .'</td>' .
+                  foreach ($unit->news as $key => $value) {
+                     $sumNews += $key;
+                     $sumPageNews += $value;
+                     echo '<td class="text-center">'. $key .'</td>' .
+                          '<td class="text-center">'. $value  .'</td>';
+                   }
+                  echo ' </tr>';
+               }
+             ?>  
+           </table>
+         </div><!-- /.box-body -->
+     <!-- </div>/.box -->
+   </div><!-- /.col-md-6 -->
           </fieldset>
           </form>
         @else

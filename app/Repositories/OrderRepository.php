@@ -173,19 +173,20 @@ class OrderRepository extends AbstractRepository
         else {
             $detailNews = $query->select(
                                 'units.symbol as unit',
-                                DB::raw('coalesce(sum(ships.page_list),0) as pageList'),
+                                DB::raw('count(phones.id) as number'),
                                 DB::raw('coalesce(sum(ships.page_xmctb),0) as pageXmctb'),
-                                DB::raw('coalesce(sum(ships.page_imei),0) as pageImei')
+                                DB::raw('coalesce(sum(ships.page_imei),0) as pageImei'),
+                                DB::raw('coalesce(sum(ships.page_list),0) as pageList')
                             )
                           ->where('date_submit', '>=', $startDate)
                           ->where('date_submit', '<=', $endDate)
                           ->whereNull('ships.deleted_at')  
                           ->groupBy('units.symbol')
+                          ->groupBy('purposes.group')
                           ->get();
         }
-        if (count($detailPurpose) > 0) {
-            $units = $this->formatDetail($detailPurpose, $detailNews);
-        }
+        // var_dump($detailNews);
+        $units = $this->formatDetail($detailPurpose, $detailNews);
         
         return $units;
 
@@ -352,54 +353,112 @@ class OrderRepository extends AbstractRepository
         return $purposes;
     }
     // return array
-    public function createFormatUnit($obj)
+    public function formatUnitForPurpose($obj)
     {
-        $categories = Category::all();
-        $c = [];
-        $unit = new \stdClass;
-        $unit->unit = $obj->unit;
+        $unit = $this->createObject();
         $unit->number = $obj->number;
-        foreach ($categories as $key => $category) {
-            $c[$category->symbol] = 0;
-            if ($category->symbol == $obj->category) {
-                $c[$category->symbol] = $obj->total;
+        foreach ($unit->categories as $key => $value) {
+            if ($key == $obj->category) {
+                $unit->categories[$key] = $obj->total;
             }
         }
         $unit->categories = $c;
         return $unit;
     }
+
+    public function formatUnitForNews($unit, $obj)
+    {
+        
+        // for news
+        if (isset($obj->numberNews)) {
+            $unit->news[0] = $obj->numberNews;
+            $unit->news[1] = $obj->pageNews;
+        }
+        // for xmctb
+        if (isset($obj->pageXmctb)) {
+            $unit->xmctb[0] = $obj->number;
+            $unit->xmctb[1] = $obj->pageXmctb;
+        }
+        // for imei
+        if (isset($obj->pageImei)) {
+            $unit->imei[0] = $obj->number;
+            $unit->imei[1] = $obj->pageImei;
+        }
+        // for list
+        if (isset($obj->pageList)) {
+            $unit->list[0] = $obj->number;
+            $unit->list[1] = $obj->pageList;
+        }
+        
+        return $unit;
+    }
+
+    public function createObject() {
+
+        $unit = new \stdClass;
+        $categories = Category::all()->sortBy('symbol');
+        $unit->unit = "";
+        $unit->number = 0;
+        $c = [];
+        foreach ($categories as $key => $category) {
+            $c[$category->symbol] = 0; 
+        }
+        $unit->categories = $c;
+        $unit->news = [];
+        $unit->xmctb = [];
+        $unit->imei = [];
+        $unit->list = [];
+
+        return $unit;
+    }
     public function formatDetail($detailPurpose, $detailNews) 
     {
         $results = [];
-        array_push($results, $this->createFormatUnit(array_shift($detailPurpose)));
-        // var_dump($results);
-        foreach ($results as $unit) {
+        if (count($detailPurpose) > 0) {
+           
+            array_push($results, $this->formatUnitForPurpose($categories, array_shift($detailPurpose)));
+            foreach ($results as $unit) {
+                foreach ($detailPurpose as $obj) {
 
-            foreach ($detailPurpose as $obj) {
-
-                if ($unit->unit == $obj->unit) {
-                    $unit->number += $obj->number;
-                    foreach ($unit->categories as $key => $category) {
-                        if ($key == $obj->category) {
-                            $unit->categories[$key] += $obj->total;
+                    if ($unit->unit == $obj->unit) {
+                        $unit->number += $obj->number;
+                        foreach ($unit->categories as $key => $category) {
+                            if ($key == $obj->category) {
+                                $unit->categories[$key] = $obj->total;
+                            }
                         }
-                    }
 
-                }
-                else {
-                    array_push($results, $this->createFormatUnit($obj));
-                }
-            }
-            foreach ($detailNews as $o) {
-                if ($unit->unit == $o->unit) {
-                    next($o);
-                    while($arr = each($o)) {
-                        $symbol = $arr[0];
-                        $unit->$symbol = $arr[1];
+                    }
+                    else {
+                        array_push($results, $this->formatUnitForPurpose($categories, $obj));
                     }
                 }
+                
             }
         }
+        if(count($detailNews) > 0) {
+
+            if(count($results) == 0) {
+                $unit = $this->createObject();
+                $o = array_shift($detailNews);
+                $unit->unit = $o->unit;
+                array_push($results, $this->formatUnitForNews($unit, $o));    
+            }
+            
+            foreach ($results as $unit) {
+                foreach ($detailNews as $o) {
+                    if ($unit->unit == $o->unit) {
+                        $this->formatUnitForNews($unit, $o);
+                    }
+                    else {
+                        $unit = $this->createObject();
+                        $unit->unit = $o->unit;
+                        array_push($results, $this->formatUnitForNews($unit, $o));
+                    }
+                }   
+            }
+        }
+        
         
         return $results;
     }
