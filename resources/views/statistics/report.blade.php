@@ -91,13 +91,13 @@
                           }
                           $sumNumber += $unit->number;
                           echo  '<td class="text-center">'. $unit->number .'</td>';
-                          foreach ($unit->news as $key => $value) {
-                              $sumNews += $key;
-                              $sumPageNews += $value;
-                              echo '<td class="text-center">'. $key .'</td>' .
-                                   '<td class="text-center">'. $value  .'</td>';
-                            }
-                           echo ' </tr>';
+                          if (count($unit->news) > 0) {
+                            $sumNews += $unit->news[0];
+                            $sumPageNews += $unit->news[1];
+                            echo '<td class="text-center">'. $unit->news[0] .'</td>' .
+                                 '<td class="text-center">'. $unit->news[1]  .'</td>';
+                          }
+                          echo '<td></td></tr>';
                         }
                       ?>  
                       <tr>
@@ -155,13 +155,13 @@
                             }
                             $sumNumber += $unit->number;
                             echo  '<td class="text-center">'. $unit->number .'</td>';
-                            foreach ($unit->news as $key => $value) {
-                              $sumNews += $key;
-                              $sumPageNews += $value;
-                              echo '<td class="text-center">'. $key .'</td>' .
-                                   '<td class="text-center">'. $value  .'</td>';
+                            if (count($unit->news) > 0) {
+                              $sumNews += $unit->news[0];
+                              $sumPageNews += $unit->news[1];
+                              echo '<td class="text-center">'. $unit->news[0] .'</td>' .
+                                   '<td class="text-center">'. $unit->news[1]  .'</td>';
                             }
-                           echo ' </tr>';
+                            echo ' </tr>';
                           }
                         ?>  
                         <tr>
@@ -234,10 +234,37 @@
                     echo '<td class="text-center">' . $category. '</td>';
                     $sumPurposeUnit[$key] += $category;
                   }
-                  $sumNews += $unit->xmctb[0];
-                  $sumPageNews += $unit->xmctb[1];
-                  echo '<td class="text-center">'. $unit->xmctb[0] .'</td>';
-                  echo '<td class="text-center">'. $unit->xmctb[1]  .'</td>';
+                  if (count($unit->xmctb) > 0) {
+                    $sumNews += $unit->xmctb[0];
+                    $sumPageNews += $unit->xmctb[1];
+                    echo '<td class="text-center">'. $unit->xmctb[0] .'</td>';
+                    echo '<td class="text-center">'. $unit->xmctb[1]  .'</td>';
+                  }
+                  else {
+                    echo '<td></td><td></td>';
+                  }
+
+                  if (count($unit->imei) > 0) {
+                    $sumNews += $unit->imei[0];
+                    $sumPageNews += $unit->imei[1];
+                    echo '<td class="text-center">'. $unit->imei[0] .'</td>';
+                    echo '<td class="text-center">'. $unit->imei[1]  .'</td>';
+                  }
+                  else {
+                    echo '<td></td><td></td>';
+                  }
+
+                  if (count($unit->list) > 0) {
+                    $sumNews += $unit->list[0];
+                    $sumPageNews += $unit->list[1];
+                    echo '<td class="text-center">'. $unit->list[0] .'</td>';
+                    echo '<td class="text-center">'. $unit->list[1]  .'</td>';
+                  }
+                  else {
+                    echo '<td></td><td></td>';
+                  }
+                  
+                  
                   echo '</tr>';
                }
              ?>  

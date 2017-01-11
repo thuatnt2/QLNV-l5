@@ -185,8 +185,8 @@ class OrderRepository extends AbstractRepository
                           ->groupBy('purposes.group')
                           ->get();
         }
-        // var_dump($detailNews);
-        $units = $this->formatDetail($detailPurpose, $detailNews);
+        $data = array_merge($detailPurpose, $detailNews);
+        $units = $this->formatDetail($data);
         // var_dump($units);
         return $units;
 
@@ -352,23 +352,31 @@ class OrderRepository extends AbstractRepository
         }
         return $purposes;
     }
-    // return array
-    public function formatUnitForPurpose($obj)
-    {
+    public function formatDetailUnit($obj) {
+
         $unit = $this->createObject();
-        $unit->number = $obj->number;
-        foreach ($unit->categories as $key => $value) {
-            if ($key == $obj->category) {
-                $unit->categories[$key] = $obj->total;
+        $unit->unit = $obj->unit;
+        $this->formatUnitForPurpose($unit, $obj);
+        $this->formatUnitForNews($unit, $obj);
+
+        return $unit;
+    }
+    // return array
+    public function formatUnitForPurpose($unit, $obj)
+    {
+        if (isset($obj->category)) {
+            $unit->number += $obj->number;
+            foreach ($unit->categories as $key => $value) {
+                if ($key == $obj->category) {
+                    $unit->categories[$key] = $obj->total;
+                }
             }
         }
-        $unit->categories = $c;
         return $unit;
     }
 
     public function formatUnitForNews($unit, $obj)
     {
-        
         // for news
         if (isset($obj->numberNews)) {
             $unit->news[0] = $obj->numberNews;
@@ -411,54 +419,26 @@ class OrderRepository extends AbstractRepository
 
         return $unit;
     }
-    public function formatDetail($detailPurpose, $detailNews) 
+    public function formatDetail($data) 
     {
         $results = [];
-        if (count($detailPurpose) > 0) {
+        if (count($data) > 0) {
            
-            array_push($results, $this->formatUnitForPurpose($categories, array_shift($detailPurpose)));
+            array_push($results, $this->formatDetailUnit(array_shift($data)));
             foreach ($results as $unit) {
-                foreach ($detailPurpose as $obj) {
+                foreach ($data as $obj) {
 
                     if ($unit->unit == $obj->unit) {
-                        $unit->number += $obj->number;
-                        foreach ($unit->categories as $key => $category) {
-                            if ($key == $obj->category) {
-                                $unit->categories[$key] = $obj->total;
-                            }
-                        }
-
+                        $this->formatUnitForPurpose($unit, $obj);
+                        $this->formatUnitForNews($unit, $obj);
                     }
                     else {
-                        array_push($results, $this->formatUnitForPurpose($categories, $obj));
+                        array_push($results, $this->formatDetailUnit($obj));
                     }
                 }
                 
             }
         }
-        if(count($detailNews) > 0) {
-
-            if(count($results) == 0) {
-                $unit = $this->createObject();
-                $o = array_shift($detailNews);
-                $unit->unit = $o->unit;
-                array_push($results, $this->formatUnitForNews($unit, $o));    
-            }
-            
-            foreach ($results as $unit) {
-                foreach ($detailNews as $o) {
-                    if ($unit->unit == $o->unit) {
-                        $this->formatUnitForNews($unit, $o);
-                    }
-                    else {
-                        $unit = $this->createObject();
-                        $unit->unit = $o->unit;
-                        array_push($results, $this->formatUnitForNews($unit, $o));
-                    }
-                }   
-            }
-        }
-        
         
         return $results;
     }
