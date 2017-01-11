@@ -26,7 +26,7 @@
         <hr>
 		{!! Former::setOption('TwitterBootstrap3.labelWidths', ['large' => 4, 'small' => 4]) !!}
         {!! Former::open_for_files(url('ship/xmctb'))->id('form-create') !!}
-        <div class="col-sm-4">
+        <div class="col-sm-5">
             {!! Former::text('created_at', 'Ngày giao')
                 ->required()
                 ->addClass('input-sm daterange')
@@ -34,7 +34,7 @@
             <div class="form-group <?php if($errors->has('phone')) echo 'has-error'?>">
                 <label for="phone" class="control-label col-lg-4 col-sm-4">Số Cv - Thuê bao<sup>*</sup></label>
                 <div class="col-lg-8 col-sm-8">
-                    <select class="form-control input-sm" id="phone" name="phone" placeholder="Chọn thuê bao đã đăng ký">
+                    <select class="form-control input-sm" id="phone" name="phone" placeholder="Chọn thuê bao đã đăng ký" multiple="">
                         @foreach($orders as $order)
                         <optgroup label="{{$order->number_cv . '/' . $order->unit->symbol}}">
                             @foreach ($order->phones as $index => $phone)
@@ -51,8 +51,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
-            {!! Former::text('page_xmctb', 'Số trang XMCTB')->required()->addClass('input-sm'); !!}
+        <div class="col-sm-6">
             <div class="form-group required <?php if($errors->has('file')) echo 'has-error'?>">
                 <label for="file" class="control-label col-lg-4 col-sm-4">File đính kèm<sup>*</sup></label>
                 <div class="col-lg-8 col-sm-8" id="uploadFile">
@@ -63,11 +62,12 @@
                     </span>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-4">
             {!! Former::text('receive_name', 'Người nhận')->addClass('input-sm'); !!}
             {!! Former::select('user_name')->label('Người giao')->options($users)->addClass('input-sm') !!}
         </div>
+{{--         <div class="col-sm-4">
+            
+        </div> --}}
         <div class="form-group">
             <div class="col-lg-offset-5 col-sm-offset-5 col-lg-8 col-sm-8">
                <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-plus">&nbsp</i>Thêm</button>
