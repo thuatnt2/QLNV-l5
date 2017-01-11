@@ -85,8 +85,12 @@
                             '<td class="text-center">' . ++$index . '</td>' .
                             '<td class="text-center">' . $unit->unit .'</td>';
                           foreach($unit->categories as $key=>$category) {
-
-                            echo '<td class="text-center">' . $category. '</td>';
+                            if ($category > 0 ) {
+                              echo '<td class="text-center">' . $category. '</td>';
+                            }
+                            else {
+                              echo '<td></td';
+                            }
                             $sumPurposeUnit[$key] += $category;
                           }
                           $sumNumber += $unit->number;
@@ -149,8 +153,12 @@
                               '<td class="text-center">' . ++$index . '</td>' .
                               '<td class="text-center">' . $unit->unit .'</td>';
                             foreach($unit->categories as $key=>$category) {
-
-                              echo '<td class="text-center">' . $category. '</td>';
+                              if ($category > 0 ) {
+                                echo '<td class="text-center">' . $category. '</td>';
+                              }
+                              else {
+                                echo '<td></td';
+                              }
                               $sumPurposeUnit[$key] += $category;
                             }
                             $sumNumber += $unit->number;
@@ -219,24 +227,28 @@
                <th class="text-center">Thuê bao</th>
                <th class="text-center">Trang list</th>
              </tr>
-             <?php 
+              <?php 
                $sumPurposeUnit[$category->symbol] = 0;   
-               $sumNumber = 0;
-               $sumNews = 0;
-               $sumPageNews = 0;
-               $sumtotal = 0;
+               $sumXmctb = [0, 0];
+               $sumImei = [0, 0];
+               $sumList = [0, 0];
 
                foreach($result['detailOther']['security'] as $index=>$unit) {
                   echo '<tr>' .
                     '<td class="text-center">' . ++$index . '</td>' .
                     '<td class="text-center">' . $unit->unit .'</td>';
                   foreach($unit->categories as $key=>$category) {
-                    echo '<td class="text-center">' . $category. '</td>';
+                    if ($category > 0) {
+                      echo '<td class="text-center">' . $category. '</td>';
+                    }
+                    else {
+                      echo '<td></td>';
+                    }
                     $sumPurposeUnit[$key] += $category;
                   }
                   if (count($unit->xmctb) > 0) {
-                    $sumNews += $unit->xmctb[0];
-                    $sumPageNews += $unit->xmctb[1];
+                    $sumXmctb[0] += $unit->xmctb[0];
+                    $sumXmctb[1] += $unit->xmctb[1];
                     echo '<td class="text-center">'. $unit->xmctb[0] .'</td>';
                     echo '<td class="text-center">'. $unit->xmctb[1]  .'</td>';
                   }
@@ -245,8 +257,8 @@
                   }
 
                   if (count($unit->imei) > 0) {
-                    $sumNews += $unit->imei[0];
-                    $sumPageNews += $unit->imei[1];
+                    $sumImei[0] += $unit->imei[0];
+                    $sumImei[1] += $unit->imei[1];
                     echo '<td class="text-center">'. $unit->imei[0] .'</td>';
                     echo '<td class="text-center">'. $unit->imei[1]  .'</td>';
                   }
@@ -255,19 +267,133 @@
                   }
 
                   if (count($unit->list) > 0) {
-                    $sumNews += $unit->list[0];
-                    $sumPageNews += $unit->list[1];
+                    $sumList[0] += $unit->list[0];
+                    $sumList[1] += $unit->list[1];
                     echo '<td class="text-center">'. $unit->list[0] .'</td>';
                     echo '<td class="text-center">'. $unit->list[1]  .'</td>';
                   }
                   else {
                     echo '<td></td><td></td>';
                   }
-                  
-                  
                   echo '</tr>';
                }
-             ?>  
+              ?>  
+              <tr>
+                <td></td>
+                <td class="text-center"><strong>Cộng</strong></td>
+                @foreach($sumPurposeUnit as $key=>$value)
+                  <td class="text-center">{{$value > 0 ? $value:""}}</td>
+                @endforeach
+                <td class="text-center">{{$sumXmctb[0] > 0 ? $sumXmctb[0]:""}}</td>
+                <td class="text-center">{{$sumXmctb[1] > 0 ? $sumXmctb[1]:""}}</td>
+                <td class="text-center">{{$sumImei[0] > 0 ? $sumImei[0]:""}}</td>
+                <td class="text-center">{{$sumImei[1] > 0 ? $sumImei[1]:""}}</td>
+                <td class="text-center">{{$sumList[0] > 0 ? $sumList[0]:""}}</td>
+                <td class="text-center">{{$sumList[1] > 0 ? $sumList[1]:""}}</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td class="text-center"><strong>Tổng cộng</strong></td>
+                <td class="text-center" colspan="{{$categories->count()}}">{{array_sum($sumPurposeUnit)}}</td>
+                <td class="text-center">{{$sumXmctb[0] > 0 ? $sumXmctb[0]:""}}</td>
+                <td class="text-center">{{$sumXmctb[1] > 0 ? $sumXmctb[1]:""}}</td>
+                <td class="text-center">{{$sumImei[0] > 0 ? $sumImei[0]:""}}</td>
+                <td class="text-center">{{$sumImei[1] > 0 ? $sumImei[1]:""}}</td>
+                <td class="text-center">{{$sumList[0] > 0 ? $sumList[0]:""}}</td>
+                <td class="text-center">{{$sumList[1] > 0 ? $sumList[1]:""}}</td>
+              </tr>
+              {{-- Yêu cầu giám sát của lực lượng cảnh sát --}}
+              @if(isset($result['detailOther']['police']) && !empty($result['detailOther']['police']))
+                <tr class="success">
+                  <th rowspan="2"`></th>
+                  <th rowspan="2"></th>
+                  <th class="text-center" colspan="{{$categories->count()}}">Yêu cầu của lực lượng Cảnh sát</th>
+                  @for($i = 0 ; $i < 6 ; $i++)
+                    <th rowspan="2"></th>
+                  @endfor
+                </tr>
+                <tr class="success">
+                  <?php
+                    foreach($categories  as $index => $category) {
+                      echo '<th class="text-center">' . $category->symbol . '</th>';  
+                      $sumPurposeUnit[$category->symbol] = 0;   
+                      $sumXmctb = [0, 0];
+                      $sumImei = [0, 0];
+                      $sumList = [0, 0];
+                    }
+                  ?>
+                </tr>
+                <?php 
+                  foreach($result['detailOther']['police'] as $index=>$unit) {
+                    echo '<tr>' .
+                      '<td class="text-center">' . ++$index . '</td>' .
+                      '<td class="text-center">' . $unit->unit .'</td>';
+                    foreach($unit->categories as $key=>$category) {
+                      if ($category > 0 ) {
+                        echo '<td class="text-center">' . $category. '</td>';
+                      }
+                      else {
+                        echo '<td></td>';
+                      }
+                      $sumPurposeUnit[$key] += $category;
+                    }
+                    if (count($unit->xmctb) > 0) {
+                      $sumXmctb[0] += $unit->xmctb[0];
+                      $sumXmctb[1] += $unit->xmctb[1];
+                      echo '<td class="text-center">'. $unit->xmctb[0] .'</td>';
+                      echo '<td class="text-center">'. $unit->xmctb[1]  .'</td>';
+                    }
+                    else {
+                      echo '<td></td><td></td>';
+                    }
+
+                    if (count($unit->imei) > 0) {
+                      $sumImei[0] += $unit->imei[0];
+                      $sumImei[1] += $unit->imei[1];
+                      echo '<td class="text-center">'. $unit->imei[0] .'</td>';
+                      echo '<td class="text-center">'. $unit->imei[1]  .'</td>';
+                    }
+                    else {
+                      echo '<td></td><td></td>';
+                    }
+
+                    if (count($unit->list) > 0) {
+                      $sumList[0] += $unit->list[0];
+                      $sumList[1] += $unit->list[1];
+                      echo '<td class="text-center">'. $unit->list[0] .'</td>';
+                      echo '<td class="text-center">'. $unit->list[1]  .'</td>';
+                    }
+                    else {
+                      echo '<td></td><td></td>';
+                    }
+                    echo ' </tr>';
+                  }
+                ?> 
+                <tr>
+                  <td></td>
+                  <td class="text-center"><strong>Cộng</strong></td>
+                  @foreach($sumPurposeUnit as $key=>$value)
+                    <td class="text-center">{{$value}}</td>
+                  @endforeach
+                  <td class="text-center">{{$sumXmctb[0] > 0 ? $sumXmctb[0]:""}}</td>
+                  <td class="text-center">{{$sumXmctb[1] > 0 ? $sumXmctb[1]:""}}</td>
+                  <td class="text-center">{{$sumImei[0] > 0 ? $sumImei[0]:""}}</td>
+                  <td class="text-center">{{$sumImei[1] > 0 ? $sumImei[1]:""}}</td>
+                  <td class="text-center">{{$sumList[0] > 0 ? $sumList[0]:""}}</td>
+                  <td class="text-center">{{$sumList[1] > 0 ? $sumList[1]:""}}</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td class="text-center"><strong>Tổng cộng</strong></td>
+                  <td class="text-center" colspan="{{$categories->count()}}">{{array_sum($sumPurposeUnit)}}</td>
+                  <td class="text-center">{{$sumXmctb[0] > 0 ? $sumXmctb[0]:""}}</td>
+                  <td class="text-center">{{$sumXmctb[1] > 0 ? $sumXmctb[1]:""}}</td>
+                  <td class="text-center">{{$sumImei[0] > 0 ? $sumImei[0]:""}}</td>
+                  <td class="text-center">{{$sumImei[1] > 0 ? $sumImei[1]:""}}</td>
+                  <td class="text-center">{{$sumList[0] > 0 ? $sumList[0]:""}}</td>
+                  <td class="text-center">{{$sumList[1] > 0 ? $sumList[1]:""}}</td>
+                </tr>
+              @endif
            </table>
          </div><!-- /.box-body -->
      <!-- </div>/.box -->
