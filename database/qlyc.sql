@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.10, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.16, for Linux (x86_64)
 --
 -- Host: localhost    Database: homestead
 -- ------------------------------------------------------
--- Server version	5.7.10
+-- Server version	5.7.16-0ubuntu0.16.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -39,7 +39,7 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
-INSERT INTO `categories` VALUES (1,'ANQG','An ninh quốc gia','2016-09-19 07:04:27','2016-09-19 07:04:27',NULL),(2,'HN','Hiềm nghi','2016-09-19 07:04:27','2016-09-19 07:04:27',NULL),(3,'ST','Sưu tra','2016-09-19 07:04:27','2016-09-19 07:04:27',NULL);
+INSERT INTO `categories` VALUES (1,'ANQG','An ninh quốc gia','2017-01-10 10:12:32','2017-01-10 10:12:32',NULL),(2,'HN','Hiềm nghi','2017-01-10 10:12:32','2017-01-10 10:12:32',NULL),(3,'ST','Sưu tra','2017-01-10 10:12:32','2017-01-10 10:12:32',NULL);
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -99,7 +99,7 @@ CREATE TABLE `kinds` (
 
 LOCK TABLES `kinds` WRITE;
 /*!40000 ALTER TABLE `kinds` DISABLE KEYS */;
-INSERT INTO `kinds` VALUES (1,'HS','Hình sự','2016-09-19 07:04:27','2016-09-19 07:04:27',NULL),(2,'MT','Ma túy','2016-09-19 07:04:27','2016-09-19 07:04:27',NULL),(3,'PĐ','Phản động','2016-09-19 07:04:27','2016-09-19 07:04:27',NULL);
+INSERT INTO `kinds` VALUES (1,'HS','Hình sự','2017-01-10 10:12:32','2017-01-10 10:12:32',NULL),(2,'MT','Ma túy','2017-01-10 10:12:32','2017-01-10 10:12:32',NULL),(3,'PĐ','Phản động','2017-01-10 10:12:32','2017-01-10 10:12:32',NULL);
 /*!40000 ALTER TABLE `kinds` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -116,7 +116,7 @@ CREATE TABLE `lists` (
   `user_id` int(10) unsigned NOT NULL,
   `receive_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `page_number` int(11) NOT NULL,
-  `date_submit` timestamp NOT NULL,
+  `date_submit` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -212,7 +212,7 @@ CREATE TABLE `networks` (
 
 LOCK TABLES `networks` WRITE;
 /*!40000 ALTER TABLE `networks` DISABLE KEYS */;
-INSERT INTO `networks` VALUES (1,'viettel','2016-09-19 07:04:27','2016-09-19 07:04:27'),(2,'vinaphone','2016-09-19 07:04:27','2016-09-19 07:04:27'),(3,'mobifone','2016-09-19 07:04:27','2016-09-19 07:04:27');
+INSERT INTO `networks` VALUES (1,'viettel','2017-01-10 10:12:32','2017-01-10 10:12:32'),(2,'vinaphone','2017-01-10 10:12:32','2017-01-10 10:12:32'),(3,'mobifone','2017-01-10 10:12:32','2017-01-10 10:12:32');
 /*!40000 ALTER TABLE `networks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -232,7 +232,7 @@ CREATE TABLE `news` (
   `file_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `page_number` int(11) NOT NULL,
   `number_news` int(11) NOT NULL,
-  `date_submit` timestamp NOT NULL,
+  `date_submit` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -311,6 +311,7 @@ CREATE TABLE `orders` (
   `date_order` date NOT NULL,
   `date_begin` date DEFAULT NULL,
   `date_end` date DEFAULT NULL,
+  `date_cut` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -325,7 +326,7 @@ CREATE TABLE `orders` (
   CONSTRAINT `orders_purpose_id_foreign` FOREIGN KEY (`purpose_id`) REFERENCES `purposes` (`id`),
   CONSTRAINT `orders_unit_id_foreign` FOREIGN KEY (`unit_id`) REFERENCES `units` (`id`),
   CONSTRAINT `orders_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -334,6 +335,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (1,1,NULL,NULL,1,2,123,321,'â','','','','','a','',NULL,'2017-01-10',NULL,NULL,NULL,'2017-01-10 10:25:51','2017-01-10 10:25:51',NULL),(2,1,3,1,4,4,123,321,'adsfsd','','','','','adsfsd','',NULL,'2017-01-11','2017-01-11','2017-01-18',NULL,'2017-01-11 06:44:37','2017-01-11 06:44:37',NULL),(3,1,3,1,1,4,126,431,'ghjghjghjgh','','','','','ghjghjghjgh','',NULL,'2017-01-11','2017-01-11','2017-02-11',NULL,'2017-01-11 08:38:13','2017-01-11 08:38:13',NULL),(4,1,2,2,3,4,766,322,'bbbbbbbbb','','','','','bbbbbbbbb','',NULL,'2017-01-11','2017-01-11','2017-01-18',NULL,'2017-01-11 08:43:09','2017-01-11 08:43:09',NULL);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -347,7 +349,7 @@ DROP TABLE IF EXISTS `password_resets`;
 CREATE TABLE `password_resets` (
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   KEY `password_resets_email_index` (`email`),
   KEY `password_resets_token_index` (`token`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -380,7 +382,7 @@ CREATE TABLE `phones` (
   PRIMARY KEY (`id`),
   KEY `phones_order_id_foreign` (`order_id`),
   CONSTRAINT `phones_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -389,6 +391,7 @@ CREATE TABLE `phones` (
 
 LOCK TABLES `phones` WRITE;
 /*!40000 ALTER TABLE `phones` DISABLE KEYS */;
+INSERT INTO `phones` VALUES (1,1,'32345345345','success','2017-01-10 10:25:51','2017-01-10 10:26:06',NULL),(2,2,'21312342423','success','2017-01-11 06:44:37','2017-01-11 06:45:17',NULL),(3,3,'0918383357','warning','2017-01-11 08:38:13','2017-01-11 08:38:13',NULL),(4,3,'0949654358','warning','2017-01-11 08:38:13','2017-01-11 08:38:13',NULL),(5,4,'01689955354','warning','2017-01-11 08:43:09','2017-01-11 08:43:09',NULL),(6,4,'0946738568','warning','2017-01-11 08:43:09','2017-01-11 08:43:09',NULL);
 /*!40000 ALTER TABLE `phones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -417,7 +420,7 @@ CREATE TABLE `purposes` (
 
 LOCK TABLES `purposes` WRITE;
 /*!40000 ALTER TABLE `purposes` DISABLE KEYS */;
-INSERT INTO `purposes` VALUES (1,'list','','list','2016-09-19 07:04:27','2016-09-19 07:04:27',NULL),(2,'xmctb','','xmctb','2016-09-19 07:04:27','2016-09-19 07:04:27',NULL),(3,'imei','','imei','2016-09-19 07:04:27','2016-09-19 07:04:27',NULL),(4,'giám sát','','monitor','2016-09-19 07:04:27','2016-09-19 07:04:27',NULL);
+INSERT INTO `purposes` VALUES (1,'list','','list','2017-01-10 10:12:32','2017-01-10 10:12:32',NULL),(2,'xmctb','','xmctb','2017-01-10 10:12:32','2017-01-10 10:12:32',NULL),(3,'imei','','imei','2017-01-10 10:12:32','2017-01-10 10:12:32',NULL),(4,'giám sát','','monitor','2017-01-10 10:12:32','2017-01-10 10:12:32',NULL);
 /*!40000 ALTER TABLE `purposes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -449,7 +452,7 @@ CREATE TABLE `ships` (
   KEY `ships_user_id_foreign` (`user_id`),
   CONSTRAINT `ships_phone_id_foreign` FOREIGN KEY (`phone_id`) REFERENCES `phones` (`id`),
   CONSTRAINT `ships_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -458,6 +461,7 @@ CREATE TABLE `ships` (
 
 LOCK TABLES `ships` WRITE;
 /*!40000 ALTER TABLE `ships` DISABLE KEYS */;
+INSERT INTO `ships` VALUES (1,1,1,NULL,NULL,NULL,NULL,1,NULL,'','','2017-01-10','2017-01-10 10:26:06','2017-01-10 10:26:06',NULL),(2,2,1,33,1,2,NULL,NULL,NULL,'','','2017-01-11','2017-01-11 06:45:46','2017-01-11 06:45:46',NULL);
 /*!40000 ALTER TABLE `ships` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -506,7 +510,7 @@ CREATE TABLE `units` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -515,7 +519,7 @@ CREATE TABLE `units` (
 
 LOCK TABLES `units` WRITE;
 /*!40000 ALTER TABLE `units` DISABLE KEYS */;
-INSERT INTO `units` VALUES (1,'PA88','An ninh chính trị tư tưởng','AN','2016-09-19 07:04:27','2016-09-19 07:04:27',NULL),(2,'PA92','xxxxxxxxx','AN','2016-09-19 07:04:27','2016-09-19 07:04:27',NULL),(3,'PC45','Phòng chống mà túy','CS','2016-09-19 07:04:27','2016-09-19 07:04:27',NULL);
+INSERT INTO `units` VALUES (1,'PA88','An ninh chính trị tư tưởng','AN','2017-01-10 10:12:32','2017-01-10 10:12:32',NULL),(2,'PA92','xxxxxxxxx','AN','2017-01-10 10:12:32','2017-01-10 10:12:32',NULL),(3,'PC45','Phòng chống mà túy','CS','2017-01-10 10:12:32','2017-01-10 10:12:32',NULL),(4,'CAĐH','Công an Đồng Hới - Đội An ninh','AN','2017-01-11 06:43:09','2017-01-11 06:43:09',NULL),(5,'CAĐH','Công an Đồng Hới - Đội cảnh sát','CS','2017-01-11 06:43:16','2017-01-11 06:43:16',NULL);
 /*!40000 ALTER TABLE `units` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -546,7 +550,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'admin','admin','$2y$10$mwcuwfs4x9vseW.A7NT8W.VGmEkD3tIFkSDSckP5kU3b0ma64jQky','admin',NULL,'2016-09-19 07:04:27','2016-09-19 07:04:27');
+INSERT INTO `users` VALUES (1,'admin','admin','$2y$10$iR2dl3pa8hSp9FhMlNA0/uLTJy.3Cppv4dV08LCVk1Y5wpAfNtiaC','admin',NULL,'2017-01-10 10:12:32','2017-01-10 10:12:32');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -559,4 +563,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-19  7:05:22
+-- Dump completed on 2017-01-11  9:35:02
