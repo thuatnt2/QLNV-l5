@@ -26,7 +26,7 @@
         <hr>
 		{!! Former::setOption('TwitterBootstrap3.labelWidths', ['large' => 4, 'small' => 4]) !!}
         {!! Former::open_for_files(url('ship/xmctb'))->id('form-create') !!}
-        <div class="col-sm-5">
+        <div class="col-sm-4 col-sm-offset-1">
             {!! Former::text('created_at', 'Ngày giao')
                 ->required()
                 ->addClass('input-sm daterange')
@@ -34,7 +34,7 @@
             <div class="form-group <?php if($errors->has('phone')) echo 'has-error'?>">
                 <label for="phone" class="control-label col-lg-4 col-sm-4">Số Cv - Thuê bao<sup>*</sup></label>
                 <div class="col-lg-8 col-sm-8">
-                    <select class="form-control input-sm" id="phone" name="phone" placeholder="Chọn thuê bao đã đăng ký" multiple="">
+                    <select class="form-control input-sm" id="phone" name="phone[]" placeholder="Chọn thuê bao đã đăng ký" multiple="multiple">
                         @foreach($orders as $order)
                         <optgroup label="{{$order->number_cv . '/' . $order->unit->symbol}}">
                             @foreach ($order->phones as $index => $phone)
@@ -51,7 +51,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-4">
             <div class="form-group required <?php if($errors->has('file')) echo 'has-error'?>">
                 <label for="file" class="control-label col-lg-4 col-sm-4">File đính kèm<sup>*</sup></label>
                 <div class="col-lg-8 col-sm-8" id="uploadFile">

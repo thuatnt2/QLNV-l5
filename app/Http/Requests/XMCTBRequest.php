@@ -8,7 +8,6 @@ class XMCTBRequest extends Request
 {
     public $rules = [
         'phone' => 'required',
-        'page_xmctb' => 'required|numeric',
         'file' => 'mimes:doc,docx,xls,xlsx,pdf'
     ];
     public $messages = [
@@ -47,7 +46,6 @@ class XMCTBRequest extends Request
     {
         return  [
             'phone' => 'Số công văn- thuê bao',
-            'page_xmctb' => 'Số trang xmctb',
             'file' => 'File'
 
         ];

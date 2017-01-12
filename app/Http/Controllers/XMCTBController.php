@@ -103,7 +103,13 @@ class XMCTBController extends Controller
             if ($request->hasFile('file')) {
                 $fileInfo = $this->uploadFile($request->file('file'), 'xmctb');
                 if ($fileInfo) {
-                    $ship = $this->ship->create($request->only($this->dataGet), $fileInfo['original-name']);
+                    $data = $request->only($this->dataGet);
+                    foreach ($request->input('phone') as $key => $value) {
+                        $data['phone'] = $value;
+                        $data['page_xmctb'] = 1;
+                        $ship = new ShipRepository(new Ship);
+                        $ship->create($data, $fileInfo['original-name']);
+                    }
                     //save info file
                     $file = new FileRepository(new File);
                     $fileInfo['ship_id'] = $ship->id;
@@ -111,9 +117,15 @@ class XMCTBController extends Controller
                 }
             }
             else {
-                $this->ship->create($request->only($this->dataGet));    
+
+                $data = $request->only($this->dataGet);
+                foreach ($request->input('phone') as $key => $value) {
+                    $data['phone'] = $value;
+                    $data['page_xmctb'] = 1;
+                    $ship = new ShipRepository(new Ship);
+                    $ship->create($data);
+                }
             }
-           
             return redirect()->back();
 
         } catch (Exception $e) {
