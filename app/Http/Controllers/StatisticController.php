@@ -27,7 +27,7 @@ class StatisticController extends Controller
      */
     public function getReport()
     {
-        return view('statistics.report');
+        return view('statistics.index');
     }
     /**
      * Display a Form for input time report.
@@ -60,11 +60,34 @@ class StatisticController extends Controller
      */
     public function postReport(Request $request)
     {
+        $content = $request->input('content');
         $reportrange = array_reverse(explode('-', $request['reportrange']));
-        $startDate = Carbon::createFromFormat('d/m/Y', trim($reportrange[1]))->toDateString();
-        $endDate =  Carbon::createFromFormat('d/m/Y', trim($reportrange[0]))->toDateString();
+        $startDate = Carbon::createFromFormat('d/m/Y', trim($reportrange[1]));
+        $endDate =  Carbon::createFromFormat('d/m/Y', trim($reportrange[0]));
+        $interval = $startDate->diff($endDate);
+        $startDate = $startDate->toDateString();
+        $endDate = $endDate->toDateString();
+        $title = '';
+        if ($interval->days == 7) {
+            $title = "BÁO CÁO TUẦN";
+        }
+        elseif ( $interval->days >= 28 || $interval->days <= 31) {
+            $title = "BÁO CÁO THÁNG";
+        }
+        elseif ($interval->days >= 88 || $interval->days <= 92) {
+            $title = "BÁO CÁO QUÝ";
+        }
+        elseif ($interval->days >= 184 || $interval->days <= 186 ) {
+            $title = "BÁO CÁO 6 THÁNG";
+        }
+        elseif ($interval->days >= 365 || $interval->days <=366) {
+            $title = "BÁO CÁO NĂM";
+        }
+        else {
+            $title = "KẾT QUẢ CÔNG TÁC";
+        }
         $result = $this->order->statistics($startDate, $endDate);
-        return view('statistics.report', compact('result', 'reportrange'));
+        return view('statistics.report', compact('result', 'reportrange', 'title', 'content'));
     }
 
     public function postUnit(Request $request)
