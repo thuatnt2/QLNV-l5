@@ -15,7 +15,7 @@
                         @foreach($orders as $order)
                         <optgroup label="{{$order->number_cv . '/' . $order->unit->symbol}}">
                             @foreach ($order->phones as $index => $phone)
-                                    <option value="{{$phone->id}}">
+                                    <option value="{{$phone->id}}" {{ $news->phone_id == $phone->id ? "selected":""}}>
                                         {{ $phone->number }}
                                     </option>
                             @endforeach
