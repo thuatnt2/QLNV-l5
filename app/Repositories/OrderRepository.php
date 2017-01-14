@@ -186,7 +186,9 @@ class OrderRepository extends AbstractRepository
                           ->get();
         }
         $data = array_merge($detailPurpose, $detailNews);
+        // var_dump($data);
         $units = $this->formatDetail($data);
+
         // var_dump($units);
         return $units;
 
@@ -422,24 +424,21 @@ class OrderRepository extends AbstractRepository
     public function formatDetail($data) 
     {
         $results = [];
-        if (count($data) > 0) {
+        while (count($data) > 0) {
            
             array_push($results, $this->formatDetailUnit(array_shift($data)));
             foreach ($results as $unit) {
-                foreach ($data as $obj) {
-
+                foreach ($data as $key => $obj) {
                     if ($unit->unit == $obj->unit) {
                         $this->formatUnitForPurpose($unit, $obj);
                         $this->formatUnitForNews($unit, $obj);
+                        array_splice($data, array_search($obj, $data), 1);
+                        
                     }
-                    else {
-                        array_push($results, $this->formatDetailUnit($obj));
-                    }
+
                 }
-                
             }
         }
-        
         return $results;
     }
     public function formatBlockOrder($param, $obj)

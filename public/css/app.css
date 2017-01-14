@@ -61,6 +61,7 @@ legend {
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
     padding: 2px;
     vertical-align: middle;
+    border: none;
 }
 hr {
 	margin-top: 5px;
@@ -68,4 +69,12 @@ hr {
 	color: #333;
     border: 0;
     border-bottom: 1px solid #e5e5e5;
+}
+.table-borderless tbody tr td,
+.table-borderless tbody tr th,
+.table-borderless thead tr th,
+.table-borderless thead tr td,
+.table-borderless tfoot tr th,
+.table-borderless tfoot tr td {
+    border: none;
 }

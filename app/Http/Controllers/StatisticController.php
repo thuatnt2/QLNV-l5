@@ -71,16 +71,16 @@ class StatisticController extends Controller
         if ($interval->days == 7) {
             $title = "BÁO CÁO TUẦN";
         }
-        elseif ( $interval->days >= 28 || $interval->days <= 31) {
+        elseif ( $interval->days >= 28 && $interval->days <= 31) {
             $title = "BÁO CÁO THÁNG";
         }
-        elseif ($interval->days >= 88 || $interval->days <= 92) {
+        elseif ($interval->days >= 88 && $interval->days <= 92) {
             $title = "BÁO CÁO QUÝ";
         }
-        elseif ($interval->days >= 184 || $interval->days <= 186 ) {
+        elseif ($interval->days >= 184 && $interval->days <= 186 ) {
             $title = "BÁO CÁO 6 THÁNG";
         }
-        elseif ($interval->days >= 365 || $interval->days <=366) {
+        elseif ($interval->days >= 365 && $interval->days <=366) {
             $title = "BÁO CÁO NĂM";
         }
         else {

@@ -5,6 +5,16 @@
 {{-- DateRangepicker --}}
 <link rel="stylesheet" href="{{ URL::asset('css/plugins/daterangepicker.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
+<style type="text/css">
+  .table-borderless tbody tr td,
+  .table-borderless tbody tr th,
+  .table-borderless thead tr th,
+  .table-borderless thead tr td,
+  .table-borderless tfoot tr th,
+  .table-borderless tfoot tr td {
+      border: none;
+  }
+</style>
 @stop()
 @section('content')
 @if (isset($reportrange))
@@ -17,7 +27,7 @@
         @if (isset($result) && $result['order'] > 0)
           <form>
           <fieldset>
-                <table class="table">
+                <table class="table table-borderless">
                   <tr>
                     <td class="text-center" width="30%"><strong>CÔNG AN TỈNH QUẢNG BÌNH</strong></td>
                     <td width="20%"></td>
@@ -85,14 +95,14 @@
                           echo '<tr>' .
                             '<td class="text-center">' . ++$index . '</td>' .
                             '<td class="text-center">' . $unit->unit .'</td>';
-                          foreach($unit->categories as $key=>$category) {
+                          foreach($unit->categories as $key => $category) {
                             if ($category > 0 ) {
-                              echo '<td class="text-center">' . $category. '</td>';
+                              $sumPurposeUnit[$key] += $category;
+                              echo '<td class="text-center">'.$category.'</td>';
                             }
                             else {
-                              echo '<td></td';
+                              echo "<td></td>";
                             }
-                            $sumPurposeUnit[$key] += $category;
                           }
                           $sumNumber += $unit->number;
                           echo  '<td class="text-center">'. $unit->number .'</td>';
@@ -158,7 +168,7 @@
                                 echo '<td class="text-center">' . $category. '</td>';
                               }
                               else {
-                                echo '<td></td';
+                                echo '<td></td>';
                               }
                               $sumPurposeUnit[$key] += $category;
                             }
@@ -170,7 +180,10 @@
                               echo '<td class="text-center">'. $unit->news[0] .'</td>' .
                                    '<td class="text-center">'. $unit->news[1]  .'</td>';
                             }
-                            echo ' </tr>';
+                            else {
+                              echo '<td></td><td></td>';
+                            }
+                            echo '<td></td></tr>';
                           }
                         ?>  
                         <tr>
