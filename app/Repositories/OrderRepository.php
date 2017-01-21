@@ -12,9 +12,11 @@ use DB;
 class OrderRepository extends AbstractRepository
 {
     protected $order;
+    protected $categories;
 
     public function __construct(Order $order)
     {
+        $this->categories = Category::all()->sortBy('symbol');
         $this->order = $order;
         parent::__construct($this->order);
     }
@@ -128,8 +130,8 @@ class OrderRepository extends AbstractRepository
         $detailOther = $this->statisticsDetail($startDate, $endDate);
         $startDate = Carbon::parse($startDate)->format('d/m/Y');
         $endDate = Carbon::parse($endDate)->format('d/m/Y');
-        
-        return compact('order', 'orderMonitor', 'orderOther', 'orderNew', 'orderClosed', 'purposes', 'total', 'shipDirector', 'detailMonitor', 'detailOther', 'startDate', 'endDate');
+        $categories = $this->categories;
+        return compact('order', 'orderMonitor', 'orderOther', 'orderNew', 'orderClosed', 'purposes', 'total', 'shipDirector', 'detailMonitor', 'detailOther', 'startDate', 'endDate', 'categories');
     }
     public function statisticsDetail($startDate, $endDate, $purpose = '')
     {
@@ -169,6 +171,7 @@ class OrderRepository extends AbstractRepository
                           ->whereNull('ships.deleted_at')  
                           ->groupBy('units.symbol')
                           ->get();
+                          // var_dump($detailNews);
         }
         else {
             $detailNews = $query->select(
@@ -186,10 +189,7 @@ class OrderRepository extends AbstractRepository
                           ->get();
         }
         $data = array_merge($detailPurpose, $detailNews);
-        // var_dump($data);
         $units = $this->formatDetail($data);
-
-        // var_dump($units);
         return $units;
 
     }
@@ -203,13 +203,13 @@ class OrderRepository extends AbstractRepository
                     ->where('status','success')
                     ->get();
     }
-    public function statisticsUnit($startDate, $endDate, $unitId = '', $purpose = '')
+    public function statisticsUnit($startDate, $endDate, $unitSymbol = '', $purpose = '')
     {
         $query =  $this->order
                        ->with('unit', 'purpose', 'phones.ships');
-        if($unitId != '') {
-            $query = $query->whereHas('unit', function($q) use ($unitId) {
-                                $q->where('units.id', $unitId);
+        if($unitSymbol != '') {
+            $query = $query->whereHas('unit', function($q) use ($unitSymbol) {
+                                $q->where('units.symbol', $unitSymbol);
                             });
         }
                        
@@ -222,7 +222,7 @@ class OrderRepository extends AbstractRepository
                            })
                            ->where(function($q) use ($startDate, $endDate){
                                 $q->Where('date_begin', '<=', $endDate)
-                                  ->orwhere('date_end', '>=', $startDate); 
+                                  ->where('date_end', '>=', $startDate); 
                              });
         }
         else {
@@ -406,11 +406,10 @@ class OrderRepository extends AbstractRepository
     public function createObject() {
 
         $unit = new \stdClass;
-        $categories = Category::all()->sortBy('symbol');
         $unit->unit = "";
         $unit->number = 0;
         $c = [];
-        foreach ($categories as $key => $category) {
+        foreach ($this->categories as $key => $category) {
             $c[$category->symbol] = 0; 
         }
         $unit->categories = $c;

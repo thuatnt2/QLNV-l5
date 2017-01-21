@@ -47,7 +47,7 @@
                         @endforeach
                     </select>
                     <span class="help-block">
-                        <?php echo $errors->first('phone') ?>
+                        <?php echo $errors->first('phone'); ?>
                     </span>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                     <input type="text" class="form-control input-sm" name="file_name">
                     <input accept="application/msword|application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/pdf" id="file" type="file" name="file" style="width: 0px; height: 0px; display: none;">
                      <span class="help-block">
-                        <?php echo $errors->first('file') ?>
+                        <?php echo $errors->first('file'); ?>
                     </span>
                 </div>
             </div>
@@ -101,7 +101,7 @@
             <div class="col-sm-9">
                 @include('pagination.limit_link', ['paginator' => $news])          
             </div>
-        </div><!-- /.box-header -->
+        </div>
         <div class="box-body">
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
@@ -117,6 +117,7 @@
                         <th class="text-center" width="13%">Thời gian yêu cầu</th>
                         <th class="text-center">Số bản tin</th>
                         <th class="text-center">Số trang tin</th>
+                        <th class="text-center" width="8%">Người nhận</th>
                         <th class="text-center" width="8%">Ghi chú</th>
                         <th class="text-center" width="6%">Thao tác</th>
                     </tr>
@@ -140,6 +141,7 @@
                         <td class="text-center">
                             {{ $new->page_news }}
                         </td>
+                        <td class="text-center">{{ $new->receive_name }}</td>
                         <td class="text-center">{{ $new->phone->order->comment }}</td>
                         <td class="text-center"width="6%">
                             <button class="btn btn-warning btn-xs fa fa-edit" data-url="{{ action('NewsController@edit', $new->id) }}" type="button" title="Sửa"></button>

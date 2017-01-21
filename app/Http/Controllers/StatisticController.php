@@ -92,15 +92,15 @@ class StatisticController extends Controller
 
     public function postUnit(Request $request)
     {
-        $unitId = $request['unit'];
+        $unitSymbol = $request['unit'];
         $reportrange = array_reverse(explode('-', $request['reportrange']));
         $startDate = Carbon::createFromFormat('d/m/Y', trim($reportrange[1]))->toDateString();
         $endDate =  Carbon::createFromFormat('d/m/Y', trim($reportrange[0]))->toDateString();
-        $monitor = $this->order->statisticsUnit($startDate, $endDate, $unitId, 'monitor');
-        $orther =  $this->order->statisticsUnit($startDate, $endDate, $unitId);
+        $monitor = $this->order->statisticsUnit($startDate, $endDate, $unitSymbol, 'monitor');
+        $orther =  $this->order->statisticsUnit($startDate, $endDate, $unitSymbol);
         $result = $monitor->merge($orther);
         $result = $result->groupBy('purpose.symbol');
-        return view('statistics.unit', compact('result', 'reportrange', 'unitId'));
+        return view('statistics.unit', compact('result', 'reportrange', 'unitSymbol'));
     }
 
     public function postAdvance(Request $request) 

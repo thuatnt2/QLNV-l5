@@ -39,14 +39,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer(['orders.index', 'orders.edit','statistics.unit', 'statistics.advance'], function($view) {
+        view()->composer(['orders.index', 'orders.edit', 'statistics.advance'], function($view) {
             $units = new UnitRepository(new  Unit);
             $categories = new CategoryRepository(new Category);
             $kinds = new KindRepository(new Kind);
             $users = new UserRepository(new User);
             $purposes = new PurposeRepository(new Purpose); 
 
-            // $units = $units->formatData($units->all(['id', 'symbol']));
             $unitPolices = $units->findAllBy('block', 'CS', ['id', 'symbol']);
             $unitSecurites = $units->findAllBy('block', 'AN', ['id', 'symbol']);
             $categories = $categories->formatData($categories->all(['id', 'symbol']));

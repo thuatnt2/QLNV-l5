@@ -64,7 +64,7 @@
                   <div class="box-body">
                     <table class="table table-bordered ">
                       <?php 
-                        $categories = App\Category::all()->sortBy('symbol');
+                        $categories = $result['categories'];
                         $sumPurposeUnit = [];
                         $sumNumber = 0;
                         $sumNews = 0;

@@ -9,12 +9,24 @@
 @section('content')
 	<div class="row">
 		<div class="box">
+    <?php
+      $units = DB::table('units')->distinct()->orderBy('symbol')->get();
+    ?>
 			{!! Former::setOption('TwitterBootstrap3.labelWidths', ['large' => 4, 'small' => 4]) !!}
 	        {!! Former::horizontal_open(url('statistics-unit'))->id('form-create') !!}
 	        <fieldset>
 	       		{!! Former::legend('Thống kê theo đơn vị') !!}
 	       		<div class="col-sm-4 col-sm-offset-3">
-              {!! Former::select('unit')->label('Đơn vị yêu cầu')->options($units)->addClass('input-sm') !!}
+              <div class="form-group">
+                  <label for="unit" class="control-label col-lg-4 col-sm-4">Đơn vị yêu cầu</label>
+                  <div class="col-lg-8 col-sm-8">
+                      <select class="form-control input-sm" id="unit" name="unit">
+                          @foreach ($units as $index=>$unit)
+                              <option value="{{ $unit->symbol }}" >{{ ucwords($unit->symbol) }}</option>
+                          @endforeach
+                      </select>
+                  </div>
+              </div>
 	       			{!! Former::text('reportrange', 'Thời gian')
 		                ->append('<i class="fa fa-calendar" id="range"></i>')
 		                ->addClass('input-sm')
@@ -41,7 +53,6 @@
           <fieldset>
               <legend>
               <span>Kết quả thống kê</span>
-              <a href="{{ route('excel', 'date='.$output.'&id='.$unitId) }} " style="float: right; margin-right: 15px"><img src="{{ asset('icon/excel.png') }}"></a>
             </legend>
               <p style="font-size: 16px; margin-left: 10px">Kết quả thực hiện từ ngày <strong>{{ trim(array_pop($reportrange)) }}</strong> đến ngày <strong>{{ trim(array_pop($reportrange)) }}</strong>  như sau</p>
               @foreach ($result as $key=> $orders)
@@ -74,7 +85,7 @@
                         <td class="text-center">{{ $order->date_order->format('d/m/Y') }}</td>
                         <td class="text-center"><a href="{{ action('OrderController@show', $order->id)  }}">{{ $order->number_cv . '/' . $order->unit->symbol}}</a></td>
                         <td class="text-center">{{ $order->number_cv_pa71 }}</td>
-                        <td>{{ $order->order_name }}</td>
+                        <td class="text-center">{{ $order->order_name }}</td>
                         <td class="text-center">
                           <?php
                             $numberOfCopies = 0;
@@ -86,7 +97,7 @@
                             }
                           ?>
                         </td>
-                        <td>
+                        <td class="text-center">
                           @if (isset($order->date_begin) && isset($order->date_end))
                             {{ $order->date_begin->format('d/m/Y') . ' &rarr; ' . $order->date_end->format('d/m/Y') }}
                           @endif
@@ -97,7 +108,7 @@
                           </td>
                         @endif
                         <td class="text-center">{{ $numberOfPage }}</td>
-                        <td>{{ $order->comment }}</td>
+                        <td class="text-center">{{ $order->comment }}</td>
                       </tr>
                      @endforeach
                      <tbody>
