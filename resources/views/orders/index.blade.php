@@ -4,6 +4,7 @@
 
 {{-- DateRangepicker --}}
 <link rel="stylesheet" href="{{ URL::asset('css/plugins/daterangepicker.css') }}">
+<link rel="stylesheet" href="{{ URL::asset('css/plugins/sorter.css') }}">
 <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
 @stop
 
@@ -130,21 +131,21 @@
             <!-- </div> -->
         </div><!-- /.box-header -->
         <div class="box-body">
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="sortTable" class="table table-bordered table-striped tablesorter">
                 <thead>
                     <tr>
                         <th class="text-center">STT</th>
                         <th class="text-center">Ngày tháng</th>
                         <th class="text-center">Số Cv đến</th>
                         <th class="text-center">Số Cv đi</th>
-                        <th class="text-center" width="15%">Tên đối tượng</th>
+                        <th class="text-center" width="10%">Tên đối tượng</th>
                         <th class="text-center" width="10%">Số điện thoại/IMEI</th>
                         <th class="text-center">Loại ĐT</th>
                         <th class="text-center">Tính chất</th>
                         <th class="text-center" width="13%">Thời gian yêu cầu</th>
                         <th class="text-center">Mục đích y/c</th>
-                        <th class="text-center" width="12%">TS y/c (Số ĐT)</th>
-                        <th class="text-center"width="4%">Tình trạng</th>
+                        <th class="text-center" width="8%">TS y/c (Số ĐT)</th>
+                        <th class="text-center" width="4%">Tình trạng</th>
                         <th class="text-center" width="8%">Ghi chú</th>
                         <th class="text-center" width="6%">Thao tác</th>
                     </tr>
@@ -158,7 +159,7 @@
                         <td class="text-center"><a href="{{ action('OrderController@show', $order->id) }}">{{ $order->number_cv . '/' . $order->unit->symbol }}</a></td>
                         <td class="text-center">{{ $order->number_cv_pa71 }}</td>
                         <td class="text-center">{{ $order->order_name }}</td>
-                        <td class="text-left">
+                        <td class="text-center">
                             @foreach($order->phones as $index => $phone)
                                 {{ $phone->number }} <br>    
                             @endforeach
@@ -243,4 +244,13 @@
 <script src="{{ URL::asset('js/plugins/jquery.inputmask.bundle.min.js') }}"></script>
 {{-- app.js --}}
 <script src="{{ URL::asset('js/app.js') }}"></script>
+{{-- Table sorter --}}
+<script src="{{ URL::asset('js/plugins/jquery.tablesorter.min.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $("#sortTable").tablesorter();
+    }
+    );
+</script>
 @stop

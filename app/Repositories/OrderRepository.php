@@ -91,26 +91,32 @@ class OrderRepository extends AbstractRepository
         $queryOrther = $this->initQueryStatistics($startDate, $endDate);
         $query1 = clone $queryMonitor;
         $query2 = clone $queryOrther;
-        $orderMonitor = $queryMonitor->count('orders.id');
+        $orderMonitor = $queryMonitor->count('orders.number_cv');
         $orderNew = $queryMonitor->where(function($q) use ($startDate, $endDate){
                                         $q->Where('date_order', '>=', $startDate)
                                           ->where('date_order', '<=', $endDate); 
                                     })
-                                 ->count('orders.id');
+                                 ->count('orders.number_cv');
         $orderClosed = $this->initQueryStatistics($startDate, $endDate, 'monitor')
                             ->where(function($q) use ($startDate, $endDate){
                                         $q->Where('date_cut', '>=', $startDate)
                                           ->where('date_cut', '<=', $endDate); 
                                     })
-                            ->count('orders.id');
-        $orderOther = $queryOrther->count('orders.id');
+                            ->count('orders.number_cv');
+        $orderOther = $queryOrther->count('orders.number_cv');
         $order = $orderMonitor + $orderOther;
+        $purposes = $queryOrther->select(
+                                    'purposes.symbol',
+                                    DB::raw('count(distinct orders.number_cv) as purposeOrder')
+                                )
+                                ->groupBy('purposes.group')
+                                ->get();
         $total = DB::table('ships')->select(
                                         DB::raw('coalesce(sum(news),0) as news'),
                                         DB::raw('coalesce(sum(page_news),0) as pageNews'), 
-                                        DB::raw('coalesce(sum(page_list),0) as pageList'),
-                                        DB::raw('coalesce(sum(page_xmctb),0) as pageXmctb'),
-                                        DB::raw('coalesce(sum(page_imei),0) as pageImei')
+                                        DB::raw('sum(page_list) as pageList'),
+                                        DB::raw('sum(page_xmctb) as pageXmctb'),
+                                        DB::raw('sum(page_imei) as pageImei')
                                     )
                                    ->where('date_submit', '>=', $startDate)
                                    ->where('date_submit', '<=', $endDate)
@@ -152,12 +158,12 @@ class OrderRepository extends AbstractRepository
                                 'units.symbol as unit',
                                 'categories.symbol as category',
                                 DB::raw('count(phones.id) as number'),
-                                DB::raw('count(distinct orders.id) as total')
+                                DB::raw('count(distinct orders.number_cv) as total')
                             )   
                          ->groupBy('units.symbol')
                          ->groupBy('categories.symbol')
                          ->get();
-
+// var_dump($detailPurpose);
         if ($purpose == 'monitor') {
             $detailNews = $query->leftJoin('ships', 'phones.id', '=', 'ships.phone_id')
                           ->select(
@@ -167,7 +173,7 @@ class OrderRepository extends AbstractRepository
                           )
                           ->where('date_submit', '>=', $startDate)
                           ->where('date_submit', '<=', $endDate)
-                          ->where('receive_name', 'not like', '%PGĐ%')
+                          ->where('receive_name', 'not like', '%GĐ%')
                           ->whereNull('ships.deleted_at')  
                           ->groupBy('units.symbol')
                           ->get();
@@ -217,9 +223,9 @@ class OrderRepository extends AbstractRepository
             $query = $query->whereHas('purpose', function($q){
                                 $q->where('purposes.group', '=', 'monitor');
                              })
-                           ->whereHas('phones', function($q) {
-                                $q->where('status', 'success');
-                           })
+                           // ->whereHas('phones', function($q) {
+                           //      $q->where('status', 'success');
+                           // })
                            ->where(function($q) use ($startDate, $endDate){
                                 $q->Where('date_begin', '<=', $endDate)
                                   ->where('date_end', '>=', $startDate); 

@@ -54,7 +54,13 @@
                   <div class="box-header">
                     
                     <h4 class="box-title"><strong>II. KẾT QUẢ<br><br></strong></h4>
-                    <p style="font-size: 16px;">Thực hiện <strong>{{ $result['order'] }}</strong> yêu cầu, trong đó: <strong>{{ $result['orderMonitor']}}</strong> yêu cầu giám sát (<strong>{{$result['orderNew']}}</strong> yêu cầu mới, <strong>{{$result['orderClosed']}}</strong> yêu cầu đã cắt) và <strong>{{ $result['orderOther']}}</strong> yêu cầu cung cấp dữ liệu viễn thông. Khai thác, xử lý <strong>{{$result['total'][0]->news}}</strong> bản tin, gồm <strong>{{$result['total'][0]->pageNews}}</strong> trang (trong đó có <strong>...</strong> bản tin dịch từ ngoại ngữ, gồm ... trang) <strong>...</strong> MB(hoặc GB) và <strong>{{$result['total'][0]->pageList + $result['total'][0]->pageXmctb + $result['total'][0]->pageImei}}</strong> trang tài liệu BP3. </p>
+                    <?php
+                      $orderPurpose = "";
+                      foreach ($result['purposes'] as $key => $purpose) {
+                        $orderPurpose .= ", <strong>" .$purpose->purposeOrder . "</strong> yêu cầu " . strtoupper($purpose->symbol); 
+                      }
+                    ?>
+                    <p style="font-size: 16px;">Thực hiện <strong>{{ $result['order'] }}</strong> yêu cầu, trong đó: <strong>{{ $result['orderMonitor']}}</strong> yêu cầu giám sát (<strong>{{$result['orderNew']}}</strong> yêu cầu mới, <strong>{{$result['orderClosed']}}</strong> yêu cầu đã cắt){!! $orderPurpose!!}. Khai thác, xử lý <strong>{{$result['total'][0]->news}}</strong> bản tin, gồm <strong>{{$result['total'][0]->pageNews}}</strong> trang (trong đó có <strong>...</strong> bản tin dịch từ ngoại ngữ, gồm ... trang) <strong>...</strong> MB(hoặc GB) và {!!$result['total'][0]->pageList > 0 ? ", <strong>".$result['total'][0]->pageList."</strong> trang LIST":""!!}{!!$result['total'][0]->pageXmctb > 0 ? ", <strong>".$result['total'][0]->pageXmctb."</strong> trang XMCTB":""!!}{!!$result['total'][0]->pageImei > 0 ? ", <strong>".$result['total'][0]->pageImei."</strong> trang IMEI":""!!}. </p>
                     <ul style="font-size: 16px;">
                       <li>Báo cáo Ban Giám đốc: <strong>{{$result['shipDirector'][0]->news}}</strong> bản tin, <strong>{{$result['shipDirector'][0]->pageNews}}</strong> trang tin</li>
                       <li>Trao đổi với các đơn vị nghiệp vụ: <strong>{{$result['total'][0]->news - $result['shipDirector'][0]->news}}</strong> bản tin, <strong>{{$result['total'][0]->pageNews - $result['shipDirector'][0]->pageNews}}</strong> trang tin. Cụ thể:</li>
