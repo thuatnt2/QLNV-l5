@@ -91,23 +91,23 @@ class OrderRepository extends AbstractRepository
         $queryOrther = $this->initQueryStatistics($startDate, $endDate);
         $query1 = clone $queryMonitor;
         $query2 = clone $queryOrther;
-        $orderMonitor = $queryMonitor->count('orders.number_cv');
+        $orderMonitor = $queryMonitor->count('orders.id');
         $orderNew = $queryMonitor->where(function($q) use ($startDate, $endDate){
                                         $q->Where('date_order', '>=', $startDate)
                                           ->where('date_order', '<=', $endDate); 
                                     })
-                                 ->count('orders.number_cv');
+                                 ->count('orders.id');
         $orderClosed = $this->initQueryStatistics($startDate, $endDate, 'monitor')
                             ->where(function($q) use ($startDate, $endDate){
                                         $q->Where('date_cut', '>=', $startDate)
                                           ->where('date_cut', '<=', $endDate); 
                                     })
-                            ->count('orders.number_cv');
-        $orderOther = $queryOrther->count('orders.number_cv');
+                            ->count('orders.id');
+        $orderOther = $queryOrther->count('orders.id');
         $order = $orderMonitor + $orderOther;
         $purposes = $queryOrther->select(
                                     'purposes.symbol',
-                                    DB::raw('count(distinct orders.number_cv) as purposeOrder')
+                                    DB::raw('count(distinct orders.id) as purposeOrder')
                                 )
                                 ->groupBy('purposes.group')
                                 ->get();
@@ -158,7 +158,7 @@ class OrderRepository extends AbstractRepository
                                 'units.symbol as unit',
                                 'categories.symbol as category',
                                 DB::raw('count(phones.id) as number'),
-                                DB::raw('count(distinct orders.number_cv) as total')
+                                DB::raw('count(distinct orders.id) as total')
                             )   
                          ->groupBy('units.symbol')
                          ->groupBy('categories.symbol')
