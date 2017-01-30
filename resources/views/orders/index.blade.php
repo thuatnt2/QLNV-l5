@@ -4,7 +4,7 @@
 
 {{-- DateRangepicker --}}
 <link rel="stylesheet" href="{{ URL::asset('css/plugins/daterangepicker.css') }}">
-<link rel="stylesheet" href="{{ URL::asset('css/plugins/sorter.css') }}">
+{{-- <link rel="stylesheet" href="{{ URL::asset('css/plugins/sorter.css') }}"> --}}
 <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
 @stop
 
@@ -133,7 +133,7 @@
         <div class="box-body">
             <table id="sortTable" class="table table-bordered table-striped tablesorter">
                 <thead>
-                    <tr>
+                    <tr class="success">
                         <th class="text-center">STT</th>
                         <th class="text-center">Ngày tháng</th>
                         <th class="text-center">Số Cv đến</th>

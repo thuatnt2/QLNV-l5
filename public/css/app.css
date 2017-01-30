@@ -58,10 +58,25 @@ legend {
 .box-body {
 	padding: 5px;
 }
+table thead tr .header {
+	background-image: url(../icon/bg.gif);
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
+}
+table thead tr .headerSortUp {
+	background-image: url(../icon/asc.gif);
+}
+table thead tr .headerSortDown {
+	background-image: url(../icon/desc.gif);
+}
+table thead tr .headerSortDown, table thead tr .headerSortUp {
+background-color: #8dbdd8;
+}
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
-    padding: 2px;
+    padding: 2px 15px 2px 2px;
     vertical-align: middle;
-    border: none;
+    border: 1px solid #FFF;
 }
 hr {
 	margin-top: 5px;

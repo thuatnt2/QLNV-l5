@@ -62,7 +62,7 @@
                     <h3 class="box-title label label-info">{{ $key }}</h3>
                   </div><!-- /.box-header -->
                   <div class="box-body">
-                    <table id="sortTable" class="table table-bordered">
+                    <table id="sortTable" class="table table-bordered tablesorter">
                     <thead>
                       <tr class="success">
                         <th class="text-center">STT</th>
@@ -139,7 +139,7 @@
 {{-- Daterangepicker --}}
 <script src="{{ URL::asset('js/plugins/daterangepicker.js') }}"></script>
 {{-- Table sorter --}}
-<script src="{{ URL::asset('js/plugins/jquery.tablesorter.js') }}"></script>
+<script src="{{ URL::asset('js/plugins/jquery.tablesorter.min.js') }}"></script>
 {{-- app.js --}}
 <script src="{{ URL::asset('js/app.js') }}"></script>
 <script type="text/javascript">
