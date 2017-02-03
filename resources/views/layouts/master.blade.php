@@ -147,6 +147,15 @@
 <script src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
 {{-- Select2 4.0.1 --}}
 <script src="{{ URL::asset('js/plugins/select2.min.js') }}"></script>
+{{-- Table sorter --}}
+<script src="{{ URL::asset('js/plugins/jquery.tablesorter.min.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $("#sortTable").tablesorter();
+    }
+    );
+</script>
 @yield('javascript')
 </body>
 </html>

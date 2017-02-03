@@ -34,7 +34,7 @@
             <div class="form-group <?php if($errors->has('phone')) echo 'has-error'?>">
                 <label for="phone" class="control-label col-lg-4 col-sm-4">Số Cv - Thuê bao<sup>*</sup></label>
                 <div class="col-lg-8 col-sm-8">
-                    <select class="form-control input-sm" id="phone" name="phone[]" placeholder="Chọn thuê bao đã đăng ký" multiple="multiple">
+                    <select class="form-control input-sm select2" id="phone" name="phone[]" placeholder="Chọn thuê bao đã đăng ký" multiple="multiple">
                         @foreach($orders as $order)
                         <optgroup label="{{$order->number_cv . '/' . $order->unit->symbol}}">
                             @foreach ($order->phones as $index => $phone)
@@ -46,7 +46,7 @@
                         @endforeach
                     </select>
                     <span class="help-block">
-                        <?php echo $errors->first('phone') ?>
+                        <?php echo $errors->first('phone'); ?>
                     </span>
                 </div>
             </div>
@@ -58,7 +58,7 @@
                     <input type="text" class="form-control input-sm" name="file_name">
                     <input accept="application/msword|application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.ms-excel|application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/pdf" id="file" type="file" name="file" style="width: 0px; height: 0px; display: none;">
                     <span class="help-block">
-                        <?php echo $errors->first('file') ?>
+                        <?php echo $errors->first('file'); ?>
                     </span>
                 </div>
             </div>
@@ -100,9 +100,9 @@
             </div>    
         </div><!-- /.box-header -->
         <div class="box-body">
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="sortTable" class="table table-bordered table-striped">
                 <thead>
-                    <tr>
+                    <tr class="success">
                         <th class="text-center">STT</th>
                         <th class="text-center">Ngày tháng</th>
                         <th class="text-center">Số Cv/Đơn vị</th> 

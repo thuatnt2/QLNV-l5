@@ -85,13 +85,15 @@ hr {
     border: 0;
     border-bottom: 1px solid #e5e5e5;
 }
-.select2-container--default .select2-selection--single {
+.select2-container--default .select2-selection--single, .select2-container--default .select2-selection--multiple {
     background-color: #fff;
     border: 1px solid #d2d6de;
     border-radius: 0px;
-    height: 30px;
+    min-height: 30px;
 }
-
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+	color: #555;
+}
 .select2-container .select2-selection--single .select2-selection__rendered {
 	padding: 0px ;
 	font-size: 18px;

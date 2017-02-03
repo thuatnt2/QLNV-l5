@@ -138,8 +138,6 @@
 <script src="{{ URL::asset('js/plugins/moment.min.js') }}"></script>
 {{-- Daterangepicker --}}
 <script src="{{ URL::asset('js/plugins/daterangepicker.js') }}"></script>
-{{-- Table sorter --}}
-<script src="{{ URL::asset('js/plugins/jquery.tablesorter.min.js') }}"></script>
 {{-- app.js --}}
 <script src="{{ URL::asset('js/app.js') }}"></script>
 <script type="text/javascript">
@@ -163,10 +161,5 @@ $(function() {
     });
 
 });
-$(document).ready(function()
-  {
-    $("#sortTable").tablesorter();
-  }
-);
 </script>
 @stop

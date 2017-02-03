@@ -103,9 +103,9 @@
             </div>
         </div>
         <div class="box-body">
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="sortTable" class="table table-bordered table-striped">
                 <thead>
-                    <tr>
+                    <tr class="success">
                         <th class="text-center">STT</th>
                         <th class="text-center">Ngày tháng</th>
                         <th class="text-center">Số Cv/Đơn vị</th>

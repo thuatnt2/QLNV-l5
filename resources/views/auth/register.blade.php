@@ -37,9 +37,9 @@
             <h3 class="box-title">Danh sách người dùng</h3>
         </div><!-- /.box-header -->
         <div class="box-body">
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="sortTable" class="table table-bordered table-striped">
                 <thead>
-                    <tr>
+                    <tr class="success">
                         <th class="text-center">STT</th>
                         <th class="text-center">Họ và tên</th>
                         <th class="text-center">Tên đăng nhập</th>

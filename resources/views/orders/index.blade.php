@@ -4,7 +4,6 @@
 
 {{-- DateRangepicker --}}
 <link rel="stylesheet" href="{{ URL::asset('css/plugins/daterangepicker.css') }}">
-{{-- <link rel="stylesheet" href="{{ URL::asset('css/plugins/sorter.css') }}"> --}}
 <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
 @stop
 
@@ -244,13 +243,4 @@
 <script src="{{ URL::asset('js/plugins/jquery.inputmask.bundle.min.js') }}"></script>
 {{-- app.js --}}
 <script src="{{ URL::asset('js/app.js') }}"></script>
-{{-- Table sorter --}}
-<script src="{{ URL::asset('js/plugins/jquery.tablesorter.min.js') }}"></script>
-<script type="text/javascript">
-    $(document).ready(function(){
-
-        $("#sortTable").tablesorter();
-    }
-    );
-</script>
 @stop
