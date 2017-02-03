@@ -118,6 +118,9 @@
                             echo '<td class="text-center">'. $unit->news[0] .'</td>' .
                                  '<td class="text-center">'. $unit->news[1]  .'</td>';
                           }
+                          else {
+                            echo "<td></td><td></td>";
+                          }
                           echo '<td></td></tr>';
                         }
                       ?>  

@@ -34,7 +34,7 @@
             <div class="form-group <?php if($errors->has('phone')) echo 'has-error'?>">
                 <label for="phone" class="control-label col-lg-4 col-sm-4">Số Cv - Thuê bao<sup>*</sup></label>
                 <div class="col-lg-8 col-sm-8">
-                    <select class="form-control input-sm" id="phone" name="phone" placeholder="Chọn thuê bao đã đăng ký">
+                    <select class="form-control input-sm select2" id="phone" name="phone" placeholder="Chọn thuê bao đã đăng ký">
                         @foreach($orders as $order)
                         <optgroup label="{{$order->number_cv . '/' . $order->unit->symbol}}">
                             @foreach ($order->phones as $index => $phone)

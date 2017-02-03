@@ -70,13 +70,13 @@ table thead tr .headerSortUp {
 table thead tr .headerSortDown {
 	background-image: url(../icon/desc.gif);
 }
-table thead tr .headerSortDown, table thead tr .headerSortUp {
-background-color: #8dbdd8;
-}
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
     padding: 2px 15px 2px 2px;
     vertical-align: middle;
-    border: 1px solid #FFF;
+    border: 1px solid #f4f4f4;
+}
+table thead tr .headerSortDown, table thead tr .headerSortUp {
+	background-color: #8dd8d8 !important;
 }
 hr {
 	margin-top: 5px;
@@ -84,4 +84,15 @@ hr {
 	color: #333;
     border: 0;
     border-bottom: 1px solid #e5e5e5;
+}
+.select2-container--default .select2-selection--single {
+    background-color: #fff;
+    border: 1px solid #d2d6de;
+    border-radius: 0px;
+    height: 30px;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+	padding: 0px ;
+	font-size: 18px;
 }
