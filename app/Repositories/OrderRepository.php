@@ -59,18 +59,22 @@ class OrderRepository extends AbstractRepository
          return $query->where('manager', $id)
                       ->get($columns);
     }
-    public function search($query)
+    public function search($data)
     {
-        $field = 'order_name';
-        $isNumeric = preg_match("/\S*\d+\S*/", $query) ? true : false;
-        if($isNumeric) {
-            $field = 'number_cv';
+        $query = $this->order
+                      ->with('unit','phones')
+                      ->orderBy('created_at', 'desc');
+        if(is_numeric($data)) {
+            $query = $query->where('number_cv', 'like', '%'.$data.'%')
+                           ->orWhereHas('phones', function ($q) use ($data)  {
+                                $q->where('number', 'like', '%'.$data.'%');
+                           }); 
         }
-        return $this->order
-                    ->with('unit','phones')
-                    ->where($field, 'like', '%'.$query.'%')
-                    ->orderBy('created_at', 'desc')
-                    ->get();
+        else {
+            $query = $query->where('order_name', 'like', '%'.$data.'%');
+        }
+
+        return $query->get();
     }
     public function paginate($perPage = 5, $condition = '', $columns = ['*'])
     {
