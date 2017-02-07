@@ -353,7 +353,24 @@ class OrderRepository extends AbstractRepository
             $order->save();
         }
     }
+    public function updateOrderExpires()
+    {
+        $toDay = Carbon::toDay();
+        $expires = $this->order->with('phones')
+                               ->where('date_end', '<', $toDay->toDateString())
+                               ->whereNull('date_cut')
+                               ->get();
 
+        foreach ($expires as $key => $order) {
+            $order->date_cut = $order->date_end->addDay();
+            $order->save();
+            // update status
+            foreach ($order->phones as $key => $phone) {
+                $phone->status = 'danger';
+                $phone->save();
+            }
+        }
+    }
     public function formatPurposeOrder($purposes, $symbol, $value)
     {
         if($value > 0) {

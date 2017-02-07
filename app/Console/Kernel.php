@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\Inspire::class,
         Commands\RepositoryCommand::class,
+        Commands\CutOrder::class,
     ];
 
     /**
@@ -27,5 +28,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('inspire')
                  ->hourly();
+        // auto cut orders exspires
+        $schedule->command('exspires')->twiceDaily(8, 16);
     }
 }

@@ -15,9 +15,9 @@
             <!-- </div> -->
         </div><!-- /.box-header -->
         <div class="box-body">
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="sortTable" class="table table-bordered table-striped">
                 <thead>
-                    <tr>
+                    <tr class="success">
                         <th class="text-center">STT</th>
                         <th class="text-center">Ngày tháng</th>
                         <th class="text-center">Số Cv đến</th>
@@ -39,9 +39,9 @@
                     		<td class="text-center">{{ $item->order->date_order->format('d/m/Y') }}</td>
                     		<td class="text-center">{{ $item->order->number_cv . '/'.$item->order->unit->symbol }}</td>
                     		<td class="text-center">{{ $item->order->number_cv_pa71 }}</td>
-                    		<td><a href="{{ action('OrderController@show', $item->order->id)  }}">{{ $item->order->order_name }}</a></td>
+                    		<td class="text-center"><a href="{{ action('OrderController@show', $item->order->id)  }}">{{ $item->order->order_name }}</a></td>
                     		<td class="text-center">{{ $item->number }}</td>
-                    		<td>
+                    		<td class="text-center">
 	                    		@if (isset($item->order->date_begin) && isset($item->order->date_end))
 	                 		   		{{ $item->order->date_begin->format('d/m/Y') . ' &rarr; ' . $item->order->date_end->format('d/m/Y') }}
 	                    		@endif
