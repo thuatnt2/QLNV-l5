@@ -187,33 +187,7 @@
                         </td>
                         <td class="text-center">{{ $order->customer_name }} <br> {{ $order->customer_phone }}</td>
                         <td class="text-center">
-                        @if ($order->purpose->group == 'monitor')
-                            @foreach($order->phones as $index=> $phone)
-                            <span class="btn btn-{{ $phone->status }} btn-xs" data-toggle="modal" data-target="#statusModal" data-url="{{ action('OrderController@updateStatus', $phone->id) }}" data-status="{{ $phone->status }}" data-number="{{ $phone->number }}" >
-                                @if ($phone->status == 'success')
-                                    <i class="fa fa-link " title="Kết nối"></i>
-                                @elseif($phone->status == 'warning')
-                                    <i class="fa fa-hourglass-half" title="Đang chờ"></i>
-                                @else
-                                    <i class="fa fa-times" title="Đóng hoặc không kết nôi" ></i>
-                                @endif
-                            </span>
-                            <br>
-                            @endforeach
-                        @else 
-                            @foreach($order->phones as $index=> $phone)
-                            <span class="btn btn-{{ $phone->status }} btn-xs" data-toggle="modal" data-target="#statusModal" data-url="{{ action('OrderController@updateStatus', $phone->id) }}" data-status="{{ $phone->status }}" data-number="{{ $phone->number }}" >
-                                @if ($phone->status == 'success')
-                                    <i class="fa fa-check " title="Đã giao"></i>
-                                @elseif($phone->status == 'warning')
-                                    <i class="fa fa-hourglass-half" title="Đang chờ"></i>
-                                @else
-                                    <i class="fa fa-times" title="Đóng hoặc không kết nôi" ></i>
-                                @endif
-                            </span>
-                            <br>
-                            @endforeach
-                        @endif
+                            @include('partials.phone_status', ['order' => $order, 'detail' => false])
                             
                             @include('partials.status_modal')
                         </td>

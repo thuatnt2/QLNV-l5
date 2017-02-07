@@ -14,7 +14,7 @@ class Order extends Model
 	 * [$dates The attributes that should be mutated to dates]
 	 * @var array
 	 */
-	protected $dates = ['deleted_at', 'date_begin', 'date_end', 'date_order'];
+	protected $dates = ['deleted_at', 'date_begin', 'date_end', 'date_order', 'date_cut'];
 
 	public function phones()
 	{

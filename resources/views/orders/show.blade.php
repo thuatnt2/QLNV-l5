@@ -42,19 +42,8 @@
     		<tr>
     			<th class="text-left" width="30%">Số điện thoại yêu cầu</th>
     			<td width="50%">
-    				@foreach($order->phones as $index=>$phone)
-    				{{  $phone->number  }} 
-    				<span class="label label-{{ $phone->status }}"style="float:right; margin-right: 20px">
-    					@if ($phone->status == 'success')
-    					Kết nối
-    					@elseif($phone->status == 'warning')
-    					Chờ kết nối
-    					@else
-    					Đóng hoặc không có dữ liệu
-    					@endif
-    				</span>
-    				<br>
-    				@endforeach
+    				@include('partials.phone_status', ['order' => $order, 'detail' => true])
+                    @include('partials.status_modal')
     			</td> 
     		</tr>
     		<tr>
@@ -95,6 +84,12 @@
                     @endif
                 </td>
     		</tr>
+            @if($order->purpose->group == 'monitor')
+                <tr>
+                    <th class="text-left" width="30%">Ngày cắt yêu cầu</th>
+                    <td>{{isset($order->date_cut)  ? $order->date_cut->format('d/m/Y'):""}}</td>
+                </tr>
+            @endif
     		<tr>
     			<th class="text-left" width="30%">File đính kèm</th>
     			<td><a href="{{ url('file',['orders', $order->file_name]) }}" target="true">{{  $order->file_name  }}</a></td>
@@ -116,6 +111,7 @@
     			<th class="text-left" width="30%">Ghi chú</th>
     			<td>{{  $order->comment  }}</td>
     		</tr>
+            
     		<tr>
     			<th class="text-left" width="30%">Ngày thêm dữ liệu</th>
     			<td>{{  $order->created_at->format('d/m/Y')  }}</td>
@@ -124,7 +120,6 @@
     			<th class="text-left" width="30%">Ngày cập nhật dữ liệu</th>
     			<td>{{  $order->updated_at->format('d/m/Y')  }}</td>
     		</tr>
-
     	</table>
     </div><!-- /.box-body -->
 </div>

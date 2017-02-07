@@ -115,26 +115,32 @@ class OrderRepository extends AbstractRepository
                                 )
                                 ->groupBy('purposes.group')
                                 ->get();
-        $total = DB::table('ships')->select(
-                                        DB::raw('coalesce(sum(news),0) as news'),
-                                        DB::raw('coalesce(sum(page_news),0) as pageNews'), 
-                                        DB::raw('sum(page_list) as pageList'),
-                                        DB::raw('sum(page_xmctb) as pageXmctb'),
-                                        DB::raw('sum(page_imei) as pageImei')
-                                    )
-                                   ->where('date_submit', '>=', $startDate)
-                                   ->where('date_submit', '<=', $endDate)
-                                   ->whereNull('ships.deleted_at')    
-                                   ->get();
-        $shipDirector = DB::table('ships')->select(
-                                        DB::raw('coalesce(sum(news),0) as news'),
-                                        DB::raw('coalesce(sum(page_news),0) as pageNews')
-                                    )
-                                   ->where('date_submit', '>=', $startDate)
-                                   ->where('date_submit', '<=', $endDate)
-                                   ->where('receive_name', 'like', '%PGĐ%')
-                                   ->whereNull('ships.deleted_at')    
-                                   ->get();
+
+        $total = $this->order->join('phones', 'phones.order_id', '=', 'orders.id')
+                             ->join('ships', 'ships.phone_id', '=', 'phones.id')
+                             ->select(
+                                  DB::raw('coalesce(sum(news),0) as news'),
+                                  DB::raw('coalesce(sum(page_news),0) as pageNews'), 
+                                  DB::raw('sum(page_list) as pageList'),
+                                  DB::raw('sum(page_xmctb) as pageXmctb'),
+                                  DB::raw('sum(page_imei) as pageImei')
+                                ) 
+                             ->where('ships.date_submit', '>=', $startDate)
+                             ->where('ships.date_submit', '<=', $endDate)
+                             ->whereNull('ships.deleted_at')    
+                             ->get();
+        $shipDirector = $this->order
+                             ->join('phones', 'phones.order_id', '=', 'orders.id')
+                             ->join('ships', 'ships.phone_id', '=', 'phones.id')
+                             ->select(
+                                DB::raw('coalesce(sum(news),0) as news'),
+                                DB::raw('coalesce(sum(page_news),0) as pageNews')
+                              )
+                             ->where('ships.date_submit', '>=', $startDate)
+                             ->where('ships.date_submit', '<=', $endDate)
+                             ->where('ships.receive_name', 'like', '%GĐ%')
+                             ->whereNull('ships.deleted_at')    
+                             ->get();
         // folow block
         $detailMonitor = $this->statisticsDetail($startDate, $endDate, 'monitor');
         $detailOther = $this->statisticsDetail($startDate, $endDate);
