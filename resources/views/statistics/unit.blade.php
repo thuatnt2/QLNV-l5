@@ -22,7 +22,7 @@
                   <div class="col-lg-8 col-sm-8">
                       <select class="form-control input-sm" id="unit" name="unit">
                           @foreach ($units as $index=>$unit)
-                              <option value="{{ $unit->symbol }}" >{{ ucwords($unit->symbol) }}</option>
+                              <option value="{{ $unit->symbol }}" {{isset($unitSymbol) && $unitSymbol == $unit->symbol ? "selected":""}}>{{ ucwords($unit->symbol) }}</option>
                           @endforeach
                       </select>
                   </div>
