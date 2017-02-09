@@ -166,8 +166,10 @@ class OrderController extends Controller
     {
         $phone = Phone::find($phoneId);
         $order = $this->order->findById($phone->order_id);
-        $order->comment = $request->get('comment');
-        $order->save();
+        if ($request->get('comment') != '') {
+            $order->comment = $request->get('comment');
+            $order->save();
+        }
         
         $phone->status = $request->get('status');
         $phone->save();
@@ -180,7 +182,8 @@ class OrderController extends Controller
                 }
             }
             if($flag) {
-                $order->date_cut = Carbon::now();
+                $order->date_end = $order->date_cut = Carbon::now();
+                $order->comment = $order->comment . '<br>Cắt trước thời hạn';
                 $order->save();
             }
         }

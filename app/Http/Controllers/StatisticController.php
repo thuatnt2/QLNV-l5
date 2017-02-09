@@ -68,10 +68,10 @@ class StatisticController extends Controller
         $startDate = $startDate->toDateString();
         $endDate = $endDate->toDateString();
         $title = '';
-        if ($interval->days == 7) {
+        if ($interval->days == 6) {
             $title = "BÁO CÁO TUẦN";
         }
-        elseif ( $interval->days >= 28 && $interval->days <= 31) {
+        elseif ( $interval->days >= 27 && $interval->days <= 31) {
             $title = "BÁO CÁO THÁNG";
         }
         elseif ($interval->days >= 88 && $interval->days <= 92) {

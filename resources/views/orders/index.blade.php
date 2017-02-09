@@ -191,7 +191,7 @@
                             
                             @include('partials.status_modal')
                         </td>
-                        <td class="text-center">{{ $order->comment }}</td>
+                        <td class="text-center">{!! $order->comment !!}</td>
                         <td class="text-center">
                             <button class="btn btn-warning btn-xs fa fa-edit" data-url="{{ action('OrderController@edit', $order->id) }}" type="button" title="Sửa"></button>
                             <!-- TODO: Delete Button -->

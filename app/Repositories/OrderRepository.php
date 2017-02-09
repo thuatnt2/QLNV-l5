@@ -362,7 +362,10 @@ class OrderRepository extends AbstractRepository
     public function updateOrderExpires()
     {
         $toDay = Carbon::toDay();
-        $expires = $this->order->with('phones')
+        $expires = $this->order->with('phones', 'purposes')
+                               ->whereHas('purposes', function ($subQuery) {
+                                  $subQuery->where('purposes.group', 'monitor');
+                               })
                                ->where('date_end', '<', $toDay->toDateString())
                                ->whereNull('date_cut')
                                ->get();
