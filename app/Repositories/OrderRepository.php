@@ -59,6 +59,14 @@ class OrderRepository extends AbstractRepository
          return $query->where('manager', $id)
                       ->get($columns);
     }
+    public function removeManagerBy($userId) {
+      // return all manager by userId 
+      $orders = $this->findManagerBy($userId);
+      foreach ($orders as $key => $order) {
+          $order->manager = null;
+          $order->save();
+      }
+    }
     public function search($data)
     {
         $query = $this->order

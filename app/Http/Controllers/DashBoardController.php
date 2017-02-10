@@ -71,15 +71,9 @@ class DashBoardController extends Controller
     	return view('dashboard');
     }
 
-    public function destroy($id)
+    public function destroy($userId)
     {
-        // return order
-        $orders = $this->orders->findManagerBy($id);
-        foreach ($orders as $key => $order) {
-            $order->manager = null;
-            $order->save();
-        }
-        
+        $this->orders->removeManagerBy($userId);        
         return redirect()->back();
     }
 

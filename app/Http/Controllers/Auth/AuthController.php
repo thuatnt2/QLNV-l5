@@ -10,6 +10,8 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Validator;
 use Hash;
+use App\Repositories\OrderRepository;
+use App\Order;
 
 class AuthController extends Controller
 {
@@ -90,6 +92,8 @@ class AuthController extends Controller
     }
     public function destroy($id)
     {
+        $order = new OrderRepository(new Order);
+        $order->removeManagerBy($id);
         $this->user->delete($id);
 
         return redirect()->back();

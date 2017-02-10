@@ -48,7 +48,7 @@
     var number = button.data('number');
 
 		var modal = $(this);
-        modal.find('.modal-title').append('Số điện thoại yêu cầu: ' +number);
+        modal.find('.modal-title').html('Số điện thoại yêu cầu: ' +number);
   		  modal.find('form').attr('action', action);
         modal.find('#'+ status).prop('checked', 'checked');
 	});
