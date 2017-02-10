@@ -142,7 +142,7 @@
                             {{ $new->page_news }}
                         </td>
                         <td class="text-center">{{ $new->receive_name }}</td>
-                        <td class="text-center">{{ $new->phone->order->comment }}</td>
+                        <td class="text-center">{!! $new->phone->order->comment !!}</td>
                         <td class="text-center"width="6%">
                             <button class="btn btn-warning btn-xs fa fa-edit" data-url="{{ action('NewsController@edit', $new->id) }}" type="button" title="Sửa"></button>
                             <!-- TODO: Delete Button -->

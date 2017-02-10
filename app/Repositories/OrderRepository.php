@@ -372,6 +372,7 @@ class OrderRepository extends AbstractRepository
 
         foreach ($expires as $key => $order) {
             $order->date_cut = $order->date_end->addDay();
+            $order->comment = $order->comment . '<br> Auto cut';
             $order->save();
             // update status
             foreach ($order->phones as $key => $phone) {

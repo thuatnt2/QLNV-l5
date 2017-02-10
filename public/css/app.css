@@ -73,7 +73,10 @@ table thead tr .headerSortDown {
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
     padding: 2px 15px 2px 2px;
     vertical-align: middle;
-    border: 1px solid #f4f4f4;
+    border: 1px solid #333;
+}
+.success {
+	border: 1px solid #333;
 }
 table thead tr .headerSortDown, table thead tr .headerSortUp {
 	background-color: #8dd8d8 !important;
