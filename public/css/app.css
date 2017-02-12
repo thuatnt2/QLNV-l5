@@ -74,10 +74,10 @@ table thead tr .headerSortDown {
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
     padding: 2px 2px 2px 2px;
     vertical-align: middle;
-    border: 1px solid #333;
+    border: 1px solid #666;
 }
 .success {
-	border: 1px solid #333;
+	border: 1px solid #666;
 }
 table thead tr .headerSortDown, table thead tr .headerSortUp {
 	background-color: #8dd8d8 !important;
@@ -101,4 +101,8 @@ hr {
 .select2-container .select2-selection--single .select2-selection__rendered {
 	padding: 0px ;
 	font-size: 18px;
+}
+.table-bordered th,
+.table-bordered td {
+  border: 1px solid #666 !important;
 }

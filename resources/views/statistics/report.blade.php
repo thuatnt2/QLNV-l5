@@ -53,7 +53,7 @@
               <!-- <div class="box"> -->
                   <div class="box-header">
                     
-                    <h4 class="box-title"><strong>II. KẾT QUẢ<br><br></strong></h4>
+                    <h4 class="box-title"><strong>I. KẾT QUẢ<br><br></strong></h4>
                     <?php
                       $orderPurpose = "";
                       foreach ($result['purposes'] as $key => $purpose) {
@@ -84,7 +84,7 @@
                         <th class="text-center" colspan="{{$categories->count()}}">Yêu cầu của lực lượng An ninh, Tình báo</th>
                         <th class="text-center" rowspan="2">Thuê bao</th>
                         <th class="text-center" colspan="2">Số bản tin khai thác, xử lý</th>
-                        <th class="text-center" rowspan="2">Dung lượng thoại ghi đĩa (MB)</th>
+                        <th class="text-center" rowspan="2" width="12%">Dung lượng thoại ghi đĩa (MB)</th>
                       </tr>
                       <tr class="success">
                         <?php
