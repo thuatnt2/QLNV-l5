@@ -203,6 +203,8 @@ class ImeiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->ship->delete($id, true);
+
+        return redirect()->back();
     }
 }
