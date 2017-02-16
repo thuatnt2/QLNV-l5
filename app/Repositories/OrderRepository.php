@@ -298,14 +298,14 @@ class OrderRepository extends AbstractRepository
     	$this->order->kind_id = $input['kind'];
     	$this->order->category_id = $input['category'];
     	$this->order->unit_id = $input['unit'];
-        $this->order->purpose_id = $input['purpose'];
+      $this->order->purpose_id = $input['purpose'];
     	$this->order->number_cv = (int)$input['number_cv'];
     	$this->order->number_cv_pa71 = (int)$input['number_cv_pa71'];
     	$this->order->order_name = $input['order_name'];
     	$this->order->customer_name = $input['customer_name'];
     	$this->order->customer_phone = $input['customer_phone'];
     	$this->order->date_order = Carbon::createFromFormat('d/m/Y', $input['created_at']);
-        $this->order->file_name = $fileName;
+      $this->order->file_name = $fileName;
         if (isset($input['date_request'])) {
             $date_request = explode('-', $input['date_request']);
             $this->order->date_end = Carbon::createFromFormat('d/m/Y', trim(array_pop($date_request)));
@@ -352,9 +352,22 @@ class OrderRepository extends AbstractRepository
         $order->date_order = Carbon::createFromFormat('d/m/Y', $input['created_at']);
         $order->file_name = $fileName;
         $date_request = explode('-', $input['date_request']);
-        $order->date_end = Carbon::createFromFormat('d/m/Y', trim(array_pop($date_request)));
-        $order->date_begin = Carbon::createFromFormat('d/m/Y', trim(array_pop($date_request)));
+        if (isset($input['date_request']) && $input['date_request'] != '') {
+            $date_request = explode('-', $input['date_request']);
+            $order->date_end = Carbon::createFromFormat('d/m/Y', trim(array_pop($date_request)));
+            $order->date_begin = Carbon::createFromFormat('d/m/Y', trim(array_pop($date_request)));
+        }else {
+            $order->date_begin = null;
+            $order->date_end = null;
+        }
         $order->comment = $input['comment'];
+        // check if purpose is xmctb
+        if ($input['purpose'] == 2) {
+            $order->category_id = null;
+            $order->kind_id = null;
+            $order->date_begin = null;
+            $order->date_end = null;
+        }
         // update Order
         $order->save();
         // update Phones

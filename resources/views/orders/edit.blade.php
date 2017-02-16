@@ -37,7 +37,6 @@
                 ->value($order->number_cv_pa71)
             !!}
             {!! Former::text('order_name', 'Tên đối tượng')
-                ->required()
                 ->addClass('input-sm')
                 ->value($order->order_name)
             !!}
@@ -73,7 +72,6 @@
             {!! Former::select('kind')->label('Tính chất')->options($kinds, isset($order->kind_id) ? $order->kind_id:"")->addClass('input-sm') !!}
             {!! Former::select('purpose')->label('Mục đích yêu cầu')->options($purposes, $order->purpose_id)->addClass('input-sm') !!}
             {!! Former::text('date_request', 'Thời gian yêu cầu')
-                ->required()
                 ->addClass('input-sm daterange')
                 ->value(isset($order->date_begin) && isset($order->date_end) ? $order->date_begin->format('d/m/Y') .'-'. $order->date_end->format('d/m/Y'):"" )
             !!}
