@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Repositories\OrderRepository;
 use App\Order;
+use Carbon\Carbon;
 
 class CutOrder extends Command
 {
@@ -43,5 +44,6 @@ class CutOrder extends Command
         $order = new OrderRepository(new Order);
         $order->updateOrderExpires();
         $this->info('update orders expires successfully');
+        \Log::info('update orders expires ' . Carbon::now());
     }
 }

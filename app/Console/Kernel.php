@@ -29,6 +29,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('inspire')
                  ->hourly();
         // auto cut orders exspires
-        $schedule->command('exspires')->twiceDaily(8, 16);
+        $schedule->command('exspires')->dailyAt('07:45');
     }
 }
