@@ -63,7 +63,7 @@ class StatisticController extends Controller
         $content = $request->input('content');
         $reportrange = array_reverse(explode('-', $request['reportrange']));
         $startDate = Carbon::createFromFormat('d/m/Y', trim($reportrange[1]));
-        $endDate =  Carbon::createFromFormat('d/m/Y', trim($reportrange[0]))->subday();
+        $endDate =  Carbon::createFromFormat('d/m/Y', trim($reportrange[0]));
         $interval = $startDate->diff($endDate);
         $startDate = $startDate->toDateString();
         $endDate = $endDate->toDateString();
