@@ -32,7 +32,8 @@ class HomeController extends Controller
                                     ->where('phones.status', 'success')
                                     ->groupBy('orders.manager')
                                     ->select(
-                                            'users.*',
+                                            'users.fullname',
+                                            'users.id',
                                             \DB::raw(' count(manager) as total')
                                         )
                                     ->get();
