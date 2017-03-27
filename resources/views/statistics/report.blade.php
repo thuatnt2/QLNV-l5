@@ -41,7 +41,7 @@
                   <tr>
                     <td></td>
                     <td></td>
-                    <td class="text-center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Quảng Bình, Ngày {{date('d')}} tháng {{date('m')}} năm {{date('Y')}}</em></td>
+                    <td class="text-center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Quảng Bình, Ngày {{date('d')}} tháng {{date('m')}} năm {{date('Y')}}</em></td>
                   </tr>
                 </table>
             {{-- </div> --}}

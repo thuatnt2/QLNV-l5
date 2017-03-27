@@ -7,10 +7,10 @@
             {!! Former::select('user', 'Tên cán bộ')->options($users, $id)->addClass('input-sm'); !!}
             <?php 
                 foreach ($orders as $key => $value) {
-                    $managers[$key] = $value;
+                    $nullManager[$key] = $value;
                 }
             ?>
-            {!! Former::multiselect('order', 'Danh sách đối tượng')->options($managers, array_keys($managers))->addClass('input-sm'); !!}
+            {!! Former::multiselect('order', 'Danh sách đối tượng')->options($managers + $nullManager, array_keys($managers))->addClass('input-sm'); !!}
             <div class="form-group">
             <div class="col-lg-offset-5 col-sm-offset-5 col-lg-8 col-sm-8">
                 <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-edit">&nbsp</i>Sửa</button>

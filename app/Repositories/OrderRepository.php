@@ -23,7 +23,7 @@ class OrderRepository extends AbstractRepository
     protected function queryAll($status, $condition)
     {
         return $query =  $this->order
-                       ->with(['unit', 'phones' => function($q) use ($status) {
+                       ->with(['kind', 'unit', 'phones' => function($q) use ($status) {
                             $q->where('status', $status);
                        }])
                        ->whereHas('purpose', function($q) use ($condition) {
@@ -390,7 +390,7 @@ class OrderRepository extends AbstractRepository
                                ->where('date_end', '<', $toDay->toDateString())
                                ->whereNull('date_cut')
                                ->get();
-
+        // var_dump($expires);                       
         foreach ($expires as $key => $order) {
             $order->date_cut = $order->date_end->addDay();
             $order->comment = $order->comment . '<br> Auto cut';

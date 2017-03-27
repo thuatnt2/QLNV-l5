@@ -19,7 +19,7 @@
 			<div class="box {{ $color[$i] }} box-solid">
                 <div class="box-header with-border">
                   <h3 class="box-title">{{ $user->fullname }}</h3>
-                  <span class="pull-right">{{ $user->total }}</span>
+                  <span class="pull-right">{{ $user->total . ' số'}}</span>
                 </div><!-- /.box-header -->
                 <table class="table table-bordered table-striped">
                 <thead>

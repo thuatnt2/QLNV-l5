@@ -28,10 +28,12 @@ class HomeController extends Controller
     public function index()
     {
         $users = \DB::table('users')->join('orders', 'orders.manager', '=', 'users.id')
+                                    ->join('phones', 'phones.order_id', '=', 'orders.id')
+                                    ->where('phones.status', 'success')
                                     ->groupBy('orders.manager')
                                     ->select(
                                             'users.*',
-                                            \DB::raw('count(manager) as total')
+                                            \DB::raw(' count(manager) as total')
                                         )
                                     ->get();
         $orders = new OrderRepository(new Order);
